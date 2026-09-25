@@ -61,7 +61,7 @@ export default function FAQSection({ faqs }: FAQSectionProps) {
             Frequently Asked Questions
           </p>
           <p className="text-sm text-[#5D5A56] dark:text-[#A0A8B8] mt-2">
-            Everything you need to know about setting up BusinessFlow for your organization.
+            Everything you need to know about setting up CoreDesk for your organization.
           </p>
 
           {/* Search Filter */}

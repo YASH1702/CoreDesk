@@ -12,7 +12,7 @@ function LoginForm() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/dashboard/admin";
 
-  const [email, setEmail] = useState("owner@businessflow.com");
+  const [email, setEmail] = useState("owner@coredesk.com");
   const [password, setPassword] = useState("password123");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -67,7 +67,7 @@ function LoginForm() {
             <Sparkles className="w-5 h-5 text-white" />
           </div>
           <span className="text-2xl font-bold tracking-tight text-[#2A2927] dark:text-[#F8F7F3]">
-            Business<span className="gold-text">Flow</span>
+            Core<span className="gold-text">Desk</span>
           </span>
         </Link>
         <h1 className="text-xl font-bold text-[#2A2927] dark:text-[#F8F7F3] tracking-tight">Welcome Back</h1>
@@ -90,14 +90,14 @@ function LoginForm() {
         <div className="grid grid-cols-3 gap-2">
           <button
             type="button"
-            onClick={() => handleQuickLogin("owner@businessflow.com", "/dashboard/admin")}
+            onClick={() => handleQuickLogin("owner@coredesk.com", "/dashboard/admin")}
             className="px-2.5 py-2 rounded-xl bg-[#FFF8ED] dark:bg-[#1B2238] hover:bg-[#E8D7B2] dark:hover:bg-[#27314A] text-[#C69A4B] text-xs font-bold border border-[#E8D7B2] dark:border-[#27314A] transition-all text-center"
           >
             Owner
           </button>
           <button
             type="button"
-            onClick={() => handleQuickLogin("marcus.chen@businessflow.com", "/dashboard/staff")}
+            onClick={() => handleQuickLogin("marcus.chen@coredesk.com", "/dashboard/staff")}
             className="px-2.5 py-2 rounded-xl bg-purple-500/10 hover:bg-purple-500/20 text-purple-700 dark:text-purple-300 text-xs font-bold border border-purple-500/20 transition-all text-center"
           >
             Staff
@@ -158,7 +158,7 @@ function LoginForm() {
             <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
           ) : (
             <>
-              Sign in to BusinessFlow
+              Sign in to CoreDesk
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </>
           )}

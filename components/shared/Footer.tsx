@@ -16,7 +16,7 @@ export default function Footer() {
                 <Sparkles className="w-5 h-5" />
               </div>
               <span className="text-xl font-bold tracking-tight text-[#2A2927] dark:text-[#F8F7F3]">
-                Business<span className="gold-text">Flow</span>
+                Core<span className="gold-text">Desk</span>
               </span>
             </Link>
             <p className="text-xs text-[#5D5A56] dark:text-[#A0A8B8] max-w-sm leading-relaxed">
@@ -76,7 +76,7 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-[#DDD6C9] dark:border-[#27314A] flex flex-col sm:flex-row items-center justify-between text-xs text-[#8B857D] dark:text-[#A0A8B8] gap-4">
-          <p>© {new Date().getFullYear()} BusinessFlow Platform Inc. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} CoreDesk Platform Inc. All rights reserved.</p>
           <p className="flex items-center gap-1 font-medium">
             Crafted with <Heart className="w-3.5 h-3.5 text-[#C69A4B] fill-[#C69A4B]" /> for premium enterprises.
           </p>

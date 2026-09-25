@@ -122,7 +122,7 @@ export default function HeroSection({ title, subtitle }: HeroSectionProps) {
                 <div className="w-3 h-3 rounded-full bg-[#D9C7A0]" />
                 <div className="w-3 h-3 rounded-full bg-[#C69A4B]" />
               </div>
-              <span className="text-xs text-[#5D5A56] dark:text-[#A0A8B8] font-mono font-medium">businessflow.app/apex-advisory/dashboard</span>
+              <span className="text-xs text-[#5D5A56] dark:text-[#A0A8B8] font-mono font-medium">coredesk.app/apex-advisory/dashboard</span>
               <div className="flex items-center gap-2 text-xs text-[#5C9E6E] font-semibold">
                 <span className="w-2 h-2 rounded-full bg-[#5C9E6E] animate-ping" /> Live Operations
               </div>

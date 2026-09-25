@@ -1,6 +1,6 @@
-# BusinessFlow — Enterprise Website & Appointment Booking SaaS Engine
+# CoreDesk — Enterprise Website & Appointment Booking SaaS Engine
 
-BusinessFlow is a production-ready, enterprise-grade business website builder and appointment scheduling platform designed with an **Aurora Glassmorphism** design aesthetic.
+CoreDesk is a production-ready, enterprise-grade business website builder and appointment scheduling platform designed with an **Aurora Glassmorphism** design aesthetic.
 
 ---
 
@@ -69,8 +69,8 @@ Access the platform at `http://localhost:3000`.
 
 | Role | Email | Password | Access Route |
 | :--- | :--- | :--- | :--- |
-| **Business Owner** | `owner@businessflow.com` | `password123` | `/dashboard/admin` |
-| **Staff Specialist** | `marcus.chen@businessflow.com` | `password123` | `/dashboard/staff` |
+| **Business Owner** | `owner@coredesk.com` | `password123` | `/dashboard/admin` |
+| **Staff Specialist** | `marcus.chen@coredesk.com` | `password123` | `/dashboard/staff` |
 | **Customer** | `alex.morgan@gmail.com` | `password123` | `/dashboard/customer` |
 
 ---

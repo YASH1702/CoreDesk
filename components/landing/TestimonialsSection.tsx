@@ -25,7 +25,7 @@ export default function TestimonialsSection({ testimonials }: TestimonialsSectio
       company: "Vanguard Systems Advisory",
       industry: "Consulting",
       content:
-        "BusinessFlow completely transformed our advisory booking pipeline. Our enterprise clients praise the warm luxury design, and no-shows dropped to absolute zero thanks to automated calendar sync.",
+        "CoreDesk completely transformed our advisory booking pipeline. Our enterprise clients praise the warm luxury design, and no-shows dropped to absolute zero thanks to automated calendar sync.",
       avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80",
       rating: 5,
     },
@@ -65,7 +65,7 @@ export default function TestimonialsSection({ testimonials }: TestimonialsSectio
       role: "Director of Performance",
       company: "Apex Athletic Club",
       content:
-        "Managing 12 personal trainers across 3 studio spaces used to be chaos. BusinessFlow calculates zero-conflict time slots in real time, saving our team hours of manual work.",
+        "Managing 12 personal trainers across 3 studio spaces used to be chaos. CoreDesk calculates zero-conflict time slots in real time, saving our team hours of manual work.",
       avatar: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200&q=80",
       rating: 5,
     },

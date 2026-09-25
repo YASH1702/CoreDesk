@@ -26,7 +26,7 @@ export default function CTASection() {
 
             <h2 className="text-3xl sm:text-5xl font-extrabold text-[#2A2927] dark:text-[#F8F7F3] tracking-tight leading-tight">
               Ready to Upgrade to <br />
-              <span className="gold-text">BusinessFlow</span> Today?
+              <span className="gold-text">CoreDesk</span> Today?
             </h2>
 
             <p className="text-sm text-[#5D5A56] dark:text-[#A0A8B8] leading-relaxed">

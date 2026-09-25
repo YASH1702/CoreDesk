@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/dashboard/admin/", "/dashboard/staff/"],
     },
-    sitemap: "https://businessflow.app/sitemap.xml",
+    sitemap: "https://coredesk.app/sitemap.xml",
   };
 }

@@ -62,12 +62,12 @@ export default function DashboardLayoutWrapper({ children }: { children: React.R
       <aside className="hidden lg:flex w-64 flex-col bg-[#F3EFE7] dark:bg-[#0F1422] border-r border-[#DDD6C9] dark:border-[#27314A] shrink-0 min-h-screen p-6 justify-between transition-colors duration-300">
         <div className="space-y-8">
           {/* Brand Logo - OnClick Redirect to Homepage */}
-          <Link href="/" className="flex items-center gap-2.5 group cursor-pointer" title="Return to BusinessFlow Homepage">
+          <Link href="/" className="flex items-center gap-2.5 group cursor-pointer" title="Return to CoreDesk Homepage">
             <div className="w-9 h-9 rounded-2xl bg-[#C69A4B] text-white flex items-center justify-center shadow-gold-btn group-hover:scale-105 transition-transform">
               <Sparkles className="w-4.5 h-4.5" />
             </div>
             <span className="text-lg font-bold tracking-tight text-[#2A2927] dark:text-[#F8F7F3]">
-              Business<span className="gold-text">Flow</span>
+              Core<span className="gold-text">Desk</span>
             </span>
           </Link>
 
@@ -149,7 +149,7 @@ export default function DashboardLayoutWrapper({ children }: { children: React.R
             <div className="w-7 h-7 rounded-xl bg-[#C69A4B] text-white flex items-center justify-center">
               <Sparkles className="w-3.5 h-3.5" />
             </div>
-            <span className="text-sm font-bold text-[#2A2927] dark:text-[#F8F7F3]">BusinessFlow</span>
+            <span className="text-sm font-bold text-[#2A2927] dark:text-[#F8F7F3]">CoreDesk</span>
           </Link>
           <div className="flex items-center gap-2">
             <button

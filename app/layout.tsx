@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "BusinessFlow — Warm Sand & Executive Dark Business & Appointment Platform",
+  title: "CoreDesk — Warm Sand & Executive Dark Business & Appointment Platform",
   description: "Enterprise appointment management and website engine styled with an executive, luxury-inspired design system.",
 };
 

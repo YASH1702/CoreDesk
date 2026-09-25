@@ -18,7 +18,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     setMounted(true);
-    const savedTheme = localStorage.getItem("businessflow_theme") as Theme | null;
+    const savedTheme = localStorage.getItem("coredesk_theme") as Theme | null;
     if (savedTheme) {
       setThemeState(savedTheme);
       if (savedTheme === "dark") {
@@ -34,7 +34,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme);
-    localStorage.setItem("businessflow_theme", newTheme);
+    localStorage.setItem("coredesk_theme", newTheme);
     if (newTheme === "dark") {
       document.documentElement.classList.add("dark");
     } else {

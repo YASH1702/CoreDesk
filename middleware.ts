@@ -3,7 +3,7 @@ import { getToken } from "next-auth/jwt";
 import type { NextRequest } from "next/server";
 
 export async function middleware(req: NextRequest) {
-  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET || "businessflow-super-secret-jwt-key-2026" });
+  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET || "coredesk-super-secret-jwt-key-2026" });
   const { pathname } = req.nextUrl;
 
   // Protect Admin Dashboard routes

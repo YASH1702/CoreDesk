@@ -12,11 +12,11 @@ export function generateICSFile(params: {
   const icsContent = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
-    "PRODID:-//BusinessFlow//Booking Platform//EN",
+    "PRODID:-//CoreDesk//Booking Platform//EN",
     "CALSCALE:GREGORIAN",
     "METHOD:REQUEST",
     "BEGIN:VEVENT",
-    `UID:${Date.now()}@businessflow.app`,
+    `UID:${Date.now()}@coredesk.app`,
     `DTSTAMP:${formatDate(new Date())}`,
     `DTSTART:${formatDate(params.startTime)}`,
     `DTEND:${formatDate(params.endTime)}`,

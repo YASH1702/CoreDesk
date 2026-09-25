@@ -70,7 +70,7 @@ export default async function CMSManagementPage() {
                 <label className="block text-xs font-bold text-[#2A2927] dark:text-[#F8F7F3] mb-2">SEO Title Tag</label>
                 <input
                   type="text"
-                  defaultValue={settings?.seoTitle || "BusinessFlow — Warm Sand & Executive Dark Business Platform"}
+                  defaultValue={settings?.seoTitle || "CoreDesk — Warm Sand & Executive Dark Business Platform"}
                   className="w-full p-3 rounded-2xl glass-input text-xs text-[#2A2927] dark:text-[#F8F7F3]"
                 />
               </div>

@@ -39,12 +39,12 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Brand Logo */}
-        <Link href="/" className="flex items-center gap-2.5 group cursor-pointer" title="Return to BusinessFlow Homepage">
+        <Link href="/" className="flex items-center gap-2.5 group cursor-pointer" title="Return to CoreDesk Homepage">
           <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#C69A4B] via-[#B7863D] to-[#8F6B2F] flex items-center justify-center shadow-gold-btn group-hover:scale-105 transition-transform">
             <Sparkles className="w-5 h-5 text-white" />
           </div>
           <span className="text-xl font-bold tracking-tight text-[#2A2927] dark:text-[#F8F7F3]">
-            Business<span className="gold-text">Flow</span>
+            Core<span className="gold-text">Desk</span>
           </span>
         </Link>
 

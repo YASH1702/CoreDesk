@@ -75,5 +75,5 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
-  secret: process.env.NEXTAUTH_SECRET || "businessflow-super-secret-jwt-key-2026",
+  secret: process.env.NEXTAUTH_SECRET || "coredesk-super-secret-jwt-key-2026",
 };

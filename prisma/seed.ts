@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log("🌱 Seeding BusinessFlow database...");
+  console.log("🌱 Seeding CoreDesk database...");
 
   // Clean existing tables
   await prisma.review.deleteMany();
@@ -45,7 +45,7 @@ async function main() {
   const ownerUser = await prisma.user.create({
     data: {
       name: "Victoria Vance",
-      email: "owner@businessflow.com",
+      email: "owner@coredesk.com",
       password: "password123",
       role: "BUSINESS_OWNER",
       image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80",
@@ -57,7 +57,7 @@ async function main() {
   const staffUser1 = await prisma.user.create({
     data: {
       name: "Dr. Marcus Chen",
-      email: "marcus.chen@businessflow.com",
+      email: "marcus.chen@coredesk.com",
       password: "password123",
       role: "STAFF",
       image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80",
@@ -69,7 +69,7 @@ async function main() {
   const staffUser2 = await prisma.user.create({
     data: {
       name: "Elena Rostova",
-      email: "elena.rostova@businessflow.com",
+      email: "elena.rostova@coredesk.com",
       password: "password123",
       role: "STAFF",
       image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80",
@@ -294,7 +294,7 @@ async function main() {
         name: "David Sterling",
         role: "Chief Executive Officer",
         company: "Vanguard Systems",
-        content: "BusinessFlow streamlined our executive advisory bookings completely. Our clients love the glass interface!",
+        content: "CoreDesk streamlined our executive advisory bookings completely. Our clients love the glass interface!",
         rating: 5,
         avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80",
       },
@@ -340,13 +340,13 @@ async function main() {
         name: "Jonathan Drake",
         email: "jdrake@enterprise.org",
         phone: "+1 (555) 998-1122",
-        message: "Looking to deploy BusinessFlow across 4 regional advisory offices.",
+        message: "Looking to deploy CoreDesk across 4 regional advisory offices.",
         status: "NEW",
       },
     ],
   });
 
-  console.log("✅ BusinessFlow Database Seeded Successfully!");
+  console.log("✅ CoreDesk Database Seeded Successfully!");
 }
 
 main()
