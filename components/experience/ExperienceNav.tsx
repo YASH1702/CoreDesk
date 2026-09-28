@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useLayoutEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import Link from "next/link";
 import { Sparkles, Calendar, ShieldCheck, ArrowRight } from "lucide-react";
 import gsap from "gsap";
@@ -9,7 +9,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 export function ExperienceNav() {
   const navRef = useRef<HTMLElement>(null);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (typeof window === "undefined") return;
     gsap.registerPlugin(ScrollTrigger);
 

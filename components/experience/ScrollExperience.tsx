@@ -35,7 +35,7 @@ export default function ScrollExperience({
     }
   }, []);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (typeof window === "undefined" || reducedMotion) return;
 
     const container = containerRef.current;
