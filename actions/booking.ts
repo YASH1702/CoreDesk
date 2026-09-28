@@ -143,6 +143,7 @@ export async function createBookingAction(data: {
   customerPhone?: string;
   notes?: string;
   userId?: string;
+  stripePaymentIntentId?: string;
 }) {
   try {
     const service = await prisma.service.findUnique({
@@ -209,7 +210,7 @@ export async function createBookingAction(data: {
         currency: "USD",
         status: "PAID",
         paymentMethod: "card_stripe",
-        stripeIntentId: "pi_" + Math.random().toString(36).substring(2, 14),
+        stripeIntentId: data.stripePaymentIntentId || ("pi_" + Math.random().toString(36).substring(2, 14)),
       },
     });
 

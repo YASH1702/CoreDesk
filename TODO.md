@@ -167,3 +167,20 @@
 - [x] Embedded `<AmbientSpatialCanvas />` into `BusinessScene.tsx` behind editorial typography and metric card
 - [x] Verified zero TypeScript errors and successful production build across all routes
 
+---
+
+## PHASE 7 — SCENE SCROLL PINNING & STRIPE ARCHITECTURE ✅
+
+- [x] Replaced fragile CSS sticky with native GSAP ScrollTrigger pinning (`pin: stage`) across 4500px scrub track
+- [x] Removed conflicting `transition-opacity` from scene layers ensuring instant, flicker-free GSAP opacity control
+- [x] Updated layout overflow to `overflow-x: clip` in `globals.css` and `app/page.tsx` to prevent scroll-container interference
+- [x] Added animated "Scroll to explore OS" visual prompt on Page 01 (Hero)
+- [x] Built mobile floating scene pagination pill with previous/next arrows and active category labels
+- [x] Added deterministic scene jump calculations mapped to `ScrollTrigger.getById("experience-trigger")`
+- [x] Created Stripe client singleton in `lib/stripe.ts` with build-time fallback safety
+- [x] Created `createPaymentIntentAction` in `actions/stripe.ts` supporting live and test modes
+- [x] Built Stripe webhook handler at `app/api/webhooks/stripe/route.ts` with signature verification
+- [x] Linked `stripePaymentIntentId` to appointments and verified payments in `actions/booking.ts`
+- [x] Verified build passes across all 22 routes
+
+
