@@ -13,6 +13,13 @@ import { ControlScene } from "@/components/experience/scenes/ControlScene";
 import { SystemScene } from "@/components/experience/scenes/SystemScene";
 import { PlatformScene } from "@/components/experience/scenes/PlatformScene";
 
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
 /* Scene background gradients mapped to the Warm Sand identity */
 const SCENE_BACKGROUNDS: Record<string, string> = {
   business: "bg-gradient-to-br from-[#F8F7F3] via-[#F2EFE6] to-[#ECE6D8]",
@@ -33,18 +40,25 @@ export default function HomePage() {
   }, []);
 
   const handleSelectScene = useCallback((index: number) => {
-    const container = document.getElementById("experience-container");
-    if (!container) return;
-    const containerTop = container.offsetTop;
-    const containerHeight = container.offsetHeight;
-    const maxScroll = containerHeight - window.innerHeight;
-    const targetProgress = index / 5;
-    const targetY = containerTop + targetProgress * maxScroll;
-    window.scrollTo({ top: targetY, behavior: "smooth" });
+    if (typeof window === "undefined") return;
+    const st = ScrollTrigger.getById("experience-trigger");
+    if (st) {
+      // Settled timeline coordinates for the 6 scenes
+      const sceneProgresses = [0.03, 0.22, 0.41, 0.60, 0.79, 0.98];
+      const targetProgress = sceneProgresses[index] ?? index / 5;
+      const targetY = st.start + targetProgress * (st.end - st.start);
+      window.scrollTo({ top: targetY, behavior: "smooth" });
+    } else {
+      const container = document.getElementById("experience-container");
+      if (!container) return;
+      const targetProgress = index / 5;
+      const targetY = container.offsetTop + targetProgress * (container.offsetHeight - window.innerHeight);
+      window.scrollTo({ top: targetY, behavior: "smooth" });
+    }
   }, []);
 
   return (
-    <div className="relative bg-[#F8F7F3] text-[#2A2927] selection:bg-[#C69A4B] selection:text-white overflow-x-hidden">
+    <div className="relative bg-[#F8F7F3] text-[#2A2927] selection:bg-[#C69A4B] selection:text-white overflow-x-clip">
       {/* Persistent Navigation */}
       <ExperienceNav />
       <SceneNav

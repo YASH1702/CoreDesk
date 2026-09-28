@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useLayoutEffect, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SCENES } from "@/constants/motion";
@@ -46,27 +46,36 @@ export default function ScrollExperience({
     if (layers.length < 6) return;
 
     const ctx = gsap.context(() => {
-      // Set initial positions for all scenes
-      // Scene 0 is visible and settled
+      // 1. Initial settled positions for Scene 0
       gsap.set(layers[0], { opacity: 1, pointerEvents: "auto", zIndex: 10 });
-      gsap.set(layers[0].querySelectorAll(".scene-business-headline, .scene-business-label, .scene-business-subline, .scene-business-cta"), {
-        x: 0,
-        opacity: 1,
-      });
+      gsap.set(
+        layers[0].querySelectorAll(
+          ".scene-business-headline, .scene-business-label, .scene-business-subline, .scene-business-cta, .scene-business-scroll"
+        ),
+        {
+          x: 0,
+          opacity: 1,
+        }
+      );
       gsap.set(layers[0].querySelectorAll(".scene-business-panel"), {
         x: 0,
         scale: 1,
         opacity: 1,
       });
 
-      // Scenes 1 through 5 start hidden with entrance offsets
+      // 2. Scenes 1 through 5 start hidden with entrance offsets
       for (let i = 1; i < layers.length; i++) {
         const sceneId = SCENES[i].id;
         gsap.set(layers[i], { opacity: 0, pointerEvents: "none", zIndex: i + 10 });
-        gsap.set(layers[i].querySelectorAll(`.scene-${sceneId}-headline, .scene-${sceneId}-label, .scene-${sceneId}-subline, .scene-${sceneId}-cta`), {
-          x: -120,
-          opacity: 0,
-        });
+        gsap.set(
+          layers[i].querySelectorAll(
+            `.scene-${sceneId}-headline, .scene-${sceneId}-label, .scene-${sceneId}-subline, .scene-${sceneId}-cta`
+          ),
+          {
+            x: -120,
+            opacity: 0,
+          }
+        );
         gsap.set(layers[i].querySelectorAll(`.scene-${sceneId}-panel`), {
           x: 220,
           scale: 0.92,
@@ -78,26 +87,25 @@ export default function ScrollExperience({
         });
       }
 
-      // Master Timeline linked to ScrollTrigger with scrub
+      // 3. Master Timeline with ScrollTrigger Pinning
+      // Pinned stage element creates deterministic 4500px scroll scrub track
       const masterTl = gsap.timeline({
         scrollTrigger: {
+          id: "experience-trigger",
           trigger: container,
+          pin: stage,
           start: "top top",
-          end: "bottom bottom",
-          scrub: 0.6,
+          end: "+=4500",
+          scrub: 0.8,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
           onUpdate: (self) => {
             const p = self.progress;
-            // Map progress to active scene index (0 to 5)
-            // Each scene has roughly 1/6th of the track
             const currentIdx = Math.min(5, Math.floor(p * 5.99));
             onSceneChange(currentIdx, p);
           },
         },
       });
-
-      // Total timeline length = 15 units
-      // Each transition takes 1.6 units, each hold takes 1.4 units
-      // 5 transitions: 0->1, 1->2, 2->3, 3->4, 4->5
 
       const sceneTransitions = [
         { from: 0, to: 1, fromId: "business", toId: "customer" },
@@ -114,9 +122,11 @@ export default function ScrollExperience({
         const toLayer = layers[to];
         const dur = 1.6;
 
-        // 1. OUTGOING SCENE DISASSEMBLY (Horizontal Split)
+        // OUTGOING SCENE DISASSEMBLY (Horizontal Split)
         masterTl.to(
-          fromLayer.querySelectorAll(`.scene-${fromId}-headline, .scene-${fromId}-label, .scene-${fromId}-subline, .scene-${fromId}-cta`),
+          fromLayer.querySelectorAll(
+            `.scene-${fromId}-headline, .scene-${fromId}-label, .scene-${fromId}-subline, .scene-${fromId}-cta, .scene-${fromId}-scroll`
+          ),
           {
             x: -140,
             opacity: 0,
@@ -154,7 +164,7 @@ export default function ScrollExperience({
           timeCursor + dur * 0.3
         );
 
-        // 2. INCOMING SCENE ASSEMBLY
+        // INCOMING SCENE ASSEMBLY
         masterTl.set(
           toLayer,
           {
@@ -244,6 +254,15 @@ export default function ScrollExperience({
         // Advance cursor: transition duration + hold duration for this scene
         timeCursor += dur + 1.2;
       });
+
+      // Refresh ScrollTrigger to calculate accurate pin boundaries
+      const refreshTimeout = setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 100);
+
+      return () => {
+        clearTimeout(refreshTimeout);
+      };
     }, container);
 
     return () => ctx.revert();
@@ -262,17 +281,17 @@ export default function ScrollExperience({
     );
   }
 
-  // Full Cinematic Scroll Experience: Sticky Viewport Stage inside 600vh Track
+  // Full Cinematic Scroll Experience: Stage pinned by GSAP ScrollTrigger
   return (
     <div
       ref={containerRef}
       id="experience-container"
-      className="relative w-full h-[600vh]"
+      className="relative w-full min-h-screen"
     >
-      {/* Pinned Viewport Stage */}
+      {/* Viewport Stage pinned dynamically by ScrollTrigger */}
       <div
         ref={stageRef}
-        className="sticky top-0 w-full h-screen overflow-hidden bg-[#F8F7F3]"
+        className="w-full h-screen overflow-hidden bg-[#F8F7F3] relative"
       >
         {React.Children.map(children, (child, index) => {
           return (
@@ -282,7 +301,7 @@ export default function ScrollExperience({
                 sceneLayersRef.current[index] = el;
               }}
               data-scene-layer={index}
-              className="absolute inset-0 w-full h-full flex items-center justify-center transition-opacity"
+              className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none"
             >
               {child}
             </div>

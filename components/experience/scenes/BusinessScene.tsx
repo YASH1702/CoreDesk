@@ -120,6 +120,16 @@ export default function BusinessScene() {
           </div>
         </div>
       </div>
+
+      {/* Scroll Down Cue */}
+      <div className="scene-business-scroll absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[#8B857D] pointer-events-auto select-none z-10">
+        <span className="text-[10px] uppercase tracking-[0.25em] font-bold text-[#8B857D]">
+          Scroll to explore OS
+        </span>
+        <div className="w-5 h-8 rounded-full border-2 border-[#DDD6C9] flex items-start justify-center p-1">
+          <div className="w-1 h-2 rounded-full bg-[#C69A4B] animate-bounce" />
+        </div>
+      </div>
     </div>
   );
 }
