@@ -1,6 +1,5 @@
 import React from "react";
 import DashboardLayoutWrapper from "@/components/dashboard/DashboardLayoutWrapper";
-import Providers from "@/components/shared/Providers";
 import { getAdminDashboardStats } from "@/actions/dashboard";
 import { DollarSign, Calendar, Users, TrendingUp, Sparkles, CheckCircle2, ArrowRight } from "lucide-react";
 import Link from "next/link";
@@ -12,8 +11,7 @@ export default async function AdminDashboardPage() {
   const stats = res.stats;
 
   return (
-    <Providers>
-      <DashboardLayoutWrapper>
+    <DashboardLayoutWrapper>
         <div className="p-6 md:p-10 space-y-8">
           {/* Top Header */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-[#DDD6C9] dark:border-[#27314A] pb-6">
@@ -147,6 +145,5 @@ export default async function AdminDashboardPage() {
           </div>
         </div>
       </DashboardLayoutWrapper>
-    </Providers>
   );
 }

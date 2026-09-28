@@ -1,6 +1,5 @@
 import React from "react";
 import DashboardLayoutWrapper from "@/components/dashboard/DashboardLayoutWrapper";
-import Providers from "@/components/shared/Providers";
 import { prisma } from "@/lib/prisma";
 import { Calendar, Clock, User, CheckCircle2, Shield } from "lucide-react";
 
@@ -22,8 +21,7 @@ export default async function StaffAgendaPage() {
   });
 
   return (
-    <Providers>
-      <DashboardLayoutWrapper>
+    <DashboardLayoutWrapper>
         <div className="p-6 md:p-10 space-y-8">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-[#DDD6C9] pb-6">
             <div>
@@ -99,6 +97,5 @@ export default async function StaffAgendaPage() {
           </div>
         </div>
       </DashboardLayoutWrapper>
-    </Providers>
   );
 }

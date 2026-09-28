@@ -158,6 +158,7 @@ export default function BookingWizardPage() {
                 <DateTimeStep
                   key="step3"
                   staffId={bookingData.staffId}
+                  serviceId={bookingData.serviceId}
                   serviceDuration={bookingData.serviceDuration}
                   selectedDate={bookingData.date}
                   selectedTimeSlot={bookingData.timeSlot}

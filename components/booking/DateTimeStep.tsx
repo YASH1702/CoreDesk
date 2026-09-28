@@ -8,6 +8,7 @@ import { Clock, Calendar as CalendarIcon, ArrowRight, ArrowLeft } from "lucide-r
 interface DateTimeStepProps {
   staffId: string;
   serviceDuration: number;
+  serviceId?: string;
   selectedDate: string;
   selectedTimeSlot: string;
   onSelect: (dateStr: string, timeSlotStr: string) => void;
@@ -18,6 +19,7 @@ interface DateTimeStepProps {
 export default function DateTimeStep({
   staffId,
   serviceDuration,
+  serviceId,
   selectedDate,
   selectedTimeSlot,
   onSelect,
@@ -33,7 +35,7 @@ export default function DateTimeStep({
       if (!date) return;
       setLoadingSlots(true);
       try {
-        const res = await fetchAvailableTimeSlots(staffId, date, serviceDuration);
+        const res = await fetchAvailableTimeSlots(staffId, date, serviceDuration, serviceId);
         if (res.success && res.availableSlots) {
           setTimeSlots(res.availableSlots);
         } else {
