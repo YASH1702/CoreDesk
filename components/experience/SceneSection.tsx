@@ -10,17 +10,6 @@ interface SceneSectionProps {
   children: React.ReactNode;
 }
 
-/**
- * SceneSection — A simple wrapper for each scene in the cinematic experience.
- * 
- * Provides:
- * - data-scene-id attribute for GSAP ScrollTrigger targeting
- * - Full viewport height
- * - Background gradient
- * - Overflow hidden to prevent element leaks
- * 
- * Animation is handled entirely by the parent ScrollExperience component.
- */
 export function SceneSection({
   id,
   index,
@@ -29,12 +18,12 @@ export function SceneSection({
   children,
 }: SceneSectionProps) {
   return (
-    <section
+    <div
       data-scene-id={id}
       data-scene-index={index}
-      className={`relative min-h-screen w-full overflow-hidden ${background} ${className}`}
+      className={`w-full h-full min-h-screen flex items-center justify-center relative overflow-hidden ${background} ${className}`}
     >
       {children}
-    </section>
+    </div>
   );
 }

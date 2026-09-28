@@ -1,126 +1,166 @@
 "use client";
 
 import React from "react";
-import { SCENES } from "../../../constants/motion";
+import Link from "next/link";
+import { Check, Clock, Calendar as CalendarIcon, User, ShieldCheck, ArrowRight } from "lucide-react";
+import { SCENES } from "@/constants/motion";
 
 export default function CustomerScene() {
   const sceneData = SCENES.find((s) => s.id === "customer");
 
+  const steps = [
+    {
+      num: "01",
+      title: "Service Package",
+      detail: "Executive Strategy Audit · 60m",
+      price: "₹1,500",
+      icon: Clock,
+      done: true,
+    },
+    {
+      num: "02",
+      title: "Specialist",
+      detail: "Dr. Marcus Chen · Principal Lead",
+      price: "Selected",
+      icon: User,
+      done: true,
+    },
+    {
+      num: "03",
+      title: "Selected Slot",
+      detail: "Thursday, Oct 15 · 10:30 AM",
+      price: "Confirmed",
+      icon: CalendarIcon,
+      done: true,
+    },
+    {
+      num: "04",
+      title: "Instant Checkout",
+      detail: "Stripe Secured · Deposit Verified",
+      price: "Ready",
+      icon: ShieldCheck,
+      done: false,
+      active: true,
+    },
+  ];
+
   return (
-    <section className="w-full h-screen relative bg-scene-customer flex items-center justify-center overflow-hidden z-scene-bg">
-      <div className="max-w-7xl w-full mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center z-scene-content">
-        {/* Left Content */}
-        <div className="flex flex-col relative z-scene-typography">
-          {/* Label */}
-          <div 
-            className="scene-customer-label flex items-center gap-3 mb-8"
-            style={{ opacity: 0, transform: "translateX(-40px)" }}
-          >
-            <div className="w-8 h-[1px] bg-gold-primary"></div>
-            <span className="text-label-sm uppercase text-gold-primary tracking-widest font-bold">
+    <div className="w-full h-full min-h-screen flex items-center justify-center px-6 sm:px-12 lg:px-20 py-20 relative overflow-hidden">
+      <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center z-10">
+        {/* Left Editorial Typography */}
+        <div className="lg:col-span-6 flex flex-col items-start text-left">
+          {/* Category Label */}
+          <div className="scene-customer-label flex items-center gap-3 mb-6 sm:mb-8">
+            <div className="w-8 h-[1.5px] bg-[#C69A4B]" />
+            <span className="text-[11px] uppercase tracking-[0.25em] font-extrabold text-[#C69A4B]">
               {sceneData?.number} — {sceneData?.label}
             </span>
           </div>
 
-          {/* Headline */}
-          <h1 
-            className="scene-customer-headline text-display-xl text-charcoal-heading mb-6"
-            style={{ opacity: 0, transform: "translateX(-80px)" }}
-          >
-            BOOKING SHOULDN'T<br/>FEEL LIKE WORK.
+          {/* Primary Editorial Headline */}
+          <h1 className="scene-customer-headline text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-[#2A2927] leading-[1.08] mb-6 sm:mb-8 max-w-2xl">
+            BOOKING <br className="hidden sm:inline" />
+            SHOULDN'T FEEL <br className="hidden sm:inline" />
+            <span className="text-[#C69A4B]">LIKE WORK.</span>
           </h1>
 
-          {/* Subline */}
-          <p 
-            className="scene-customer-subline text-charcoal-body text-lg md:text-xl max-w-md leading-relaxed"
-            style={{ opacity: 0, transform: "translateY(20px)" }}
-          >
+          {/* Supporting Subline */}
+          <p className="scene-customer-subline text-base sm:text-lg lg:text-xl text-[#5D5A56] max-w-lg mb-8 sm:mb-10 leading-relaxed font-normal">
             {sceneData?.subline}
           </p>
+
+          {/* Interactive CTA */}
+          <div className="scene-customer-cta">
+            <Link
+              href="/book"
+              className="px-8 py-4 rounded-full bg-[#C69A4B] hover:bg-[#B7863D] text-white font-semibold text-sm shadow-[0_8px_25px_rgba(198,154,75,0.28)] transition-all duration-300 inline-flex items-center gap-2 group cursor-pointer"
+            >
+              <span>Test Customer Wizard</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
         </div>
 
-        {/* Right Content - Booking Flow */}
-        <div 
-          className="scene-customer-flow relative z-scene-ui h-[600px] flex items-center justify-center"
-          style={{ opacity: 0, transform: "translateX(200px)" }}
-        >
-          {/* Connection Line */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md h-[2px] bg-gold-primary/20 -z-10 hidden md:block"></div>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-full max-h-[500px] w-[2px] bg-gold-primary/20 -z-10 md:hidden"></div>
+        {/* Right Product UI Composition: Step Progression Journey */}
+        <div className="lg:col-span-6 relative w-full">
+          <div className="scene-customer-panel relative">
+            {/* Ambient Glow */}
+            <div className="absolute -inset-4 bg-gradient-to-br from-[#E8D7B2]/20 via-[#FFF8ED]/30 to-transparent rounded-[36px] blur-2xl -z-10" />
 
-          <div className="flex flex-col md:flex-row gap-6 relative">
-            {/* Step 1: Service */}
-            <div 
-              className="scene-customer-step-1 bg-white/80 backdrop-blur-xl border border-white/60 rounded-16 shadow-glass-card p-4 w-48 relative md:translate-y-12"
-              style={{ opacity: 0, transform: "translateX(50px)" }}
-            >
-              <div className="text-xs text-gold-primary font-bold mb-2">01 / SERVICE</div>
-              <div className="font-bold text-charcoal-heading text-sm mb-1">Signature Haircut</div>
-              <div className="flex justify-between text-xs text-charcoal-secondary">
-                <span>45 min</span>
-                <span>₹1,200</span>
-              </div>
-            </div>
-
-            {/* Step 2: Date */}
-            <div 
-              className="scene-customer-step-2 bg-white/80 backdrop-blur-xl border border-white/60 rounded-16 shadow-glass-card p-4 w-48 relative md:-translate-y-4"
-              style={{ opacity: 0, transform: "translateX(50px)" }}
-            >
-              <div className="text-xs text-gold-primary font-bold mb-2">02 / DATE</div>
-              <div className="grid grid-cols-4 gap-1 mb-1">
-                {[...Array(8)].map((_, i) => (
-                  <div key={i} className={`h-6 rounded flex items-center justify-center text-xs ${i === 4 ? 'bg-gold-primary text-white shadow-gold-btn' : 'bg-warm-sec text-charcoal-secondary'}`}>
-                    {12 + i}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Step 3: Staff */}
-            <div 
-              className="scene-customer-step-3 bg-white/80 backdrop-blur-xl border border-white/60 rounded-16 shadow-glass-card p-4 w-48 relative md:translate-y-8"
-              style={{ opacity: 0, transform: "translateX(50px)" }}
-            >
-              <div className="text-xs text-gold-primary font-bold mb-2">03 / STAFF</div>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gold-cream border border-gold-primary/30 flex items-center justify-center text-gold-primary font-bold">
-                  S
-                </div>
+            {/* Stacked Interactive Booking Flow Container */}
+            <div className="bg-[#FFFCF7]/95 backdrop-blur-2xl border border-[#DDD6C9] rounded-[28px] p-6 sm:p-8 shadow-[0_25px_70px_rgba(80,65,45,0.12)]">
+              {/* Header */}
+              <div className="flex items-center justify-between pb-4 mb-6 border-b border-[#ECE6D8]">
                 <div>
-                  <div className="font-bold text-charcoal-heading text-sm">Sarah M.</div>
-                  <div className="text-xs text-charcoal-secondary">Senior Stylist</div>
+                  <h3 className="text-base font-bold text-[#2A2927]">Client Self-Booking Portal</h3>
+                  <p className="text-xs text-[#8B857D] font-medium">Deterministic availability · No overlaps</p>
+                </div>
+                <div className="px-3 py-1 rounded-full bg-[#FFF8ED] border border-[#E8D7B2] text-[#C69A4B] text-[11px] font-bold">
+                  Step 4 of 4
                 </div>
               </div>
-            </div>
 
-            {/* Step 4: Time */}
-            <div 
-              className="scene-customer-step-4 bg-white/80 backdrop-blur-xl border border-white/60 rounded-16 shadow-glass-card p-4 w-48 relative md:-translate-y-8"
-              style={{ opacity: 0, transform: "translateX(50px)" }}
-            >
-              <div className="text-xs text-gold-primary font-bold mb-2">04 / TIME</div>
-              <div className="flex flex-wrap gap-2">
-                <div className="px-3 py-1.5 rounded-full bg-warm-sec text-xs text-charcoal-secondary">10:00 AM</div>
-                <div className="px-3 py-1.5 rounded-full bg-gold-primary text-white text-xs shadow-gold-btn">11:30 AM</div>
-                <div className="px-3 py-1.5 rounded-full bg-warm-sec text-xs text-charcoal-secondary">02:00 PM</div>
-              </div>
-            </div>
+              {/* Step Sequence Cards */}
+              <div className="space-y-3.5">
+                {steps.map((st, i) => {
+                  const IconComp = st.icon;
+                  return (
+                    <div
+                      key={st.num}
+                      className={`scene-customer-stagger p-4 rounded-2xl border transition-all duration-300 flex items-center justify-between gap-4 ${
+                        st.active
+                          ? "bg-white border-[#C69A4B] shadow-md ring-1 ring-[#C69A4B]/20"
+                          : "bg-white/80 border-[#ECE6D8] shadow-sm hover:border-[#DDD6C9]"
+                      }`}
+                    >
+                      <div className="flex items-center gap-3.5">
+                        <div
+                          className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-xs ${
+                            st.done
+                              ? "bg-[#5C9E6E]/15 text-[#5C9E6E]"
+                              : st.active
+                              ? "bg-[#C69A4B] text-white shadow-sm"
+                              : "bg-[#F2EFE6] text-[#8B857D]"
+                          }`}
+                        >
+                          {st.done ? <Check className="w-4 h-4" /> : <IconComp className="w-4 h-4" />}
+                        </div>
+                        <div>
+                          <div className="text-[11px] font-extrabold uppercase tracking-wider text-[#8B857D]">
+                            {st.num} / {st.title}
+                          </div>
+                          <div className="text-xs sm:text-sm font-bold text-[#2A2927] mt-0.5">
+                            {st.detail}
+                          </div>
+                        </div>
+                      </div>
 
-            {/* Step 5: Confirm */}
-            <div 
-              className="scene-customer-step-5 bg-white/90 backdrop-blur-xl border border-gold-primary/30 rounded-16 shadow-warm-md p-4 w-48 relative md:translate-y-4"
-              style={{ opacity: 0, transform: "translateX(50px)" }}
-            >
-              <div className="w-8 h-8 rounded-full bg-status-success/20 text-status-success flex items-center justify-center mb-2">
-                ✓
+                      <span
+                        className={`text-xs font-bold px-2.5 py-1 rounded-lg ${
+                          st.active
+                            ? "bg-[#FFF8ED] text-[#C69A4B] border border-[#E8D7B2]"
+                            : "text-[#5D5A56] bg-[#F8F7F3]"
+                        }`}
+                      >
+                        {st.price}
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
-              <div className="font-bold text-charcoal-heading text-sm mb-1">Confirmed!</div>
-              <div className="text-xs text-charcoal-secondary">See you on Oct 12</div>
+
+              {/* Confirmation Footer */}
+              <div className="scene-customer-stagger mt-6 pt-5 border-t border-[#ECE6D8] flex items-center justify-between">
+                <div className="flex items-center gap-2 text-xs text-[#5D5A56]">
+                  <Check className="w-4 h-4 text-[#5C9E6E]" />
+                  <span>Calendar invite + SMS reminder queued</span>
+                </div>
+                <span className="text-xs font-bold text-[#C69A4B]">100% Automated</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

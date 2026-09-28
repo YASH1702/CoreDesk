@@ -3,9 +3,12 @@
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
-export async function getAdminDashboardStats() {
+export async function getAdminDashboardStats(businessId?: string) {
   try {
-    const business = await prisma.business.findFirst();
+    const business = businessId
+      ? await prisma.business.findUnique({ where: { id: businessId } })
+      : await prisma.business.findFirst();
+
     if (!business) return { success: false, error: "No business found." };
 
     const totalAppointments = await prisma.appointment.count({
@@ -56,6 +59,7 @@ export async function getAdminDashboardStats() {
         recentAppointments,
         topServices,
         businessName: business.name,
+        businessSlug: business.slug,
       },
     };
   } catch (error: any) {
@@ -80,6 +84,7 @@ export async function updateAppointmentStatus(appointmentId: string, status: str
 
 export async function createOrUpdateService(data: {
   id?: string;
+  businessId?: string;
   title: string;
   description: string;
   category: string;
@@ -88,7 +93,10 @@ export async function createOrUpdateService(data: {
   bufferTime?: number;
 }) {
   try {
-    const business = await prisma.business.findFirst();
+    const business = data.businessId
+      ? await prisma.business.findUnique({ where: { id: data.businessId } })
+      : await prisma.business.findFirst();
+
     if (!business) return { success: false, error: "Business not found." };
 
     if (data.id) {

@@ -27,6 +27,7 @@ model User {
   reviews       Review[]
   notifications Notification[]
   blogs         Blog[]
+  memberships   BusinessMember[]
 }
 
 model Business {
@@ -55,6 +56,10 @@ model Business {
   faqs          FAQ[]
   blogs         Blog[]
   cmsSettings   Settings?
+  members       BusinessMember[]
+  businessHours BusinessHours[]
+  holidays      Holiday[]
+  inquiries     Inquiry[]
 }
 
 model Service {
@@ -280,3 +285,49 @@ model FAQ {
   answer     String
   order      Int      @default(0)
 }
+
+model BusinessMember {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  businessId String
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  role       String   @default("MEMBER") // OWNER, ADMIN, STAFF, MEMBER
+  createdAt  DateTime @default(now())
+
+  @@unique([userId, businessId])
+}
+
+model BusinessHours {
+  id         String   @id @default(cuid())
+  businessId String
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  dayOfWeek  Int      // 0 = Sunday, 1 = Monday, ... 6 = Saturday
+  openTime   String   // e.g. "09:00"
+  closeTime  String   // e.g. "18:00"
+  isOpen     Boolean  @default(true)
+
+  @@unique([businessId, dayOfWeek])
+}
+
+model Holiday {
+  id         String   @id @default(cuid())
+  businessId String
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  date       DateTime
+  title      String
+  createdAt  DateTime @default(now())
+}
+
+model Inquiry {
+  id         String   @id @default(cuid())
+  businessId String
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  name       String
+  email      String
+  phone      String?
+  message    String
+  status     String   @default("UNREAD") // UNREAD, CONTACTED, CLOSED
+  createdAt  DateTime @default(now())
+}
+

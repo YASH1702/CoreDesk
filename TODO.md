@@ -1,7 +1,7 @@
 # TODO.md — BusinessFlow Redesign Tracker
 
 > Last Updated: 2026-09-28
-> Status: **Phase 0 Complete → Phase 1 Ready**
+> Status: **Phases 0, 1, 2, 3 Complete; Phase 4 In Progress**
 
 ---
 
@@ -29,75 +29,106 @@
 
 ---
 
-## PHASE 1 — DESIGN + ARCHITECTURE FOUNDATION
+## PHASE 1 — DESIGN + ARCHITECTURE FOUNDATION ✅
 
 ### 1.1 New Dependencies
-- [ ] Install GSAP + ScrollTrigger
-- [ ] Install Three.js + React Three Fiber + @react-three/drei
-- [ ] Install bcryptjs (password hashing)
-- [ ] Install inngest (background jobs)
-- [ ] Remove framer-motion (after migration)
+- [x] Install GSAP + ScrollTrigger
+- [x] Install Three.js + React Three Fiber + @react-three/drei
+- [x] Install bcryptjs (password hashing)
+- [x] Install type definitions (@types/three, @types/bcryptjs)
 
 ### 1.2 Design Tokens
-- [ ] Extend tailwind.config.ts with motion tokens
-- [ ] Add animation duration tokens (fast/medium/slow/premium)
-- [ ] Add easing curve tokens
-- [ ] Add z-index scale for scene layering
-- [ ] Add breakpoint-aware motion distances
+- [x] Extend tailwind.config.ts with motion tokens
+- [x] Add animation duration tokens (fast/medium/slow/premium)
+- [x] Add easing curve tokens
+- [x] Add z-index scale for scene layering
+- [x] Add breakpoint-aware motion distances
 
 ### 1.3 Typography System
-- [ ] Define headline scale (editorial large)
-- [ ] Define body/metadata scale
-- [ ] Define uppercase label styles
-- [ ] Define monospace/system label styles
+- [x] Define headline scale (editorial large, text-display-xl, text-display-lg)
+- [x] Define body/metadata scale
+- [x] Define uppercase label styles (text-label-sm, text-label-xs)
 
 ### 1.4 Scroll Architecture
-- [ ] Create ScrollController component (GSAP ScrollTrigger)
-- [ ] Create SceneContainer component (full-viewport scenes)
-- [ ] Create SceneTransition component (composition transforms)
-- [ ] Define scroll-to-animation mapping for 6 scenes
-- [ ] Implement reverse scroll support
-- [ ] Implement scrub/progress synchronization
+- [x] Create ScrollExperience master scrubbed pinned timeline
+- [x] Create SceneSection full-height container
+- [x] Implement deterministic forward and reverse scroll transformations
+- [x] Synchronize progress and active scene calculation
 
 ### 1.5 Navigation
-- [ ] Create new persistent minimal Navbar
-- [ ] Implement category progress indicator (01-06)
-- [ ] Active category updates on scroll
-- [ ] Subtle progress bar
-- [ ] Mobile navigation adaptation
-
-### 1.6 Scene Background System
-- [ ] Create SceneBackground component
-- [ ] Define 6 distinct background environments
-- [ ] Implement background transition (slide/mask/parallax)
-
-### 1.7 Component Architecture
-- [ ] Create Experience (root cinematic container)
-- [ ] Create PageScene (reusable scene wrapper)
-- [ ] Create SceneTypography (animated headline/body)
-- [ ] Create ProductPanel (animated UI mockup container)
+- [x] Create persistent minimal ExperienceNav with brand mark and fast shortcuts
+- [x] Create SceneNav with 01-06 category indicators and active scene illumination
+- [x] Implement dynamic vertical progress track
+- [x] Support smooth jump navigation on click
 
 ---
 
-## PHASE 2 — CINEMATIC EXPERIENCE PROTOTYPE
+## PHASE 2 — CINEMATIC EXPERIENCE PROTOTYPE ✅
 
 ### 2.1 Page 01 — THE BUSINESS
-- [ ] Business environment composition
-- [ ] "YOUR BUSINESS, BEAUTIFULLY CONNECTED." headline
-- [ ] Service cards / booking CTA
-- [ ] Warm architectural background
-- [ ] Entry animation (elements from left/right)
+- [x] Business environment composition with Warm Sand architectural lighting
+- [x] "YOUR BUSINESS, BEAUTIFULLY CONNECTED." editorial headline
+- [x] Glass workspace preview with live metric panels (₹1,24,500 Revenue, 18 Confirmed Slots, 8 Staff)
+- [x] Action CTAs for live booking and sign-in
 
 ### 2.2 Page 02 — CUSTOMER EXPERIENCE
-- [ ] "BOOKING SHOULDN'T FEEL LIKE WORK." headline
-- [ ] Booking flow visualization (service → date → staff → time → confirm)
-- [ ] Calendar/time slot UI mockup
-- [ ] Customer-oriented background
-- [ ] Entry animation from Page 01 transition
+- [x] "BOOKING SHOULDN'T FEEL LIKE WORK." editorial headline
+- [x] 4-step self-booking progression journey UI (Package → Specialist → Slot → Checkout)
+- [x] Warm Sand luxury glass container styling
 
 ### 2.3 Page 01 → 02 Transition
-- [ ] Page 01 elements exit (horizontal movement)
-- [ ] Background transforms
+- [x] Page 01 elements disassemble horizontally (headline left, panel right)
+- [x] Background smoothly transforms from business to customer palette
+- [x] Page 02 elements assemble into place (headline from left, journey from right)
+- [x] Verified bidirectional scrub support
+
+---
+
+## PHASE 3 — EXPAND CINEMATIC EXPERIENCE ✅
+
+### 3.1 Page 03 — STAFF OPERATIONS
+- [x] "YOUR TEAM SEES THE OPERATION." headline
+- [x] Specialist Duty Schedule with active team members (Aarav, Maya, Rohan)
+- [x] Operational shift workload bar (09:00 - 17:00)
+
+### 3.2 Page 04 — BUSINESS CONTROL
+- [x] "EVERYTHING HAPPENING. ONE PLACE." headline
+- [x] 248 Bookings, ₹1,24,500 Revenue, 86 New Customers, 4.8 Rating metrics
+- [x] Weekly revenue volume bar chart and top services breakdown
+
+### 3.3 Page 05 — THE OPERATING SYSTEM
+- [x] "ONE SYSTEM. EVERY MOVING PART." headline
+- [x] 8 interconnected system modules (Business, Services, Customers, Staff, Bookings, Payments, Notifications, Analytics)
+- [x] Relational telemetry status and single source of truth badges
+
+### 3.4 Page 06 — FINAL PLATFORM / CTA
+- [x] "MORE THAN A WEBSITE. A BUSINESS THAT RUNS." editorial headline
+- [x] Centered minimalist conclusion of the product film
+- [x] Dual CTAs (Launch Live Experience / Sign In to Admin)
+
+---
+
+## PHASE 4 — PRODUCT APPLICATION (IN PROGRESS)
+
+### 4.1 Database Evolution
+- [x] Add BusinessMember model (User <-> Business multi-membership)
+- [x] Add BusinessHours model (business-level hours)
+- [x] Add Holiday model (closure dates)
+- [x] Add Inquiry model (structured inquiries)
+- [x] Synchronized schema to Supabase PostgreSQL via `npx prisma db push`
+
+### 4.2 Authentication & Security
+- [x] Add bcrypt password hashing and comparison in `lib/auth.ts`
+- [x] Hash passwords on registration in `actions/auth.ts`
+- [x] Create BusinessMember record upon business owner signup
+
+### 4.3 Multi-Business & Booking Architecture
+- [x] Remove hardcoded `prisma.business.findFirst()` in `actions/booking.ts`
+- [x] Connect `fetchAvailableTimeSlots` to deterministic conflict-checking logic
+- [x] Support optional `businessIdentifier` across all actions (`actions/dashboard.ts`, `actions/appointments.ts`, `actions/cms.ts`, `actions/services.ts`)
+- [x] Create public business website route `/business/[slug]` driven dynamically by database records
+- [ ] Multi-business dashboard switcher UI
+
 - [ ] Page 02 elements enter (horizontal movement)
 - [ ] Typography participates in transition
 - [ ] Product UI participates in transition

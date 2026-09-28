@@ -1,6 +1,7 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 
 export const authOptions: NextAuthOptions = {
@@ -28,19 +29,31 @@ export const authOptions: NextAuthOptions = {
         }
 
         const user = await prisma.user.findUnique({
-          where: { email: credentials.email },
+          where: { email: credentials.email.toLowerCase().trim() },
           include: {
             staffProfile: true,
+            memberships: {
+              include: { business: true },
+            },
           },
         });
 
         if (!user) {
-          throw new Error("Invalid credentials");
+          throw new Error("Invalid email or password");
         }
 
-        // For local development, check matching password or demo hash
-        if (user.password && user.password !== credentials.password) {
-          throw new Error("Invalid credentials");
+        // Validate password: support bcrypt hash with fallback for existing seeded test accounts
+        let isValid = false;
+        if (user.password) {
+          if (user.password.startsWith("$2a$") || user.password.startsWith("$2b$")) {
+            isValid = await bcrypt.compare(credentials.password, user.password);
+          } else {
+            isValid = user.password === credentials.password;
+          }
+        }
+
+        if (!isValid) {
+          throw new Error("Invalid email or password");
         }
 
         return {

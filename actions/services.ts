@@ -2,9 +2,14 @@
 
 import { prisma } from "@/lib/prisma";
 
-export async function getServicesCatalog() {
+export async function getServicesCatalog(businessIdentifier?: string) {
   try {
-    const business = await prisma.business.findFirst();
+    const business = businessIdentifier
+      ? await prisma.business.findFirst({
+          where: { OR: [{ id: businessIdentifier }, { slug: businessIdentifier }] },
+        })
+      : await prisma.business.findFirst();
+
     if (!business) return { success: false, services: [] };
 
     const services = await prisma.service.findMany({

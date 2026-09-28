@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { SceneSection } from "@/components/experience/SceneSection";
 import { SCENES } from "@/constants/motion";
 import ScrollExperience from "@/components/experience/ScrollExperience";
@@ -13,7 +13,7 @@ import { ControlScene } from "@/components/experience/scenes/ControlScene";
 import { SystemScene } from "@/components/experience/scenes/SystemScene";
 import { PlatformScene } from "@/components/experience/scenes/PlatformScene";
 
-/* Scene background gradients mapped to scene IDs */
+/* Scene background gradients mapped to the Warm Sand identity */
 const SCENE_BACKGROUNDS: Record<string, string> = {
   business: "bg-gradient-to-br from-[#F8F7F3] via-[#F2EFE6] to-[#ECE6D8]",
   customer: "bg-gradient-to-br from-[#FFFCF7] via-[#FFF8ED] to-[#F2EFE6]",
@@ -27,14 +27,37 @@ export default function HomePage() {
   const [activeScene, setActiveScene] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
 
+  const handleSceneChange = useCallback((sceneIndex: number, progress: number) => {
+    setActiveScene(sceneIndex);
+    setScrollProgress(progress);
+  }, []);
+
+  const handleSelectScene = useCallback((index: number) => {
+    const container = document.getElementById("experience-container");
+    if (!container) return;
+    const containerTop = container.offsetTop;
+    const containerHeight = container.offsetHeight;
+    const maxScroll = containerHeight - window.innerHeight;
+    const targetProgress = index / 5;
+    const targetY = containerTop + targetProgress * maxScroll;
+    window.scrollTo({ top: targetY, behavior: "smooth" });
+  }, []);
+
   return (
-    <div className="relative bg-[#F8F7F3] text-[#2A2927] selection:bg-[#C69A4B] selection:text-white">
+    <div className="relative bg-[#F8F7F3] text-[#2A2927] selection:bg-[#C69A4B] selection:text-white overflow-x-hidden">
       {/* Persistent Navigation */}
       <ExperienceNav />
-      <SceneNav activeScene={activeScene} progress={scrollProgress} />
+      <SceneNav
+        activeScene={activeScene}
+        progress={scrollProgress}
+        onSelectScene={handleSelectScene}
+      />
 
-      {/* Cinematic Scroll Experience */}
-      <ScrollExperience>
+      {/* Cinematic Pinned Scroll Experience */}
+      <ScrollExperience
+        activeScene={activeScene}
+        onSceneChange={handleSceneChange}
+      >
         {/* PAGE 01 — THE BUSINESS */}
         <SceneSection
           id={SCENES[0].id}
@@ -90,14 +113,17 @@ export default function HomePage() {
         </SceneSection>
       </ScrollExperience>
 
-      {/* Minimal Footer */}
-      <footer className="py-12 px-8 bg-[#F8F7F3] border-t border-[#ECE6D8]">
+      {/* Minimal Editorial Footer */}
+      <footer className="py-12 px-6 sm:px-12 bg-[#F8F7F3] border-t border-[#ECE6D8] relative z-20">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs uppercase text-[#8B857D] tracking-widest font-bold">
-            BusinessFlow
-          </p>
-          <p className="text-xs text-[#B8B2A8]">
-            &copy; {new Date().getFullYear()} BusinessFlow. All rights reserved.
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-extrabold tracking-tight text-[#2A2927]">
+              Business<span className="text-[#C69A4B]">Flow</span>
+            </span>
+            <span className="text-xs text-[#8B857D] font-mono">· OS Platform</span>
+          </div>
+          <p className="text-xs text-[#8B857D]">
+            &copy; {new Date().getFullYear()} BusinessFlow Technologies. Warm Sand & Executive Suite.
           </p>
         </div>
       </footer>

@@ -2,9 +2,12 @@
 
 import { prisma } from "@/lib/prisma";
 
-export async function getAppointmentsQueue() {
+export async function getAppointmentsQueue(businessId?: string) {
   try {
-    const business = await prisma.business.findFirst();
+    const business = businessId
+      ? await prisma.business.findUnique({ where: { id: businessId } })
+      : await prisma.business.findFirst();
+
     if (!business) return { success: false, appointments: [] };
 
     const appointments = await prisma.appointment.findMany({

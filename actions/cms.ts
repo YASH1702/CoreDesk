@@ -3,16 +3,26 @@
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
-export async function getCMSData() {
+export async function getCMSData(businessIdentifier?: string) {
   try {
-    const business = await prisma.business.findFirst({
-      include: {
-        services: { where: { isActive: true } },
-        testimonials: true,
-        faqs: { orderBy: { order: "asc" } },
-        cmsSettings: true,
-      },
-    });
+    const business = businessIdentifier
+      ? await prisma.business.findFirst({
+          where: { OR: [{ id: businessIdentifier }, { slug: businessIdentifier }] },
+          include: {
+            services: { where: { isActive: true } },
+            testimonials: true,
+            faqs: { orderBy: { order: "asc" } },
+            cmsSettings: true,
+          },
+        })
+      : await prisma.business.findFirst({
+          include: {
+            services: { where: { isActive: true } },
+            testimonials: true,
+            faqs: { orderBy: { order: "asc" } },
+            cmsSettings: true,
+          },
+        });
 
     return { success: true, data: business };
   } catch (error: any) {

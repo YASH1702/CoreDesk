@@ -1,105 +1,140 @@
 "use client";
 
-import { Calendar, TrendingUp, Users, Star } from "lucide-react";
+import React from "react";
+import Link from "next/link";
+import { Calendar, TrendingUp, Users, Star, ArrowRight, ShieldCheck } from "lucide-react";
+import { SCENES } from "@/constants/motion";
 
 export function ControlScene() {
+  const sceneData = SCENES.find((s) => s.id === "control");
+
+  const metrics = [
+    { label: "Total Bookings", value: "248", icon: Calendar, change: "+18%", color: "text-[#C69A4B] bg-[#FFF8ED]" },
+    { label: "Total Revenue", value: "₹1,24,500", icon: TrendingUp, change: "+32%", color: "text-[#5C9E6E] bg-[#F0FDF4]" },
+    { label: "New Customers", value: "86", icon: Users, change: "+14%", color: "text-[#2563EB] bg-[#EFF6FF]" },
+    { label: "Verified Rating", value: "4.8", icon: Star, change: "★ 98 reviews", color: "text-[#D89A2B] bg-[#FEFCE8]" },
+  ];
+
+  const days = [
+    { day: "Mon", height: "45%" },
+    { day: "Tue", height: "65%" },
+    { day: "Wed", height: "40%" },
+    { day: "Thu", height: "85%" },
+    { day: "Fri", height: "60%" },
+    { day: "Sat", height: "95%" },
+    { day: "Sun", height: "75%" },
+  ];
+
   return (
-    <div className="min-h-screen w-full flex items-center bg-gradient-to-br from-sand-200 to-sand-400 relative overflow-hidden text-charcoal-body">
-      {/* Container */}
-      <div className="max-w-7xl mx-auto w-full px-6 flex flex-col md:flex-row items-center justify-between gap-12 z-10">
-        
-        {/* Left: Text */}
-        <div className="w-full md:w-1/2 flex flex-col items-start">
-          <div className="scene-control-label text-sm font-semibold tracking-widest text-[#C69A4B] mb-6">
-            04 — CONTROL
+    <div className="w-full h-full min-h-screen flex items-center justify-center px-6 sm:px-12 lg:px-20 py-20 relative overflow-hidden">
+      <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center z-10">
+        {/* Left Editorial Typography */}
+        <div className="lg:col-span-6 flex flex-col items-start text-left">
+          {/* Category Label */}
+          <div className="scene-control-label flex items-center gap-3 mb-6 sm:mb-8">
+            <div className="w-8 h-[1.5px] bg-[#C69A4B]" />
+            <span className="text-[11px] uppercase tracking-[0.25em] font-extrabold text-[#C69A4B]">
+              {sceneData?.number} — {sceneData?.label}
+            </span>
           </div>
-          <h2 className="scene-control-headline text-5xl md:text-6xl font-bold leading-tight text-charcoal-heading mb-6">
-            EVERYTHING HAPPENING.<br />ONE PLACE.
-          </h2>
-          <p className="scene-control-subline text-lg text-charcoal-body/80 max-w-md">
-            Bookings, revenue, customer growth, service performance, and payment analytics — unified command.
+
+          {/* Primary Editorial Headline */}
+          <h1 className="scene-control-headline text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-[#2A2927] leading-[1.08] mb-6 sm:mb-8 max-w-2xl">
+            EVERYTHING <br className="hidden sm:inline" />
+            HAPPENING. <br className="hidden sm:inline" />
+            <span className="text-[#C69A4B]">ONE PLACE.</span>
+          </h1>
+
+          {/* Supporting Subline */}
+          <p className="scene-control-subline text-base sm:text-lg lg:text-xl text-[#5D5A56] max-w-lg mb-8 sm:mb-10 leading-relaxed font-normal">
+            {sceneData?.subline}
           </p>
+
+          {/* Interactive CTA */}
+          <div className="scene-control-cta">
+            <Link
+              href="/dashboard/admin"
+              className="px-8 py-4 rounded-full bg-[#C69A4B] hover:bg-[#B7863D] text-white font-semibold text-sm shadow-[0_8px_25px_rgba(198,154,75,0.28)] transition-all duration-300 inline-flex items-center gap-2 group cursor-pointer"
+            >
+              <ShieldCheck className="w-4 h-4" />
+              <span>Open Executive Console</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
         </div>
 
-        {/* Right: Panel */}
-        <div className="scene-control-panel w-full md:w-1/2 bg-white/80 backdrop-blur-lg border border-white/50 rounded-3xl p-8 shadow-2xl relative">
-          
-          {/* Top Row: Metric Cards */}
-          <div className="grid grid-cols-2 gap-4 mb-8">
-            <div className="scene-control-stagger bg-white rounded-xl p-5 shadow-sm border border-sand-200 flex flex-col">
-              <div className="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mb-3">
-                <Calendar className="w-4 h-4" />
-              </div>
-              <div className="text-2xl font-bold text-charcoal-heading">248</div>
-              <div className="text-sm text-charcoal-body/70">Bookings</div>
-            </div>
-            <div className="scene-control-stagger bg-white rounded-xl p-5 shadow-sm border border-sand-200 flex flex-col">
-              <div className="w-8 h-8 rounded-full bg-green-50 text-green-600 flex items-center justify-center mb-3">
-                <TrendingUp className="w-4 h-4" />
-              </div>
-              <div className="text-2xl font-bold text-charcoal-heading">₹1,24,500</div>
-              <div className="text-sm text-charcoal-body/70">Revenue</div>
-            </div>
-            <div className="scene-control-stagger bg-white rounded-xl p-5 shadow-sm border border-sand-200 flex flex-col">
-              <div className="w-8 h-8 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center mb-3">
-                <Users className="w-4 h-4" />
-              </div>
-              <div className="text-2xl font-bold text-charcoal-heading">86</div>
-              <div className="text-sm text-charcoal-body/70">New Customers</div>
-            </div>
-            <div className="scene-control-stagger bg-white rounded-xl p-5 shadow-sm border border-sand-200 flex flex-col">
-              <div className="w-8 h-8 rounded-full bg-yellow-50 text-yellow-600 flex items-center justify-center mb-3">
-                <Star className="w-4 h-4" />
-              </div>
-              <div className="text-2xl font-bold text-charcoal-heading">4.8</div>
-              <div className="text-sm text-charcoal-body/70">Rating</div>
-            </div>
-          </div>
+        {/* Right Product UI Composition: Executive Analytics Suite */}
+        <div className="lg:col-span-6 relative w-full">
+          <div className="scene-control-panel relative">
+            {/* Ambient Glow */}
+            <div className="absolute -inset-4 bg-gradient-to-br from-[#D9C7A0]/20 via-[#ECE6D8]/30 to-transparent rounded-[36px] blur-2xl -z-10" />
 
-          {/* Revenue Chart Placeholder */}
-          <div className="scene-control-stagger bg-white rounded-xl p-6 shadow-sm border border-sand-200 mb-6">
-            <div className="text-sm font-semibold mb-4 text-charcoal-heading">Weekly Revenue</div>
-            <div className="h-32 w-full flex items-end justify-between gap-2 relative">
-              {/* Grid Lines */}
-              <div className="absolute inset-0 flex flex-col justify-between pointer-events-none">
-                <div className="w-full border-t border-sand-200/50 h-0"></div>
-                <div className="w-full border-t border-sand-200/50 h-0"></div>
-                <div className="w-full border-t border-sand-200/50 h-0"></div>
-                <div className="w-full border-t border-sand-200/50 h-0"></div>
+            {/* Main Glass Control Center Card */}
+            <div className="bg-[#FFFCF7]/95 backdrop-blur-2xl border border-[#DDD6C9] rounded-[28px] p-6 sm:p-8 shadow-[0_25px_70px_rgba(80,65,45,0.12)]">
+              {/* Header */}
+              <div className="flex items-center justify-between pb-4 mb-6 border-b border-[#ECE6D8]">
+                <div>
+                  <h3 className="text-base font-bold text-[#2A2927]">Executive Revenue & Flow Analytics</h3>
+                  <p className="text-xs text-[#8B857D] font-medium">Real-time enterprise metrics & CRM telemetry</p>
+                </div>
+                <span className="text-xs font-bold text-[#C69A4B] bg-[#FFF8ED] border border-[#E8D7B2] px-3 py-1 rounded-full">
+                  Live Feed
+                </span>
               </div>
-              {/* Bars */}
-              <div className="w-full bg-gradient-to-t from-[#C69A4B] to-[#E3BE79] rounded-t-sm h-[40%] z-10"></div>
-              <div className="w-full bg-gradient-to-t from-[#C69A4B] to-[#E3BE79] rounded-t-sm h-[60%] z-10"></div>
-              <div className="w-full bg-gradient-to-t from-[#C69A4B] to-[#E3BE79] rounded-t-sm h-[30%] z-10"></div>
-              <div className="w-full bg-gradient-to-t from-[#C69A4B] to-[#E3BE79] rounded-t-sm h-[80%] z-10"></div>
-              <div className="w-full bg-gradient-to-t from-[#C69A4B] to-[#E3BE79] rounded-t-sm h-[50%] z-10"></div>
-              <div className="w-full bg-gradient-to-t from-[#C69A4B] to-[#E3BE79] rounded-t-sm h-[90%] z-10"></div>
-              <div className="w-full bg-gradient-to-t from-[#C69A4B] to-[#E3BE79] rounded-t-sm h-[100%] z-10"></div>
-            </div>
-            <div className="flex justify-between mt-2 text-[10px] text-charcoal-body/50 px-1">
-              <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
-            </div>
-          </div>
 
-          {/* Top Services Mini-List */}
-          <div className="scene-control-stagger">
-            <div className="text-sm font-semibold mb-3 text-charcoal-heading">Top Services</div>
-            <div className="flex flex-col gap-2">
-              <div className="flex justify-between items-center text-sm border-b border-sand-200 pb-2">
-                <span>Premium Consultation</span>
-                <span className="font-semibold">₹45,000</span>
+              {/* 4 Metric Cards Grid */}
+              <div className="grid grid-cols-2 gap-3.5 mb-6">
+                {metrics.map((m) => {
+                  const IconComp = m.icon;
+                  return (
+                    <div
+                      key={m.label}
+                      className="scene-control-stagger bg-white rounded-2xl p-4 border border-[#ECE6D8] shadow-sm"
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <div className={`w-8 h-8 rounded-xl flex items-center justify-center ${m.color}`}>
+                          <IconComp className="w-4 h-4" />
+                        </div>
+                        <span className="text-[10px] font-bold text-[#5C9E6E]">{m.change}</span>
+                      </div>
+                      <div className="text-xl sm:text-2xl font-extrabold text-[#2A2927]">{m.value}</div>
+                      <div className="text-xs text-[#8B857D] font-medium mt-0.5">{m.label}</div>
+                    </div>
+                  );
+                })}
               </div>
-              <div className="flex justify-between items-center text-sm border-b border-sand-200 pb-2">
-                <span>Standard Review</span>
-                <span className="font-semibold">₹32,000</span>
+
+              {/* Weekly Performance Bar Chart */}
+              <div className="scene-control-stagger bg-white rounded-2xl p-5 border border-[#ECE6D8] shadow-sm mb-4">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-xs font-bold text-[#2A2927]">Weekly Booking Volume</span>
+                  <span className="text-xs text-[#C69A4B] font-semibold">Peak: Sat (₹24.8k)</span>
+                </div>
+
+                <div className="h-28 w-full flex items-end justify-between gap-3 px-2 pt-2 border-b border-[#ECE6D8]">
+                  {days.map((d) => (
+                    <div key={d.day} className="flex-1 flex flex-col items-center gap-1.5 h-full justify-end group">
+                      <div
+                        style={{ height: d.height }}
+                        className="w-full max-w-[28px] bg-gradient-to-t from-[#B7863D] to-[#C69A4B] rounded-t-lg transition-all duration-300 group-hover:from-[#C69A4B] group-hover:to-[#E8D7B2]"
+                      />
+                      <span className="text-[10px] font-bold text-[#8B857D]">{d.day}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div className="flex justify-between items-center text-sm">
-                <span>Initial Assessment</span>
-                <span className="font-semibold">₹18,500</span>
+
+              {/* Top Services Breakdown */}
+              <div className="scene-control-stagger flex items-center justify-between text-xs text-[#5D5A56] px-1 pt-1">
+                <span className="font-semibold">Top Performing:</span>
+                <span className="text-[#2A2927] font-bold">Executive Audit (42%)</span>
+                <span>·</span>
+                <span className="text-[#2A2927] font-bold">Tech Blueprint (35%)</span>
+                <span>·</span>
+                <span className="text-[#2A2927] font-bold">Consult (23%)</span>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
