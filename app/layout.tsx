@@ -3,8 +3,8 @@ import "./globals.css";
 import Providers from "@/components/shared/Providers";
 
 export const metadata: Metadata = {
-  title: "CoreDesk — Warm Sand & Executive Dark Business & Appointment Platform",
-  description: "Enterprise appointment management and website engine styled with an executive, luxury-inspired design system.",
+  title: "BusinessFlow — Premium Business Operating System",
+  description: "The complete operating system for service-based businesses. Bookings, services, staff, customers, payments, and analytics — beautifully connected.",
 };
 
 export default function RootLayout({
