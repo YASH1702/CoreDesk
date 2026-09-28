@@ -4,12 +4,16 @@ import React from "react";
 import Link from "next/link";
 import { Sparkles, ArrowRight, TrendingUp, Calendar, Users, ShieldCheck } from "lucide-react";
 import { SCENES } from "@/constants/motion";
+import AmbientSpatialCanvas from "../AmbientSpatialCanvas";
 
 export default function BusinessScene() {
   const sceneData = SCENES.find((s) => s.id === "business");
 
   return (
     <div className="w-full h-full min-h-screen flex items-center justify-center px-6 sm:px-12 lg:px-20 py-20 relative overflow-hidden">
+      {/* 3D Selective Spatial Canvas Background */}
+      <AmbientSpatialCanvas />
+
       <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center z-10">
         {/* Left Editorial Typography */}
         <div className="lg:col-span-7 flex flex-col items-start text-left">

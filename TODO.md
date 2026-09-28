@@ -151,3 +151,19 @@
 - [x] Set explicit `"build": "prisma generate && next build"` in package.json
 - [x] Replaced `useLayoutEffect` with `useEffect` in all client navigation components
 - [x] Synchronized local repository with remote GitHub (`main` -> `origin/main`)
+
+---
+
+## PHASE 6 — 3D SELECTIVE SPATIAL CANVAS ✅
+
+- [x] Created `AmbientSpatialCanvas.tsx` using Three.js with pure client lifecycle and SSR safety
+- [x] Implemented luxury Warm Sand crystalline facets (translucent glass polyhedrons with champagne gold wireframe cages)
+- [x] Created precision horology orbital astrolabe rings (`#C69A4B`)
+- [x] Added 180 floating warm-gold dust stardust particles with gentle sinusoidal drift and looped boundary reset
+- [x] Integrated fluid pointer parallax with lerp damping for camera and spatial group tilt
+- [x] Added tab visibility change detection (pauses RAF loop when tab is hidden to save 0% CPU)
+- [x] Added `prefers-reduced-motion` detection and graceful fallback
+- [x] Clean GPU memory and resource disposal on unmount (geometries, materials, renderer context loss)
+- [x] Embedded `<AmbientSpatialCanvas />` into `BusinessScene.tsx` behind editorial typography and metric card
+- [x] Verified zero TypeScript errors and successful production build across all routes
+
