@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
+import InquiryForm from "@/components/business/InquiryForm";
 import {
   Calendar,
   Clock,
@@ -198,6 +199,16 @@ export default async function PublicBusinessPage({ params }: BusinessPageProps) 
           </div>
         </section>
       )}
+
+      {/* Client Inquiry Section */}
+      <section className="py-20 px-6 sm:px-12 bg-white/60 border-t border-[#ECE6D8]">
+        <div className="max-w-3xl mx-auto">
+          <InquiryForm
+            businessSlugOrId={business.slug}
+            businessName={business.name}
+          />
+        </div>
+      </section>
 
       {/* Contact & Location Footer Banner */}
       <section className="py-16 px-6 sm:px-12 bg-[#F2EFE6] border-t border-[#DDD6C9]">
