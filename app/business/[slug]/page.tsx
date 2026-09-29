@@ -82,7 +82,7 @@ export default async function PublicBusinessPage({ params }: BusinessPageProps) 
 
           <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
             <Link
-              href={`/book`}
+              href={`/book/${business.slug}`}
               className="px-8 py-4 rounded-full bg-[#C69A4B] hover:bg-[#B7863D] text-white font-semibold text-sm shadow-[0_8px_25px_rgba(198,154,75,0.28)] transition-all flex items-center gap-2 group cursor-pointer"
             >
               <Calendar className="w-4 h-4" />
@@ -158,7 +158,7 @@ export default async function PublicBusinessPage({ params }: BusinessPageProps) 
                     ${svc.price.toFixed(2)}
                   </span>
                   <Link
-                    href={`/book`}
+                    href={`/book/${business.slug}?serviceId=${svc.id}`}
                     className="px-4 py-2 rounded-xl bg-[#C69A4B] hover:bg-[#B7863D] text-white text-xs font-bold shadow-sm transition-all"
                   >
                     Select & Book

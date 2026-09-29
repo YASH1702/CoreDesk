@@ -26,6 +26,7 @@ import {
   ExternalLink,
   MessageSquareQuote,
   Check,
+  BarChart3,
 } from "lucide-react";
 import { getUserBusinesses, createNewBusiness } from "@/actions/dashboard";
 
@@ -86,6 +87,7 @@ export default function DashboardLayoutWrapper({ children }: { children: React.R
     { label: "Services Catalog", href: "/dashboard/admin/services", icon: Layers },
     { label: "CRM Customers", href: "/dashboard/admin/customers", icon: UserCheck },
     { label: "Billing & Invoices", href: "/dashboard/admin/invoices", icon: CreditCard },
+    { label: "Analytics", href: "/dashboard/admin/analytics", icon: BarChart3 },
     { label: "Team Specialists", href: "/dashboard/admin/team", icon: Users },
     { label: "Client Inquiries", href: "/dashboard/admin/inquiries", icon: MessageSquareQuote },
     { label: "No-Code CMS", href: "/dashboard/admin/cms", icon: Layout },
