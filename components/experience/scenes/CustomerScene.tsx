@@ -45,8 +45,8 @@ export default function CustomerScene() {
   ];
 
   return (
-    <div className="w-full h-full min-h-screen flex items-center justify-center px-6 sm:px-12 lg:px-20 py-20 relative overflow-hidden">
-      <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center z-10">
+    <div className="w-full h-full min-h-screen flex items-center justify-center px-6 sm:px-12 lg:px-16 py-20 relative overflow-hidden">
+      <div className="max-w-6xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center z-10 lg:pr-20">
         {/* Left Editorial Typography */}
         <div className="lg:col-span-6 flex flex-col items-start text-left">
           {/* Category Label */}

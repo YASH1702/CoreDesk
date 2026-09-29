@@ -9,9 +9,8 @@ export function PlatformScene() {
   const sceneData = SCENES.find((s) => s.id === "platform");
 
   return (
-    <div className="w-full h-full min-h-screen flex items-center justify-center px-6 sm:px-12 lg:px-20 py-24 relative overflow-hidden text-center">
-      {/* Subtle Atmospheric Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#F8F7F3] via-[#FFFDF9] to-[#F2EFE6] -z-10" />
+    <div className="w-full h-full min-h-screen flex items-center justify-center px-6 sm:px-12 lg:px-20 py-24 relative overflow-hidden text-center bg-transparent">
+      {/* Subtle Atmospheric Radial Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-gradient-to-tr from-[#C69A4B]/10 via-[#E8D7B2]/15 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
 
       {/* Decorative Minimal Line */}

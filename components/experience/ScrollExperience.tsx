@@ -3,10 +3,12 @@
 import React, { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { SCENES } from "@/constants/motion";
+import AmbientSpatialCanvas from "./AmbientSpatialCanvas";
 
 if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 }
 
 interface ScrollExperienceProps {
@@ -22,6 +24,7 @@ export default function ScrollExperience({
 }: ScrollExperienceProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+  const stageBgRef = useRef<HTMLDivElement>(null);
   const sceneLayersRef = useRef<(HTMLDivElement | null)[]>([]);
   const [reducedMotion, setReducedMotion] = useState(false);
 
@@ -40,63 +43,73 @@ export default function ScrollExperience({
 
     const container = containerRef.current;
     const stage = stageRef.current;
+    const stageBg = stageBgRef.current;
     if (!container || !stage) return;
 
     const layers = sceneLayersRef.current.filter(Boolean) as HTMLDivElement[];
     if (layers.length < 6) return;
 
-    const ctx = gsap.context(() => {
-      // 1. Initial settled positions for Scene 0
-      gsap.set(layers[0], { opacity: 1, pointerEvents: "auto", zIndex: 10 });
-      gsap.set(
-        layers[0].querySelectorAll(
-          ".scene-business-headline, .scene-business-label, .scene-business-subline, .scene-business-cta, .scene-business-scroll"
-        ),
-        {
-          x: 0,
-          opacity: 1,
-        }
-      );
-      gsap.set(layers[0].querySelectorAll(".scene-business-panel"), {
-        x: 0,
-        scale: 1,
-        opacity: 1,
-      });
+    // Safe selector helper to prevent empty NodeList warnings in GSAP
+    const q = (el: HTMLElement, selector: string) => {
+      const found = el.querySelectorAll(selector);
+      return found.length > 0 ? found : null;
+    };
 
-      // 2. Scenes 1 through 5 start hidden with entrance offsets
+    const ctx = gsap.context(() => {
+      // Background colors representing the Warm Sand identity progression
+      const bgColors = [
+        "#F8F7F3", // 0: Business (Ivory Sand)
+        "#FFFDF8", // 1: Customer (Luminous Champagne)
+        "#F5EFE3", // 2: Staff (Focused Studio Sand)
+        "#EFE7D8", // 3: Control (Executive Rich Sand)
+        "#F5EFE5", // 4: System (Relational Cream)
+        "#F8F7F3", // 5: Platform (Expansive Warm White)
+      ];
+
+      // 1. Initial State: Scene 0 settled and interactive
+      gsap.set(layers[0], { opacity: 1, pointerEvents: "auto", zIndex: 20 });
+      const s0Head = q(layers[0], ".scene-business-headline, .scene-business-label, .scene-business-subline, .scene-business-cta");
+      if (s0Head) gsap.set(s0Head, { x: 0, opacity: 1 });
+      const s0Panel = q(layers[0], ".scene-business-panel");
+      if (s0Panel) gsap.set(s0Panel, { x: 0, scale: 1, opacity: 1 });
+      const s0Scroll = q(layers[0], ".scene-business-scroll");
+      if (s0Scroll) gsap.set(s0Scroll, { opacity: 1, y: 0 });
+
+      // 2. Initial State: Scenes 1 through 5 hidden with entrance offsets
       for (let i = 1; i < layers.length; i++) {
         const sceneId = SCENES[i].id;
-        gsap.set(layers[i], { opacity: 0, pointerEvents: "none", zIndex: i + 10 });
-        gsap.set(
-          layers[i].querySelectorAll(
-            `.scene-${sceneId}-headline, .scene-${sceneId}-label, .scene-${sceneId}-subline, .scene-${sceneId}-cta`
-          ),
-          {
-            x: -120,
+        gsap.set(layers[i], { opacity: 0, pointerEvents: "none", zIndex: 10 });
+
+        const incomingHead = q(layers[i], `.scene-${sceneId}-headline, .scene-${sceneId}-label, .scene-${sceneId}-subline, .scene-${sceneId}-cta`);
+        if (incomingHead) {
+          gsap.set(incomingHead, {
+            x: sceneId === "platform" ? 0 : -140,
+            y: sceneId === "platform" ? 50 : 0,
             opacity: 0,
-          }
-        );
-        gsap.set(layers[i].querySelectorAll(`.scene-${sceneId}-panel`), {
-          x: 220,
-          scale: 0.92,
-          opacity: 0,
-        });
-        gsap.set(layers[i].querySelectorAll(`.scene-${sceneId}-stagger`), {
-          y: 30,
-          opacity: 0,
-        });
+          });
+        }
+
+        const incomingPanel = q(layers[i], `.scene-${sceneId}-panel`);
+        if (incomingPanel) {
+          gsap.set(incomingPanel, { x: 180, scale: 0.92, opacity: 0 });
+        }
+
+        const incomingStagger = q(layers[i], `.scene-${sceneId}-stagger`);
+        if (incomingStagger) {
+          gsap.set(incomingStagger, { y: 25, opacity: 0 });
+        }
       }
 
       // 3. Master Timeline with ScrollTrigger Pinning
-      // Pinned stage element creates deterministic 4500px scroll scrub track
+      // Responsive 2800px scrub track for immediate, tactile responsiveness
       const masterTl = gsap.timeline({
         scrollTrigger: {
           id: "experience-trigger",
           trigger: container,
           pin: stage,
           start: "top top",
-          end: "+=4500",
-          scrub: 0.8,
+          end: "+=2800",
+          scrub: 0.5,
           anticipatePin: 1,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
@@ -115,147 +128,184 @@ export default function ScrollExperience({
         { from: 4, to: 5, fromId: "system", toId: "platform" },
       ];
 
-      let timeCursor = 1.0; // Initial hold for Scene 0
+      // Quick start: animation begins within first 40px of scrolling
+      let timeCursor = 0.2;
+      const dur = 1.3;
 
       sceneTransitions.forEach(({ from, to, fromId, toId }) => {
         const fromLayer = layers[from];
         const toLayer = layers[to];
-        const dur = 1.6;
+
+        // Background color transition
+        if (stageBg) {
+          masterTl.to(
+            stageBg,
+            {
+              backgroundColor: bgColors[to],
+              duration: dur * 0.9,
+              ease: "power1.inOut",
+            },
+            timeCursor
+          );
+        }
 
         // OUTGOING SCENE DISASSEMBLY (Horizontal Split)
-        masterTl.to(
-          fromLayer.querySelectorAll(
-            `.scene-${fromId}-headline, .scene-${fromId}-label, .scene-${fromId}-subline, .scene-${fromId}-cta, .scene-${fromId}-scroll`
-          ),
-          {
-            x: -140,
-            opacity: 0,
-            duration: dur * 0.8,
-            ease: "power2.in",
-          },
-          timeCursor
-        );
+        const fromHead = q(fromLayer, `.scene-${fromId}-headline, .scene-${fromId}-label, .scene-${fromId}-subline, .scene-${fromId}-cta`);
+        if (fromHead) {
+          masterTl.to(
+            fromHead,
+            {
+              x: fromId === "platform" ? 0 : -150,
+              y: fromId === "platform" ? -50 : 0,
+              opacity: 0,
+              duration: dur * 0.75,
+              ease: "power2.in",
+            },
+            timeCursor
+          );
+        }
 
-        masterTl.to(
-          fromLayer.querySelectorAll(`.scene-${fromId}-panel`),
-          {
-            x: 240,
-            scale: 0.88,
-            opacity: 0,
-            duration: dur * 0.8,
-            ease: "power2.in",
-          },
-          timeCursor
-        );
+        const fromScroll = q(fromLayer, `.scene-${fromId}-scroll`);
+        if (fromScroll) {
+          masterTl.to(fromScroll, { opacity: 0, duration: dur * 0.4 }, timeCursor);
+        }
 
+        const fromPanel = q(fromLayer, `.scene-${fromId}-panel`);
+        if (fromPanel) {
+          masterTl.to(
+            fromPanel,
+            {
+              x: 180,
+              scale: 0.90,
+              opacity: 0,
+              duration: dur * 0.75,
+              ease: "power2.in",
+            },
+            timeCursor
+          );
+        }
+
+        // Cross-fade opacity between layers
         masterTl.to(
           fromLayer,
           {
             opacity: 0,
             duration: dur * 0.5,
             ease: "power1.inOut",
-            onComplete: () => {
-              fromLayer.style.pointerEvents = "none";
-            },
-            onReverseComplete: () => {
-              fromLayer.style.pointerEvents = "auto";
-            },
           },
-          timeCursor + dur * 0.3
+          timeCursor + dur * 0.25
         );
 
-        // INCOMING SCENE ASSEMBLY
-        masterTl.set(
-          toLayer,
-          {
-            pointerEvents: "auto",
-          },
-          timeCursor + dur * 0.2
-        );
+        masterTl.set(fromLayer, { pointerEvents: "none", zIndex: 10 }, timeCursor + dur * 0.5);
+
+        // INCOMING SCENE ASSEMBLY (Horizontal Convergence)
+        masterTl.set(toLayer, { pointerEvents: "auto", zIndex: 20 }, timeCursor + dur * 0.2);
 
         masterTl.to(
           toLayer,
           {
             opacity: 1,
-            duration: dur * 0.6,
+            duration: dur * 0.55,
             ease: "power1.inOut",
           },
           timeCursor + dur * 0.2
         );
 
-        masterTl.to(
-          toLayer.querySelectorAll(`.scene-${toId}-label`),
-          {
-            x: 0,
-            opacity: 1,
-            duration: dur * 0.7,
-            ease: "power3.out",
-          },
-          timeCursor + dur * 0.3
-        );
+        const toLabel = q(toLayer, `.scene-${toId}-label`);
+        if (toLabel) {
+          masterTl.to(
+            toLabel,
+            {
+              x: 0,
+              y: 0,
+              opacity: 1,
+              duration: dur * 0.6,
+              ease: "power3.out",
+            },
+            timeCursor + dur * 0.3
+          );
+        }
 
-        masterTl.to(
-          toLayer.querySelectorAll(`.scene-${toId}-headline`),
-          {
-            x: 0,
-            opacity: 1,
-            duration: dur * 0.8,
-            ease: "power3.out",
-          },
-          timeCursor + dur * 0.35
-        );
+        const toHeadline = q(toLayer, `.scene-${toId}-headline`);
+        if (toHeadline) {
+          masterTl.to(
+            toHeadline,
+            {
+              x: 0,
+              y: 0,
+              opacity: 1,
+              duration: dur * 0.7,
+              ease: "power3.out",
+            },
+            timeCursor + dur * 0.35
+          );
+        }
 
-        masterTl.to(
-          toLayer.querySelectorAll(`.scene-${toId}-subline`),
-          {
-            x: 0,
-            opacity: 1,
-            duration: dur * 0.8,
-            ease: "power3.out",
-          },
-          timeCursor + dur * 0.4
-        );
+        const toSubline = q(toLayer, `.scene-${toId}-subline`);
+        if (toSubline) {
+          masterTl.to(
+            toSubline,
+            {
+              x: 0,
+              y: 0,
+              opacity: 1,
+              duration: dur * 0.7,
+              ease: "power3.out",
+            },
+            timeCursor + dur * 0.4
+          );
+        }
 
-        masterTl.to(
-          toLayer.querySelectorAll(`.scene-${toId}-cta`),
-          {
-            x: 0,
-            opacity: 1,
-            duration: dur * 0.7,
-            ease: "power3.out",
-          },
-          timeCursor + dur * 0.45
-        );
+        const toCta = q(toLayer, `.scene-${toId}-cta`);
+        if (toCta) {
+          masterTl.to(
+            toCta,
+            {
+              x: 0,
+              y: 0,
+              opacity: 1,
+              duration: dur * 0.65,
+              ease: "power3.out",
+            },
+            timeCursor + dur * 0.45
+          );
+        }
 
-        masterTl.to(
-          toLayer.querySelectorAll(`.scene-${toId}-panel`),
-          {
-            x: 0,
-            scale: 1,
-            opacity: 1,
-            duration: dur * 0.85,
-            ease: "power3.out",
-          },
-          timeCursor + dur * 0.35
-        );
+        const toPanel = q(toLayer, `.scene-${toId}-panel`);
+        if (toPanel) {
+          masterTl.to(
+            toPanel,
+            {
+              x: 0,
+              scale: 1,
+              opacity: 1,
+              duration: dur * 0.75,
+              ease: "power3.out",
+            },
+            timeCursor + dur * 0.35
+          );
+        }
 
-        masterTl.to(
-          toLayer.querySelectorAll(`.scene-${toId}-stagger`),
-          {
-            y: 0,
-            opacity: 1,
-            stagger: 0.08,
-            duration: dur * 0.7,
-            ease: "power2.out",
-          },
-          timeCursor + dur * 0.45
-        );
+        const toStagger = q(toLayer, `.scene-${toId}-stagger`);
+        if (toStagger) {
+          masterTl.to(
+            toStagger,
+            {
+              y: 0,
+              opacity: 1,
+              stagger: 0.06,
+              duration: dur * 0.6,
+              ease: "power2.out",
+            },
+            timeCursor + dur * 0.4
+          );
+        }
 
-        // Advance cursor: transition duration + hold duration for this scene
-        timeCursor += dur + 1.2;
+        // Hold pause on this settled scene before next transition starts
+        timeCursor += dur + 0.65;
       });
 
-      // Refresh ScrollTrigger to calculate accurate pin boundaries
+      // Refresh ScrollTrigger to calculate accurate pin metrics
       const refreshTimeout = setTimeout(() => {
         ScrollTrigger.refresh();
       }, 100);
@@ -291,8 +341,18 @@ export default function ScrollExperience({
       {/* Viewport Stage pinned dynamically by ScrollTrigger */}
       <div
         ref={stageRef}
-        className="w-full h-screen overflow-hidden bg-[#F8F7F3] relative"
+        className="w-full h-screen overflow-hidden relative"
       >
+        {/* Dynamic Warm Sand Stage Background */}
+        <div
+          ref={stageBgRef}
+          className="absolute inset-0 w-full h-full bg-[#F8F7F3] -z-20 transition-colors duration-500"
+        />
+
+        {/* Persistent 3D Ambient Spatial Canvas across all 6 scenes */}
+        <AmbientSpatialCanvas className="z-0" />
+
+        {/* Scene Composition Layers */}
         {React.Children.map(children, (child, index) => {
           return (
             <div
@@ -301,7 +361,7 @@ export default function ScrollExperience({
                 sceneLayersRef.current[index] = el;
               }}
               data-scene-layer={index}
-              className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none"
+              className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none z-10"
             >
               {child}
             </div>

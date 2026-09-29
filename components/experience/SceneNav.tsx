@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { SCENES } from "@/constants/motion";
 
@@ -12,6 +12,7 @@ interface SceneNavProps {
 
 export function SceneNav({ activeScene, progress, onSelectScene }: SceneNavProps) {
   const currentScene = SCENES[activeScene] ?? SCENES[0];
+  const [hoveredScene, setHoveredScene] = useState<number | null>(null);
 
   const handlePrev = () => {
     if (activeScene > 0 && onSelectScene) {
@@ -27,76 +28,85 @@ export function SceneNav({ activeScene, progress, onSelectScene }: SceneNavProps
 
   return (
     <>
-      {/* Desktop Vertical Scene Navigator */}
-      <nav className="fixed right-6 sm:right-10 top-1/2 -translate-y-1/2 z-[90] hidden md:flex flex-col select-none">
-        <div className="relative flex flex-col justify-between h-[360px] py-2">
-          {/* Track Line */}
-          <div className="absolute left-[9px] top-4 bottom-4 w-[1px] bg-[#DDD6C9] dark:bg-[#27314A] -z-10" />
+      {/* Desktop Minimal Vertical Scene Navigator (Non-intrusive luxury rail) */}
+      <nav
+        aria-label="Scene Navigator"
+        className="fixed right-4 lg:right-6 top-1/2 -translate-y-1/2 z-[80] hidden md:flex flex-col items-end select-none pointer-events-auto"
+      >
+        <div className="relative flex flex-col items-center justify-between h-[280px] py-2">
+          {/* Vertical Hairline Track */}
+          <div className="absolute right-[11px] top-2 bottom-2 w-[1.5px] bg-[#DDD6C9]/70 dark:bg-[#27314A] -z-10 rounded-full" />
 
-          {/* Progress Line */}
+          {/* Golden Progress Fill */}
           <div
-            className="absolute left-[9px] top-4 w-[1.5px] bg-[#C69A4B] -z-10 origin-top transition-transform duration-100 ease-out"
+            className="absolute right-[11px] top-2 w-[2px] bg-[#C69A4B] -z-10 origin-top rounded-full transition-transform duration-75 ease-out"
             style={{
-              height: "calc(100% - 32px)",
+              height: "calc(100% - 16px)",
               transform: `scaleY(${Math.max(0, Math.min(1, progress))})`,
             }}
           />
 
           {SCENES.map((scene) => {
             const isActive = activeScene === scene.index;
-            return (
-              <button
-                key={scene.id}
-                onClick={() => {
-                  if (onSelectScene) {
-                    onSelectScene(scene.index);
-                  }
-                }}
-                className="group flex items-center gap-3.5 text-left py-1 cursor-pointer transition-transform duration-200 hover:translate-x-[-2px]"
-                aria-label={`Jump to ${scene.label} (${scene.number})`}
-              >
-                {/* Category Number Indicator Dot / Badge */}
-                <div
-                  className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-mono font-bold transition-all duration-300 ${
-                    isActive
-                      ? "bg-[#C69A4B] text-white shadow-[0_2px_8px_rgba(198,154,75,0.4)] scale-110"
-                      : "bg-white text-[#8B857D] border border-[#DDD6C9] group-hover:border-[#C69A4B] group-hover:text-[#C69A4B]"
-                  }`}
-                >
-                  {scene.number}
-                </div>
+            const isHovered = hoveredScene === scene.index;
 
-                {/* Category Name Label */}
-                <div
-                  className={`text-[11px] uppercase tracking-[0.2em] font-bold transition-all duration-300 whitespace-nowrap ${
+            return (
+              <div
+                key={scene.id}
+                className="relative flex items-center justify-end group py-2"
+                onMouseEnter={() => setHoveredScene(scene.index)}
+                onMouseLeave={() => setHoveredScene(null)}
+              >
+                {/* Floating Category Pill on Active or Hover */}
+                {(isActive || isHovered) && (
+                  <div
+                    className={`absolute right-8 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.18em] whitespace-nowrap shadow-sm pointer-events-none transition-all duration-200 ${
+                      isActive
+                        ? "bg-[#C69A4B] text-white shadow-[0_4px_12px_rgba(198,154,75,0.35)]"
+                        : "bg-white/95 dark:bg-[#1B2238] text-[#2A2927] dark:text-[#F8F7F3] border border-[#DDD6C9]"
+                    }`}
+                  >
+                    {scene.number} · {scene.label}
+                  </div>
+                )}
+
+                {/* Dot / Pill Button */}
+                <button
+                  onClick={() => onSelectScene?.(scene.index)}
+                  className={`relative flex items-center justify-center cursor-pointer transition-all duration-300 rounded-full ${
                     isActive
-                      ? "text-[#C69A4B] opacity-100 translate-x-0"
-                      : "text-[#8B857D] opacity-40 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0"
+                      ? "w-6 h-6 bg-[#C69A4B] text-white shadow-[0_2px_8px_rgba(198,154,75,0.4)]"
+                      : "w-5 h-5 bg-white/90 dark:bg-[#161C2E] border border-[#DDD6C9] dark:border-[#27314A] hover:border-[#C69A4B] hover:scale-110"
                   }`}
+                  aria-label={`Jump to scene ${scene.number} - ${scene.label}`}
                 >
-                  {scene.label}
-                </div>
-              </button>
+                  {isActive ? (
+                    <span className="text-[10px] font-mono font-bold">{scene.number}</span>
+                  ) : (
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#8B857D] group-hover:bg-[#C69A4B] transition-colors" />
+                  )}
+                </button>
+              </div>
             );
           })}
         </div>
       </nav>
 
-      {/* Mobile Floating Scene Navigation Pill */}
+      {/* Mobile Floating Scene Navigation Pill (Docked bottom) */}
       <nav
         aria-label="Scene pagination"
-        className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[90] flex md:hidden items-center gap-2 bg-[#FFFCF7]/95 backdrop-blur-xl border border-[#DDD6C9] rounded-full px-3.5 py-2 shadow-[0_10px_30px_rgba(80,65,45,0.12)] select-none"
+        className="fixed bottom-4 left-1/2 -translate-x-1/2 z-[80] flex md:hidden items-center gap-2 bg-[#FFFCF7]/95 dark:bg-[#161C2E]/95 backdrop-blur-xl border border-[#DDD6C9] dark:border-[#27314A] rounded-full px-3 py-1.5 shadow-[0_10px_30px_rgba(80,65,45,0.12)] select-none"
       >
         <button
           onClick={handlePrev}
           disabled={activeScene === 0}
           aria-label="Previous scene"
-          className="w-7 h-7 rounded-full flex items-center justify-center text-[#2A2927] disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[#F2EFE6] transition-colors"
+          className="w-6 h-6 rounded-full flex items-center justify-center text-[#2A2927] dark:text-[#F8F7F3] disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[#F2EFE6] dark:hover:bg-[#1E273D] transition-colors"
         >
-          <ChevronLeft className="w-4 h-4" />
+          <ChevronLeft className="w-3.5 h-3.5" />
         </button>
 
-        <div className="flex items-center gap-1.5 px-1.5">
+        <div className="flex items-center gap-1.5 px-1">
           {SCENES.map((scene) => (
             <button
               key={scene.id}
@@ -104,14 +114,14 @@ export function SceneNav({ activeScene, progress, onSelectScene }: SceneNavProps
               aria-label={`Jump to scene ${scene.number}`}
               className={`transition-all duration-300 rounded-full ${
                 activeScene === scene.index
-                  ? "w-5 h-2 bg-[#C69A4B]"
-                  : "w-2 h-2 bg-[#DDD6C9] hover:bg-[#C69A4B]/60"
+                  ? "w-4 h-1.5 bg-[#C69A4B]"
+                  : "w-1.5 h-1.5 bg-[#DDD6C9] dark:bg-[#27314A]"
               }`}
             />
           ))}
         </div>
 
-        <span className="text-[11px] font-bold uppercase tracking-wider text-[#C69A4B] min-w-[70px] text-center">
+        <span className="text-[10px] font-bold uppercase tracking-wider text-[#C69A4B] min-w-[70px] text-center">
           {currentScene.number} {currentScene.label}
         </span>
 
@@ -119,9 +129,9 @@ export function SceneNav({ activeScene, progress, onSelectScene }: SceneNavProps
           onClick={handleNext}
           disabled={activeScene === SCENES.length - 1}
           aria-label="Next scene"
-          className="w-7 h-7 rounded-full flex items-center justify-center text-[#2A2927] disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[#F2EFE6] transition-colors"
+          className="w-6 h-6 rounded-full flex items-center justify-center text-[#2A2927] dark:text-[#F8F7F3] disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[#F2EFE6] dark:hover:bg-[#1E273D] transition-colors"
         >
-          <ChevronRight className="w-4 h-4" />
+          <ChevronRight className="w-3.5 h-3.5" />
         </button>
       </nav>
     </>

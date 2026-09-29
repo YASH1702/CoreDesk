@@ -15,20 +15,11 @@ import { PlatformScene } from "@/components/experience/scenes/PlatformScene";
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
 if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 }
-
-/* Scene background gradients mapped to the Warm Sand identity */
-const SCENE_BACKGROUNDS: Record<string, string> = {
-  business: "bg-gradient-to-br from-[#F8F7F3] via-[#F2EFE6] to-[#ECE6D8]",
-  customer: "bg-gradient-to-br from-[#FFFCF7] via-[#FFF8ED] to-[#F2EFE6]",
-  staff: "bg-gradient-to-br from-[#F2EFE6] via-[#ECE6D8] to-[#E8D7B2]",
-  control: "bg-gradient-to-br from-[#ECE6D8] via-[#E8D7B2] to-[#D9C7A0]",
-  system: "bg-gradient-to-br from-[#F8F7F3] via-[#ECE6D8] to-[#E8D7B2]",
-  platform: "bg-gradient-to-b from-[#F8F7F3] to-[#FFFCF7]",
-};
 
 export default function HomePage() {
   const [activeScene, setActiveScene] = useState(0);
@@ -44,10 +35,14 @@ export default function HomePage() {
     const st = ScrollTrigger.getById("experience-trigger");
     if (st) {
       // Settled timeline coordinates for the 6 scenes
-      const sceneProgresses = [0.03, 0.22, 0.41, 0.60, 0.79, 0.98];
+      const sceneProgresses = [0.0, 0.2, 0.4, 0.6, 0.8, 1.0];
       const targetProgress = sceneProgresses[index] ?? index / 5;
       const targetY = st.start + targetProgress * (st.end - st.start);
-      window.scrollTo({ top: targetY, behavior: "smooth" });
+      gsap.to(window, {
+        scrollTo: { y: targetY, autoKill: false },
+        duration: 0.8,
+        ease: "power2.inOut",
+      });
     } else {
       const container = document.getElementById("experience-container");
       if (!container) return;
@@ -73,56 +68,32 @@ export default function HomePage() {
         onSceneChange={handleSceneChange}
       >
         {/* PAGE 01 — THE BUSINESS */}
-        <SceneSection
-          id={SCENES[0].id}
-          index={0}
-          background={SCENE_BACKGROUNDS.business}
-        >
+        <SceneSection id={SCENES[0].id} index={0}>
           <BusinessScene />
         </SceneSection>
 
         {/* PAGE 02 — CUSTOMER EXPERIENCE */}
-        <SceneSection
-          id={SCENES[1].id}
-          index={1}
-          background={SCENE_BACKGROUNDS.customer}
-        >
+        <SceneSection id={SCENES[1].id} index={1}>
           <CustomerScene />
         </SceneSection>
 
         {/* PAGE 03 — STAFF OPERATIONS */}
-        <SceneSection
-          id={SCENES[2].id}
-          index={2}
-          background={SCENE_BACKGROUNDS.staff}
-        >
+        <SceneSection id={SCENES[2].id} index={2}>
           <StaffScene />
         </SceneSection>
 
         {/* PAGE 04 — BUSINESS CONTROL */}
-        <SceneSection
-          id={SCENES[3].id}
-          index={3}
-          background={SCENE_BACKGROUNDS.control}
-        >
+        <SceneSection id={SCENES[3].id} index={3}>
           <ControlScene />
         </SceneSection>
 
         {/* PAGE 05 — THE OPERATING SYSTEM */}
-        <SceneSection
-          id={SCENES[4].id}
-          index={4}
-          background={SCENE_BACKGROUNDS.system}
-        >
+        <SceneSection id={SCENES[4].id} index={4}>
           <SystemScene />
         </SceneSection>
 
         {/* PAGE 06 — FINAL PLATFORM / CTA */}
-        <SceneSection
-          id={SCENES[5].id}
-          index={5}
-          background={SCENE_BACKGROUNDS.platform}
-        >
+        <SceneSection id={SCENES[5].id} index={5}>
           <PlatformScene />
         </SceneSection>
       </ScrollExperience>
