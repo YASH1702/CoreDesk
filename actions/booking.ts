@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { getAvailableTimeSlots } from "@/services/availability";
+import { inngest } from "@/lib/inngest/client";
 
 export async function getBookingInitialData(businessIdentifier?: string) {
   try {
@@ -239,6 +240,23 @@ export async function createBookingAction(data: {
       });
     }
 
+    // Trigger Inngest async workflow for confirmation email and 24h reminder
+    try {
+      await inngest.send({
+        name: "appointment.created",
+        data: {
+          appointmentId: appointment.id,
+          customerEmail: data.customerEmail,
+          customerName: data.customerName,
+          serviceTitle: service.title,
+          startTime: startTime.toISOString(),
+          businessName: "BusinessFlow Partner",
+        },
+      });
+    } catch (inngestErr) {
+      console.warn("Inngest dispatch warning:", inngestErr);
+    }
+
     revalidatePath("/dashboard/admin/appointments");
     revalidatePath("/dashboard/customer");
 
@@ -285,6 +303,18 @@ export async function cancelBooking(data: { appointmentId: string; reason?: stri
       where: { id: data.appointmentId },
       data: { status: "CANCELLED" },
     });
+
+    try {
+      await inngest.send({
+        name: "appointment.cancelled",
+        data: {
+          appointmentId: data.appointmentId,
+          reason: data.reason || "User requested cancellation",
+        },
+      });
+    } catch (inngestErr) {
+      console.warn("Inngest cancel dispatch warning:", inngestErr);
+    }
 
     revalidatePath("/dashboard/admin/appointments");
     revalidatePath("/dashboard/customer");

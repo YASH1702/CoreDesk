@@ -183,4 +183,21 @@
 - [x] Linked `stripePaymentIntentId` to appointments and verified payments in `actions/booking.ts`
 - [x] Verified build passes across all 22 routes
 
+---
+
+## PHASE 8 — INNGEST BACKGROUND WORKFLOWS & INDUSTRY ARCHETYPES ✅
+
+- [x] Installed and configured Inngest v3 client singleton in `lib/inngest/client.ts`
+- [x] Created Inngest background workflow functions in `lib/inngest/functions.ts`:
+  - `sendBookingConfirmation`: immediate email dispatch + scheduled 24h pre-session reminder
+  - `handleBookingCancellation`: calendar slot release and cancellation notice
+  - `handleInquiryReceived`: intake alert and owner notification
+- [x] Built Inngest App Router endpoint at `app/api/inngest/route.ts` using `serve`
+- [x] Wired event dispatching in `actions/booking.ts` (`appointment.created`, `appointment.cancelled`)
+- [x] Wired event dispatching in `actions/dashboard.ts` (`inquiry.received`)
+- [x] Connected dynamic industry archetype terminology (`INDUSTRY_ARCHETYPES`) to public website at `app/business/[slug]/page.tsx`
+- [x] Connected dynamic industry terminology to Booking Wizard at `app/book/page.tsx`
+- [x] Verified zero TypeScript errors and successful production build across all 23 routes
+
+
 

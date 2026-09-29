@@ -8,7 +8,8 @@ import StaffPickerStep from "@/components/booking/StaffPickerStep";
 import DateTimeStep from "@/components/booking/DateTimeStep";
 import CustomerDetailsStep from "@/components/booking/CustomerDetailsStep";
 import PaymentStep from "@/components/booking/PaymentStep";
-import { getServicesAction, getStaffAction } from "@/actions/booking";
+import { getBookingInitialData, getServicesAction, getStaffAction } from "@/actions/booking";
+import { INDUSTRY_ARCHETYPES } from "@/constants/business-types";
 import { Sparkles, Calendar, Check, Layers, Users, Clock, ShieldCheck, ArrowRight, ArrowLeft } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -16,6 +17,7 @@ export default function BookingWizardPage() {
   const [step, setStep] = useState(1);
   const [services, setServices] = useState<any[]>([]);
   const [staffList, setStaffList] = useState<any[]>([]);
+  const [industry, setIndustry] = useState<string>("CONSULTING");
   const [loadingData, setLoadingData] = useState(true);
 
   const [bookingData, setBookingData] = useState({
@@ -36,10 +38,14 @@ export default function BookingWizardPage() {
   useEffect(() => {
     async function loadData() {
       try {
-        const [servicesRes, staffRes] = await Promise.all([
+        const [initRes, servicesRes, staffRes] = await Promise.all([
+          getBookingInitialData(),
           getServicesAction(),
           getStaffAction(),
         ]);
+        if (initRes.success && initRes.business?.industry) {
+          setIndustry(initRes.business.industry);
+        }
         if (servicesRes.success && servicesRes.services) setServices(servicesRes.services);
         if (staffRes.success && staffRes.staff) setStaffList(staffRes.staff);
       } catch (err) {
@@ -54,11 +60,13 @@ export default function BookingWizardPage() {
   const nextStep = () => setStep((prev) => Math.min(prev + 1, 5));
   const prevStep = () => setStep((prev) => Math.max(prev - 1, 1));
 
+  const archetype = INDUSTRY_ARCHETYPES[industry?.toUpperCase()] || INDUSTRY_ARCHETYPES.CONSULTING;
+
   const stepsList = [
-    { num: 1, title: "Service Package", icon: Layers },
-    { num: 2, title: "Specialist", icon: Users },
+    { num: 1, title: archetype.serviceNoun, icon: Layers },
+    { num: 2, title: archetype.staffNoun, icon: Users },
     { num: 3, title: "Date & Time", icon: Clock },
-    { num: 4, title: "Client Info", icon: Sparkles },
+    { num: 4, title: `${archetype.clientNoun} Info`, icon: Sparkles },
     { num: 5, title: "Stripe Checkout", icon: ShieldCheck },
   ];
 
@@ -70,13 +78,13 @@ export default function BookingWizardPage() {
         {/* Wizard Header */}
         <div className="text-center max-w-2xl mx-auto mb-10">
           <span className="px-3.5 py-1.5 rounded-full bg-[#FFF8ED] dark:bg-[#1B2238] border border-[#E8D7B2] dark:border-[#27314A] text-[#C69A4B] text-xs font-bold inline-flex items-center gap-1.5">
-            <Calendar className="w-3.5 h-3.5" /> Instant Live Booking Portal
+            <Calendar className="w-3.5 h-3.5" /> Instant Live Booking Portal · {archetype.name}
           </span>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-[#2A2927] dark:text-[#F8F7F3] tracking-tight mt-3">
-            Schedule Your Appointment
+            Schedule Your {archetype.serviceNoun}
           </h1>
           <p className="text-xs sm:text-sm text-[#5D5A56] dark:text-[#A0A8B8] mt-2">
-            Select a service package, specialist, and preferred time slot for instant confirmation.
+            Select your {archetype.serviceNoun.toLowerCase()}, preferred {archetype.staffNoun.toLowerCase()}, and time slot for instant confirmation.
           </p>
         </div>
 

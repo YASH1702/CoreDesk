@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import InquiryForm from "@/components/business/InquiryForm";
+import { INDUSTRY_ARCHETYPES } from "@/constants/business-types";
 import {
   Calendar,
   Clock,
@@ -57,6 +58,7 @@ export default async function PublicBusinessPage({ params }: BusinessPageProps) 
   }
 
   const cms = business.cmsSettings;
+  const archetype = INDUSTRY_ARCHETYPES[business.industry?.toUpperCase()] || INDUSTRY_ARCHETYPES.CONSULTING;
 
   return (
     <div className="min-h-screen bg-[#F8F7F3] text-[#2A2927] relative selection:bg-[#C69A4B] selection:text-white">
@@ -67,7 +69,7 @@ export default async function PublicBusinessPage({ params }: BusinessPageProps) 
         <div className="text-center max-w-3xl mx-auto space-y-5">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FFF8ED] border border-[#E8D7B2] text-[#C69A4B] text-xs font-bold">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Verified BusinessFlow Partner · {business.industry}</span>
+            <span>Verified BusinessFlow Partner · {archetype.name}</span>
           </div>
 
           <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-[#2A2927] leading-[1.1]">
@@ -75,7 +77,7 @@ export default async function PublicBusinessPage({ params }: BusinessPageProps) 
           </h1>
 
           <p className="text-base sm:text-lg text-[#5D5A56] leading-relaxed">
-            {cms?.heroSubtitle || business.description || "Experience executive services tailored with uncompromising precision and world-class care."}
+            {cms?.heroSubtitle || business.description || archetype.tagline}
           </p>
 
           <div className="pt-4 flex flex-wrap items-center justify-center gap-4">
@@ -104,17 +106,17 @@ export default async function PublicBusinessPage({ params }: BusinessPageProps) 
         <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
           <div className="p-4 rounded-2xl bg-white border border-[#ECE6D8] shadow-sm text-center">
             <div className="text-2xl font-extrabold text-[#2A2927]">{business.services.length}</div>
-            <div className="text-xs text-[#8B857D] font-medium mt-0.5">Signature Services</div>
+            <div className="text-xs text-[#8B857D] font-medium mt-0.5">{archetype.serviceNoun}s</div>
           </div>
           <div className="p-4 rounded-2xl bg-white border border-[#ECE6D8] shadow-sm text-center">
             <div className="text-2xl font-extrabold text-[#2A2927]">{business.staff.length}</div>
-            <div className="text-xs text-[#8B857D] font-medium mt-0.5">Licensed Specialists</div>
+            <div className="text-xs text-[#8B857D] font-medium mt-0.5">{archetype.staffNoun}s</div>
           </div>
           <div className="p-4 rounded-2xl bg-white border border-[#ECE6D8] shadow-sm text-center">
             <div className="text-2xl font-extrabold text-[#2A2927] flex items-center justify-center gap-1">
               <Star className="w-4 h-4 text-[#C69A4B] fill-[#C69A4B]" /> 4.9
             </div>
-            <div className="text-xs text-[#8B857D] font-medium mt-0.5">Client Satisfaction</div>
+            <div className="text-xs text-[#8B857D] font-medium mt-0.5">{archetype.clientNoun} Satisfaction</div>
           </div>
           <div className="p-4 rounded-2xl bg-white border border-[#ECE6D8] shadow-sm text-center">
             <div className="text-2xl font-extrabold text-[#5C9E6E]">100%</div>
@@ -129,10 +131,10 @@ export default async function PublicBusinessPage({ params }: BusinessPageProps) 
           <div className="text-center max-w-2xl mx-auto mb-14">
             <span className="text-xs uppercase tracking-widest font-extrabold text-[#C69A4B]">Exclusive Menu</span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-[#2A2927] tracking-tight mt-2">
-              Featured Service Offerings
+              Featured {archetype.serviceNoun} Offerings
             </h2>
             <p className="text-sm text-[#5D5A56] mt-2">
-              Select your desired appointment package. Deterministic scheduling with zero overlap guarantee.
+              Select your desired package. Deterministic scheduling with zero overlap guarantee.
             </p>
           </div>
 

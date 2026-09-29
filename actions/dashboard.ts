@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { inngest } from "@/lib/inngest/client";
 
 export async function getAdminDashboardStats(businessId?: string) {
   try {
@@ -173,6 +174,20 @@ export async function submitInquiryAction(data: {
         status: "UNREAD",
       },
     });
+
+    try {
+      await inngest.send({
+        name: "inquiry.received",
+        data: {
+          inquiryId: inquiry.id,
+          name: inquiry.name,
+          email: inquiry.email,
+          businessId: business.id,
+        },
+      });
+    } catch (inngestErr) {
+      console.warn("Inngest inquiry dispatch warning:", inngestErr);
+    }
 
     revalidatePath(`/business/${business.slug}`);
     revalidatePath("/dashboard/admin");
