@@ -57,50 +57,38 @@ export default function AmbientSpatialCanvas({
     rimLight.position.set(-6, -4, 4);
     scene.add(rimLight);
 
-    const accentPointLight = new THREE.PointLight(0xe8c16a, 2.2, 10);
-    accentPointLight.position.set(2, 0, 2);
-    scene.add(accentPointLight);
+    const pointLight = new THREE.PointLight(0xe8c16a, 2.2, 10);
+    pointLight.position.set(2, 0, 2);
+    scene.add(pointLight);
 
     // Root World Group for mouse parallax
     const worldGroup = new THREE.Group();
     scene.add(worldGroup);
 
     // =========================================================================
-    // DIRECTION 2: THE ARCHITECTURAL GLASS MONOLITH & KINETIC BOOKING WAFERS
+    // DIRECTION 3: THE 3D SPATIAL KINETIC SEAL & ORBITAL ACCESS CARD
     // =========================================================================
-    const heroMonolithGroup = new THREE.Group();
-    worldGroup.add(heroMonolithGroup);
+    const heroSealGroup = new THREE.Group();
+    worldGroup.add(heroSealGroup);
 
     // Disposable tracking lists
     const disposablesGeometries: THREE.BufferGeometry[] = [];
     const disposablesMaterials: THREE.Material[] = [];
 
     // Shared Materials
-    const frostedGlassMat = new THREE.MeshPhysicalMaterial({
-      color: 0xfffcf5,
-      metalness: 0.06,
-      roughness: 0.12,
-      transmission: 0.86,
-      thickness: 1.5,
-      ior: 1.52,
-      transparent: true,
-      opacity: 0.88,
-    });
-    disposablesMaterials.push(frostedGlassMat);
-
-    const goldChassisMat = new THREE.MeshStandardMaterial({
+    const goldPolishedMat = new THREE.MeshStandardMaterial({
       color: 0xc69a4b,
       metalness: 0.94,
       roughness: 0.16,
     });
-    disposablesMaterials.push(goldChassisMat);
+    disposablesMaterials.push(goldPolishedMat);
 
-    const champagneMat = new THREE.MeshStandardMaterial({
+    const champagneBronzeMat = new THREE.MeshStandardMaterial({
       color: 0xd4af63,
       metalness: 0.88,
       roughness: 0.22,
     });
-    disposablesMaterials.push(champagneMat);
+    disposablesMaterials.push(champagneBronzeMat);
 
     const goldWireMat = new THREE.LineBasicMaterial({
       color: 0xc69a4b,
@@ -109,89 +97,143 @@ export default function AmbientSpatialCanvas({
     });
     disposablesMaterials.push(goldWireMat);
 
-    const activeEmissiveMat = new THREE.MeshStandardMaterial({
+    const frostedGlassMat = new THREE.MeshPhysicalMaterial({
+      color: 0xfffcf5,
+      metalness: 0.06,
+      roughness: 0.12,
+      transmission: 0.86,
+      thickness: 1.4,
+      ior: 1.52,
+      transparent: true,
+      opacity: 0.88,
+    });
+    disposablesMaterials.push(frostedGlassMat);
+
+    const obsidianGlassMat = new THREE.MeshPhysicalMaterial({
+      color: 0x3d3830,
+      metalness: 0.4,
+      roughness: 0.18,
+      transmission: 0.5,
+      thickness: 1.2,
+      transparent: true,
+      opacity: 0.92,
+    });
+    disposablesMaterials.push(obsidianGlassMat);
+
+    const emissiveGoldMat = new THREE.MeshStandardMaterial({
       color: 0xc69a4b,
       emissive: 0xc69a4b,
       emissiveIntensity: 0.6,
       metalness: 0.9,
       roughness: 0.15,
     });
-    disposablesMaterials.push(activeEmissiveMat);
+    disposablesMaterials.push(emissiveGoldMat);
 
-    // 4 Modular Glass Wafers (Forming the Monolith in Business, Unfolding into Booking Steps in Customer)
-    interface WaferItem {
-      group: THREE.Group;
-      mesh: THREE.Mesh;
-      wireframe: THREE.LineSegments;
-      tagMesh: THREE.Mesh;
-      coreStrip: THREE.Mesh;
-      baseY: number;
-    }
+    // -------------------------------------------------------------
+    // PART A: ORBITAL GIMBAL RINGS (Active in Scene 01)
+    // -------------------------------------------------------------
+    const gimbalGroup = new THREE.Group();
+    heroSealGroup.add(gimbalGroup);
 
-    const wafers: WaferItem[] = [];
-    const waferCount = 4;
-    const waferWidth = 1.75;
-    const waferHeight = 0.58;
-    const waferDepth = 0.18;
+    const outerGimbalGeo = new THREE.TorusGeometry(1.68, 0.045, 32, 120);
+    disposablesGeometries.push(outerGimbalGeo);
+    const outerGimbalMesh = new THREE.Mesh(outerGimbalGeo, goldPolishedMat);
+    gimbalGroup.add(outerGimbalMesh);
 
-    const slabGeo = new THREE.BoxGeometry(waferWidth, waferHeight, waferDepth);
-    disposablesGeometries.push(slabGeo);
+    const middleGimbalGeo = new THREE.TorusGeometry(1.36, 0.035, 32, 100);
+    disposablesGeometries.push(middleGimbalGeo);
+    const middleGimbalMesh = new THREE.Mesh(middleGimbalGeo, champagneBronzeMat);
+    middleGimbalMesh.rotation.x = Math.PI * 0.45;
+    gimbalGroup.add(middleGimbalMesh);
 
-    const edgeGeo = new THREE.EdgesGeometry(slabGeo);
-    disposablesGeometries.push(edgeGeo);
+    // -------------------------------------------------------------
+    // PART B: EXECUTIVE MONOGRAM MEDALLION (Active in Scene 01)
+    // -------------------------------------------------------------
+    const medallionGroup = new THREE.Group();
+    heroSealGroup.add(medallionGroup);
 
-    const tagGeo = new THREE.BoxGeometry(0.14, 0.14, 0.22);
-    disposablesGeometries.push(tagGeo);
+    // Medallion Disc
+    const discGeo = new THREE.CylinderGeometry(0.96, 0.96, 0.12, 64);
+    disposablesGeometries.push(discGeo);
+    const discMesh = new THREE.Mesh(discGeo, obsidianGlassMat);
+    discMesh.rotation.x = Math.PI / 2;
+    medallionGroup.add(discMesh);
 
-    const stripGeo = new THREE.BoxGeometry(1.4, 0.025, 0.04);
-    disposablesGeometries.push(stripGeo);
+    // Medallion Outer Bevel Rim
+    const rimGeo = new THREE.TorusGeometry(0.96, 0.04, 32, 100);
+    disposablesGeometries.push(rimGeo);
+    const rimMesh = new THREE.Mesh(rimGeo, goldPolishedMat);
+    medallionGroup.add(rimMesh);
 
-    for (let i = 0; i < waferCount; i++) {
-      const waferGroup = new THREE.Group();
-      heroMonolithGroup.add(waferGroup);
+    // Raised Geometric Monogram / Crest
+    const crestBarGeo = new THREE.BoxGeometry(0.7, 0.06, 0.05);
+    disposablesGeometries.push(crestBarGeo);
+    const crest1 = new THREE.Mesh(crestBarGeo, goldPolishedMat);
+    crest1.position.z = 0.07;
+    crest1.rotation.z = Math.PI / 4;
+    medallionGroup.add(crest1);
 
-      // Stacked vertically in monolith state: i=0 at top, i=3 at bottom
-      // Stack offsets: (1.5 - i) * 0.64
-      const initialY = (1.5 - i) * 0.64;
+    const crest2 = new THREE.Mesh(crestBarGeo, goldPolishedMat);
+    crest2.position.z = 0.07;
+    crest2.rotation.z = -Math.PI / 4;
+    medallionGroup.add(crest2);
 
-      const slabMesh = new THREE.Mesh(slabGeo, frostedGlassMat);
-      waferGroup.add(slabMesh);
+    // Central Crystal Keystone Facet
+    const keystoneGeo = new THREE.OctahedronGeometry(0.28, 0);
+    disposablesGeometries.push(keystoneGeo);
+    const keystoneMesh = new THREE.Mesh(keystoneGeo, frostedGlassMat);
+    keystoneMesh.position.z = 0.12;
+    medallionGroup.add(keystoneMesh);
 
-      const wireframe = new THREE.LineSegments(edgeGeo, goldWireMat);
-      slabMesh.add(wireframe);
+    // -------------------------------------------------------------
+    // PART C: VIP RESERVATION ACCESS CARD (Morphs in on Scroll for Scene 02)
+    // -------------------------------------------------------------
+    const keycardGroup = new THREE.Group();
+    heroSealGroup.add(keycardGroup);
+    keycardGroup.visible = false; // Hidden initially at p=0
 
-      // Gold step tag / crest on edge
-      const tagMesh = new THREE.Mesh(tagGeo, i === 3 ? activeEmissiveMat : goldChassisMat);
-      tagMesh.position.set(-waferWidth / 2 + 0.15, 0, 0);
-      waferGroup.add(tagMesh);
+    // Card Glass Body
+    const cardWidth = 1.7;
+    const cardHeight = 2.45;
+    const cardDepth = 0.09;
+    const cardGeo = new THREE.BoxGeometry(cardWidth, cardHeight, cardDepth);
+    disposablesGeometries.push(cardGeo);
 
-      // Interior telemetry strip
-      const coreStrip = new THREE.Mesh(stripGeo, champagneMat);
-      coreStrip.position.set(0.08, 0, 0);
-      waferGroup.add(coreStrip);
+    const cardMesh = new THREE.Mesh(cardGeo, frostedGlassMat);
+    keycardGroup.add(cardMesh);
 
-      waferGroup.position.set(0, initialY, 0);
+    // Gold Bevel Edge Wireframe
+    const cardEdges = new THREE.EdgesGeometry(cardGeo);
+    disposablesGeometries.push(cardEdges);
+    const cardBezel = new THREE.LineSegments(cardEdges, goldWireMat);
+    cardMesh.add(cardBezel);
 
-      wafers.push({
-        group: waferGroup,
-        mesh: slabMesh,
-        wireframe,
-        tagMesh,
-        coreStrip,
-        baseY: initialY,
-      });
-    }
+    // Embossed Gold NFC / Microchip
+    const chipGeo = new THREE.BoxGeometry(0.36, 0.28, 0.04);
+    disposablesGeometries.push(chipGeo);
+    const chipMesh = new THREE.Mesh(chipGeo, emissiveGoldMat);
+    chipMesh.position.set(-0.46, 0.65, cardDepth / 2 + 0.02);
+    keycardGroup.add(chipMesh);
 
-    // Outer Monolith Structural Bevel Frame (Anchoring the Monolith in Scene 01)
-    const frameGeo = new THREE.BoxGeometry(1.86, 2.75, 0.26);
-    disposablesGeometries.push(frameGeo);
-    const frameEdges = new THREE.EdgesGeometry(frameGeo);
-    disposablesGeometries.push(frameEdges);
-    const monolithChassisFrame = new THREE.LineSegments(frameEdges, goldWireMat);
-    heroMonolithGroup.add(monolithChassisFrame);
+    // Horizontal Holographic Telemetry Foil
+    const foilGeo = new THREE.BoxGeometry(1.45, 0.22, 0.02);
+    disposablesGeometries.push(foilGeo);
+    const foilMesh = new THREE.Mesh(foilGeo, champagneBronzeMat);
+    foilMesh.position.set(0, -0.65, cardDepth / 2 + 0.01);
+    keycardGroup.add(foilMesh);
 
-    // Radiant Ambient Backing Halo (Illuminates in Customer Scene)
-    const haloGeo = new THREE.PlaneGeometry(3.2, 3.8);
+    // Circular Verified Stamp / Seal on the Card
+    const stampGeo = new THREE.CylinderGeometry(0.24, 0.24, 0.03, 32);
+    disposablesGeometries.push(stampGeo);
+    const stampMesh = new THREE.Mesh(stampGeo, goldPolishedMat);
+    stampMesh.rotation.x = Math.PI / 2;
+    stampMesh.position.set(0.44, -0.65, cardDepth / 2 + 0.03);
+    keycardGroup.add(stampMesh);
+
+    // -------------------------------------------------------------
+    // PART D: RADIANT AMBIENT BACKING HALO
+    // -------------------------------------------------------------
+    const haloGeo = new THREE.RingGeometry(1.4, 2.6, 64);
     disposablesGeometries.push(haloGeo);
     const haloMat = new THREE.MeshBasicMaterial({
       color: 0xc69a4b,
@@ -203,9 +245,11 @@ export default function AmbientSpatialCanvas({
     disposablesMaterials.push(haloMat);
     const haloMesh = new THREE.Mesh(haloGeo, haloMat);
     haloMesh.position.z = -0.3;
-    heroMonolithGroup.add(haloMesh);
+    heroSealGroup.add(haloMesh);
 
-    // Ambient Warm Sand Constellation Particles
+    // -------------------------------------------------------------
+    // PART E: AMBIENT WARM SAND PARTICLES
+    // -------------------------------------------------------------
     const particleCount = 140;
     const particlePositions = new Float32Array(particleCount * 3);
     const particleVelocities: { y: number; xOffset: number; speed: number }[] = [];
@@ -286,19 +330,19 @@ export default function AmbientSpatialCanvas({
 
       if (!prefersReducedMotion) {
         // =====================================================================
-        // SCROLL-SCRUBBED KINETIC CHOREOGRAPHY FOR DIRECTION 2:
+        // SCROLL-SCRUBBED KINETIC CHOREOGRAPHY FOR DIRECTION 3:
         // 01 — THE BUSINESS (p = 0)  -->  02 — THE CUSTOMER (p = 1)
         // =====================================================================
 
         // 1. SPATIAL POSITION & CAMERA TRACKING
-        // In Business (p=0): Sits proudly at x: 2.15, y: 0.05, z: 0.2
+        // In Business (p=0): Sits at x: 2.15, y: 0.05, z: 0.2
         // During scrub: Lifts toward camera (Z-arc +1.2) and sweeps across to x: -1.75
         // In Customer (p=1): Settles at x: -1.75, y: -0.05, z: 0.4
         const targetX = THREE.MathUtils.lerp(2.15, -1.75, p);
         const targetY = THREE.MathUtils.lerp(0.05, -0.05, p) + Math.sin(elapsedTime * 0.7) * 0.06;
-        const targetZ = THREE.MathUtils.lerp(0.2, 0.4, p) + Math.sin(p * Math.PI) * 1.15;
+        const targetZ = THREE.MathUtils.lerp(0.2, 0.4, p) + Math.sin(p * Math.PI) * 1.2;
 
-        heroMonolithGroup.position.set(targetX, targetY, targetZ);
+        heroSealGroup.position.set(targetX, targetY, targetZ);
 
         // Camera push: 8.2 -> 7.1 along Z-axis
         camera.position.z = 8.2 - p * 1.1;
@@ -306,47 +350,54 @@ export default function AmbientSpatialCanvas({
         camera.position.y = -currentMouseY * 0.25;
         camera.lookAt(0, 0, 0);
 
-        // 2. MONOLITH ROTATION & 3D PERSPECTIVE
-        // In Business: Upright, tilted at 18 degrees showing edge depth
-        // During scrub: Rotates through 65 degrees, catching golden directional light
-        // In Customer: Aligns facing camera at 6 degrees for maximum readability
-        heroMonolithGroup.rotation.y = THREE.MathUtils.lerp(0.32, 0.08, p) + Math.sin(p * Math.PI) * 0.45;
-        heroMonolithGroup.rotation.x = THREE.MathUtils.lerp(0.12, 0.02, p);
-        heroMonolithGroup.rotation.z = THREE.MathUtils.lerp(-0.04, 0.0, p);
+        // 2. KINETIC MORPH: EXECUTIVE MEDALLION -> VIP RESERVATION KEYCARD
+        if (p < 0.48) {
+          // Phase 1: Medallion & Gimbal active
+          medallionGroup.visible = true;
+          keycardGroup.visible = false;
+          gimbalGroup.visible = true;
 
-        // Monolith outer chassis frame fades out as slabs separate
-        monolithChassisFrame.material.opacity = THREE.MathUtils.lerp(0.55, 0.0, Math.min(1, p * 2.0));
+          const phaseProgress = p / 0.48;
+          // Gimbal expands and tilts
+          gimbalGroup.scale.setScalar(1.0 + phaseProgress * 0.4);
+          middleGimbalMesh.rotation.y = elapsedTime * 0.3 + phaseProgress * Math.PI;
+          outerGimbalMesh.rotation.z = -elapsedTime * 0.2 - phaseProgress * Math.PI * 0.8;
 
-        // 3. KINETIC FISSION: MONOLITH UNLATCHES INTO 4 BOOKING WAFERS
-        // In Business (p=0): Wafers are packed tightly together forming a single solid obelisk
-        // In Customer (p=1): Wafers separate into 4 stepped tiers, docking behind booking steps!
-        wafers.forEach((w, i) => {
-          // Separation spread factor increases with scroll scrub
-          const spreadFactor = Math.pow(p, 1.2);
+          // Medallion rotates on Y
+          medallionGroup.rotation.y = elapsedTime * 0.2 + phaseProgress * Math.PI;
+          medallionGroup.rotation.x = Math.sin(elapsedTime * 0.6) * 0.08;
+          medallionGroup.scale.setScalar(Math.max(0.001, 1.0 - phaseProgress * 0.3));
+        } else {
+          // Phase 2: VIP Reservation Keycard takes stage and flips into settlement
+          medallionGroup.visible = false;
+          keycardGroup.visible = true;
+          gimbalGroup.visible = true;
 
-          // Slabs expand vertically and fan out with individual Z-depth offsets
-          const spreadY = (1.5 - i) * (0.64 + spreadFactor * 0.28);
-          // Individual staggered Z-stepping (each wafer has independent depth)
-          const stepZ = Math.sin((p * Math.PI) + i * 0.4) * 0.4 + (i * 0.06 * spreadFactor);
-          // Subtle horizontal stagger fan
-          const stepX = (i % 2 === 0 ? 1 : -1) * Math.sin(p * Math.PI) * 0.25;
+          const phaseProgress = (p - 0.48) / 0.52; // 0 -> 1
 
-          w.group.position.set(stepX, spreadY, stepZ);
+          // Gimbal rings dissolve and drift back
+          gimbalGroup.scale.setScalar(1.4 + phaseProgress * 0.3);
+          outerGimbalMesh.rotation.z += 0.002;
+          middleGimbalMesh.rotation.y += 0.003;
+          outerGimbalMesh.material.opacity = THREE.MathUtils.lerp(0.5, 0.0, phaseProgress);
+          middleGimbalMesh.material.opacity = THREE.MathUtils.lerp(0.5, 0.0, phaseProgress);
 
-          // Individual subtle rotational tilt per wafer during transition
-          w.group.rotation.y = Math.sin(p * Math.PI + i * 0.5) * 0.18;
-          w.group.rotation.x = Math.sin(p * Math.PI + i * 0.3) * 0.08;
+          // Keycard 3D Flip into alignment
+          // Flips 180 degrees from edge-on (Math.PI / 2) to facing front with subtle luxury yaw
+          const flipAngle = THREE.MathUtils.lerp(Math.PI * 0.6, 0.12, Math.pow(phaseProgress, 0.8));
+          keycardGroup.rotation.y = flipAngle;
+          keycardGroup.rotation.x = THREE.MathUtils.lerp(0.2, 0.04, phaseProgress);
+          keycardGroup.rotation.z = THREE.MathUtils.lerp(-0.15, 0.0, phaseProgress);
+          keycardGroup.scale.setScalar(THREE.MathUtils.lerp(0.65, 1.0, Math.pow(phaseProgress, 0.7)));
 
-          // Slab 4 (Checkout step) illuminates as p reaches completion
-          if (i === 3) {
-            const glowIntensity = THREE.MathUtils.lerp(0.4, 1.4, p);
-            activeEmissiveMat.emissiveIntensity = glowIntensity + Math.sin(elapsedTime * 3.0) * 0.15;
-          }
-        });
+          // Chip & Stamp Emissive Pulse when Customer composition docks
+          const glowIntensity = THREE.MathUtils.lerp(0.4, 1.5, phaseProgress);
+          emissiveGoldMat.emissiveIntensity = glowIntensity + Math.sin(elapsedTime * 3.0) * 0.18;
+        }
 
         // Halo expands and illuminates in Scene 02
-        haloMesh.scale.setScalar(THREE.MathUtils.lerp(1.0, 1.4, p));
-        haloMat.opacity = THREE.MathUtils.lerp(0.08, 0.28, p) + Math.sin(elapsedTime * 1.6) * 0.03;
+        haloMesh.scale.setScalar(THREE.MathUtils.lerp(1.0, 1.45, p));
+        haloMat.opacity = THREE.MathUtils.lerp(0.08, 0.32, p) + Math.sin(elapsedTime * 1.6) * 0.04;
 
         // Dust particles gentle upward drift
         const posAttr = particleGeometry.attributes.position as THREE.BufferAttribute;
