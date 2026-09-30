@@ -415,32 +415,29 @@ export default function ScrollExperience({
         );
       }
 
+      // Layer 1 Activate (Overlapped choreography so 3D astrolabe bridges the scenes)
+      masterTl.set(layers[1], { pointerEvents: "auto", zIndex: 20 }, 0.45);
+      masterTl.to(
+        layers[1],
+        {
+          opacity: 1,
+          duration: 0.35,
+          ease: "power1.inOut",
+        },
+        0.45
+      );
+
       // Layer 0 Exit Hand-off
       masterTl.to(
         layers[0],
         {
           opacity: 0,
-          duration: 0.4,
+          duration: 0.35,
           ease: "power1.inOut",
         },
         0.55
       );
-      masterTl.set(layers[0], { pointerEvents: "none", zIndex: 10 }, 0.8);
-
-      // -------------------------------------------------------------
-      // PHASE C: INCOMING CUSTOMER SCENE KINETIC ASSEMBLY
-      // -------------------------------------------------------------
-      // Layer 1 Activate
-      masterTl.set(layers[1], { pointerEvents: "auto", zIndex: 20 }, 0.65);
-      masterTl.to(
-        layers[1],
-        {
-          opacity: 1,
-          duration: 0.45,
-          ease: "power1.inOut",
-        },
-        0.65
-      );
+      masterTl.set(layers[0], { pointerEvents: "none", zIndex: 10 }, 0.75);
 
       // Kinetic Typography Masked Staggered Entry (Left Column)
       if (cLabel) {
