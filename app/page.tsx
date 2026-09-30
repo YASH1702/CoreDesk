@@ -33,12 +33,14 @@ export default function HomePage() {
   const handleSelectScene = useCallback((index: number) => {
     const st = ScrollTrigger.getById("experience-trigger");
     if (st) {
-      // Settled timeline coordinates for Milestone 1 (0: Business, 1: Customer)
-      const targetProgress = index === 0 ? 0.0 : 1.0;
+      // Precise resting coordinates across all 6 scenes:
+      // 0: Business (0.0), 1: Customer (0.24), 2: Staff (0.43), 3: Control (0.61), 4: System (0.80), 5: Platform (1.0)
+      const sceneTargets = [0.0, 0.24, 0.43, 0.61, 0.80, 1.0];
+      const targetProgress = sceneTargets[index] ?? (index / 5);
       const targetY = st.start + targetProgress * (st.end - st.start);
       gsap.to(window, {
         scrollTo: { y: targetY, autoKill: false },
-        duration: 0.8,
+        duration: 0.9,
         ease: "power2.inOut",
       });
     } else {
@@ -60,7 +62,7 @@ export default function HomePage() {
         onSelectScene={handleSelectScene}
       />
 
-      {/* Cinematic Pinned Scroll Experience */}
+      {/* Cinematic Pinned Scroll Experience Across All 6 Scenes */}
       <ScrollExperience
         activeScene={activeScene}
         onSceneChange={handleSceneChange}

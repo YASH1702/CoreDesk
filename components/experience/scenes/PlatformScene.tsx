@@ -17,9 +17,9 @@ export function PlatformScene() {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-28 bg-gradient-to-b from-[#C69A4B]/40 to-transparent" />
 
       {/* Main Centered Content */}
-      <div className="max-w-4xl mx-auto w-full flex flex-col items-center z-10">
+      <div className="max-w-4xl mx-auto w-full flex flex-col items-center z-10 pointer-events-auto">
         {/* Category Label */}
-        <div className="scene-platform-label flex items-center gap-3 mb-8">
+        <div className="scene-platform-label flex items-center gap-3 mb-8 will-change-transform">
           <div className="w-8 h-[1.5px] bg-[#C69A4B]" />
           <span className="text-[11px] uppercase tracking-[0.25em] font-extrabold text-[#C69A4B]">
             {sceneData?.number} — {sceneData?.label}
@@ -27,22 +27,30 @@ export function PlatformScene() {
           <div className="w-8 h-[1.5px] bg-[#C69A4B]" />
         </div>
 
-        {/* Primary Editorial Headline */}
-        <h2 className="scene-platform-headline text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-[#2A2927] leading-[1.08] mb-8 max-w-3xl">
-          MORE THAN A WEBSITE. <br />
-          <span className="text-[#C69A4B]">A BUSINESS THAT RUNS.</span>
+        {/* Primary Editorial Kinetic Headline with Masked Line Wrappers */}
+        <h2 className="scene-platform-headline text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold tracking-tight text-[#2A2927] leading-[1.08] mb-8 max-w-3xl">
+          <span className="block overflow-hidden pb-1">
+            <span className="scene-platform-head-line-1 inline-block will-change-transform">
+              MORE THAN A WEBSITE.
+            </span>
+          </span>
+          <span className="block overflow-hidden pt-1">
+            <span className="scene-platform-head-line-2 inline-block will-change-transform text-[#C69A4B]">
+              A BUSINESS THAT RUNS.
+            </span>
+          </span>
         </h2>
 
         {/* Supporting Subline */}
-        <p className="scene-platform-subline text-base sm:text-xl text-[#5D5A56] max-w-2xl mb-12 tracking-wide font-normal leading-relaxed">
+        <p className="scene-platform-subline text-base sm:text-lg lg:text-xl text-[#5D5A56] max-w-2xl mb-10 tracking-wide font-normal leading-relaxed will-change-transform">
           Bookings · Services · Staff · Customers · Payments · Analytics
         </p>
 
         {/* Dual Primary Actions */}
-        <div className="scene-platform-cta flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full max-w-md">
+        <div className="scene-platform-cta flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full max-w-md will-change-transform">
           <Link
             href="/book"
-            className="w-full sm:w-auto px-9 py-4 rounded-full bg-[#C69A4B] hover:bg-[#B7863D] text-white font-semibold text-sm shadow-[0_10px_30px_rgba(198,154,75,0.32)] transition-all duration-300 flex items-center justify-center gap-2.5 group cursor-pointer"
+            className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-[#C69A4B] hover:bg-[#B7863D] text-white font-semibold text-sm shadow-[0_10px_30px_rgba(198,154,75,0.32)] transition-all duration-300 flex items-center justify-center gap-2.5 group cursor-pointer"
           >
             <Sparkles className="w-4 h-4 text-[#FFF8ED]" />
             <span>Launch Live Experience</span>
@@ -51,7 +59,7 @@ export function PlatformScene() {
 
           <Link
             href="/login"
-            className="w-full sm:w-auto px-9 py-4 rounded-full bg-white hover:bg-[#FDFBF7] text-[#2A2927] border border-[#DDD6C9] font-semibold text-sm shadow-sm hover:border-[#C69A4B] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-white hover:bg-[#FDFBF7] text-[#2A2927] border border-[#DDD6C9] font-semibold text-sm shadow-sm hover:border-[#C69A4B] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
           >
             <ShieldCheck className="w-4 h-4 text-[#8B857D]" />
             <span>Sign In to Admin</span>
@@ -59,7 +67,7 @@ export function PlatformScene() {
         </div>
 
         {/* Bottom Metadata Badges */}
-        <div className="mt-16 pt-8 border-t border-[#ECE6D8] w-full max-w-xl flex items-center justify-between text-xs text-[#8B857D]">
+        <div className="scene-platform-meta mt-14 pt-6 border-t border-[#ECE6D8] w-full max-w-xl flex items-center justify-between text-xs text-[#8B857D] will-change-transform">
           <span>Production Ready · Next.js 15</span>
           <span>•</span>
           <span>Enterprise Cloud Architecture</span>

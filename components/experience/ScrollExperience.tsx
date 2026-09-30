@@ -51,7 +51,7 @@ export default function ScrollExperience({
     const layers = sceneLayersRef.current.filter(Boolean) as HTMLDivElement[];
     if (layers.length < 2) return;
 
-    // Safe selector helper preventing missing selector warnings
+    // Safe selector helper
     const q = (el: HTMLElement, selector: string) => {
       const found = el.querySelectorAll(selector);
       return found.length > 0 ? found : null;
@@ -59,469 +59,252 @@ export default function ScrollExperience({
 
     const ctx = gsap.context(() => {
       // -------------------------------------------------------------
-      // 1. INITIAL RESTING STATE CONFIGURATION
+      // 1. INITIAL RESTING STATE CONFIGURATION FOR ALL 6 SCENES
       // -------------------------------------------------------------
 
-      // Layer 0: THE BUSINESS — Settled, illuminated, interactive
+      // Layer 0: Active & Visible
       gsap.set(layers[0], { opacity: 1, pointerEvents: "auto", zIndex: 20 });
 
-      // Typography Initial State
-      const bLabel = q(layers[0], ".scene-business-label");
-      if (bLabel) gsap.set(bLabel, { x: 0, opacity: 1 });
-
-      const bLine1 = q(layers[0], ".scene-business-head-line-1");
-      if (bLine1) gsap.set(bLine1, { x: 0, y: 0, letterSpacing: "normal", opacity: 1 });
-
-      const bLine2 = q(layers[0], ".scene-business-head-line-2");
-      if (bLine2) gsap.set(bLine2, { x: 0, y: 0, opacity: 1 });
-
-      const bSubline = q(layers[0], ".scene-business-subline");
-      if (bSubline) gsap.set(bSubline, { x: 0, y: 0, opacity: 1 });
-
-      const bMeta = q(layers[0], ".scene-business-meta");
-      if (bMeta) gsap.set(bMeta, { x: 0, opacity: 1 });
-
-      const bCta = q(layers[0], ".scene-business-cta");
-      if (bCta) gsap.set(bCta, { x: 0, scale: 1, opacity: 1 });
-
-      const bScroll = q(layers[0], ".scene-business-scroll");
-      if (bScroll) gsap.set(bScroll, { y: 0, opacity: 1 });
-
-      // Product UI Initial State
-      const bWrapper = q(layers[0], ".scene-business-panel-wrapper");
-      if (bWrapper) gsap.set(bWrapper, { x: 0, y: 0, scale: 1, opacity: 1 });
-
-      const bGlow = q(layers[0], ".scene-business-glow");
-      if (bGlow) gsap.set(bGlow, { scale: 1, opacity: 1 });
-
-      const bCardHeader = q(layers[0], ".scene-business-card-header");
-      if (bCardHeader) gsap.set(bCardHeader, { y: 0, opacity: 1 });
-
-      const bMetricPrimary = q(layers[0], ".scene-business-metric-primary");
-      if (bMetricPrimary) gsap.set(bMetricPrimary, { x: 0, y: 0, opacity: 1 });
-
-      const bMetricSlot = q(layers[0], ".scene-business-metric-slot");
-      if (bMetricSlot) gsap.set(bMetricSlot, { x: 0, y: 0, opacity: 1 });
-
-      const bMetricStaff = q(layers[0], ".scene-business-metric-staff");
-      if (bMetricStaff) gsap.set(bMetricStaff, { x: 0, y: 0, opacity: 1 });
-
-      const bCardFooter = q(layers[0], ".scene-business-card-footer");
-      if (bCardFooter) gsap.set(bCardFooter, { y: 0, opacity: 1 });
-
-      // Layer 1: CUSTOMER EXPERIENCE — Concealed with refined entrance offsets
-      gsap.set(layers[1], { opacity: 0, pointerEvents: "none", zIndex: 10 });
-
-      // Typography Entrance Pre-conditions
-      const cLabel = q(layers[1], ".scene-customer-label");
-      if (cLabel) gsap.set(cLabel, { y: -15, opacity: 0 });
-
-      const cLine1 = q(layers[1], ".scene-customer-head-line-1");
-      if (cLine1) gsap.set(cLine1, { y: 40, opacity: 0 });
-
-      const cLine2 = q(layers[1], ".scene-customer-head-line-2");
-      if (cLine2) gsap.set(cLine2, { y: 40, opacity: 0 });
-
-      const cLine3 = q(layers[1], ".scene-customer-head-line-3");
-      if (cLine3) gsap.set(cLine3, { y: 40, opacity: 0 });
-
-      const cSubline = q(layers[1], ".scene-customer-subline");
-      if (cSubline) gsap.set(cSubline, { y: 20, opacity: 0 });
-
-      const cMeta = q(layers[1], ".scene-customer-meta");
-      if (cMeta) gsap.set(cMeta, { y: 15, opacity: 0 });
-
-      const cCta = q(layers[1], ".scene-customer-cta");
-      if (cCta) gsap.set(cCta, { y: 15, scale: 0.96, opacity: 0 });
-
-      // Product UI Entrance Pre-conditions
-      const cWrapper = q(layers[1], ".scene-customer-panel-wrapper");
-      if (cWrapper) {
-        gsap.set(cWrapper, {
-          y: 25,
-          scale: 0.95,
-          opacity: 0,
-        });
+      // Layers 1-5: Dormant initial state
+      for (let i = 1; i < layers.length; i++) {
+        gsap.set(layers[i], { opacity: 0, pointerEvents: "none", zIndex: 10 });
       }
 
-      const cGlow = q(layers[1], ".scene-customer-glow");
-      if (cGlow) gsap.set(cGlow, { scale: 0.85, opacity: 0 });
+      // Pre-set offsets for initial entry of dormant scenes
+      for (let i = 1; i < layers.length; i++) {
+        const layer = layers[i];
+        const labels = q(layer, "[class*='-label']");
+        if (labels) gsap.set(labels, { y: -15, opacity: 0 });
 
-      const cCardHeader = q(layers[1], ".scene-customer-card-header");
-      if (cCardHeader) gsap.set(cCardHeader, { y: -12, opacity: 0 });
+        const headlines = q(layer, "[class*='-head-line-']");
+        if (headlines) gsap.set(headlines, { y: 40, opacity: 0 });
 
-      const cStep1 = q(layers[1], ".scene-customer-step-1");
-      if (cStep1) gsap.set(cStep1, { x: 25, opacity: 0 });
+        const sublines = q(layer, "[class*='-subline']");
+        if (sublines) gsap.set(sublines, { y: 20, opacity: 0 });
 
-      const cStep2 = q(layers[1], ".scene-customer-step-2");
-      if (cStep2) gsap.set(cStep2, { x: 25, opacity: 0 });
+        const metas = q(layer, "[class*='-meta']");
+        if (metas) gsap.set(metas, { y: 15, opacity: 0 });
 
-      const cStep3 = q(layers[1], ".scene-customer-step-3");
-      if (cStep3) gsap.set(cStep3, { x: 25, opacity: 0 });
+        const ctas = q(layer, "[class*='-cta']");
+        if (ctas) gsap.set(ctas, { y: 15, scale: 0.96, opacity: 0 });
 
-      const cStep4 = q(layers[1], ".scene-customer-step-4");
-      if (cStep4) gsap.set(cStep4, { x: 25, opacity: 0 });
+        const wrappers = q(layer, "[class*='-panel-wrapper']");
+        if (wrappers) gsap.set(wrappers, { y: 25, scale: 0.95, opacity: 0 });
 
-      const cCardFooter = q(layers[1], ".scene-customer-card-footer");
-      if (cCardFooter) gsap.set(cCardFooter, { y: 15, opacity: 0 });
-
-      // Park scenes 2-5 dormant for Milestone 1
-      for (let i = 2; i < layers.length; i++) {
-        gsap.set(layers[i], { display: "none", opacity: 0, pointerEvents: "none" });
+        const glows = q(layer, "[class*='-glow']");
+        if (glows) gsap.set(glows, { scale: 0.85, opacity: 0 });
       }
 
       // -------------------------------------------------------------
-      // 2. MASTER GSAP SCROLLTRIGGER SCRUBBED TIMELINE
+      // 2. MASTER GSAP SCROLLTRIGGER SCRUBBED TIMELINE (6500px track)
       // -------------------------------------------------------------
+      // 6500px provides ample physical scroll length so all 6 scene transitions
+      // feel luxurious and the walking character movement speed is calm and natural.
       const masterTl = gsap.timeline({
         scrollTrigger: {
           id: "experience-trigger",
           trigger: container,
           pin: stage,
           start: "top top",
-          end: "+=1800",
-          scrub: 0.6,
+          end: "+=6500",
+          scrub: 0.7,
           anticipatePin: 1,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
             const p = self.progress;
             setScrollProgress(p);
-            const currentIdx = p < 0.4 ? 0 : 1;
-            onSceneChange(currentIdx, p);
+            // Scene index tracking across 6 scenes:
+            // 0: Business, 1: Customer, 2: Staff, 3: Control, 4: System, 5: Platform
+            const idx =
+              p < 0.17 ? 0 :
+              p < 0.35 ? 1 :
+              p < 0.53 ? 2 :
+              p < 0.71 ? 3 :
+              p < 0.89 ? 4 : 5;
+            onSceneChange(idx, p);
           },
         },
       });
 
-      // -------------------------------------------------------------
-      // PHASE A: ENVIRONMENT & BACKGROUND HARMONY
-      // -------------------------------------------------------------
+      // Background atmospheric lighting shifts
       if (stageBg) {
-        masterTl.to(
-          stageBg,
-          {
-            backgroundColor: "#FFFDF8",
-            duration: 0.8,
-            ease: "power1.inOut",
-          },
-          0.1
-        );
+        masterTl.to(stageBg, { backgroundColor: "#FFFDF8", duration: 1.0, ease: "power1.inOut" }, 0.2);
+        masterTl.to(stageBg, { backgroundColor: "#F9F6EE", duration: 1.0, ease: "power1.inOut" }, 0.55);
+        masterTl.to(stageBg, { backgroundColor: "#F8F7F3", duration: 1.0, ease: "power1.inOut" }, 0.85);
       }
 
-      if (stageAtmosphere) {
-        masterTl.to(
-          stageAtmosphere,
-          {
-            opacity: 0.9,
-            scale: 1.1,
-            duration: 0.8,
-            ease: "power2.inOut",
-          },
-          0.1
-        );
+      // =============================================================
+      // TRANSITION 1: SCENE 0 (BUSINESS) -> SCENE 1 (CUSTOMER)
+      // Active: 0.00 -> 0.14 | Transition: 0.10 -> 0.22 | Settle: 0.22 -> 0.32
+      // =============================================================
+      const bScroll = q(layers[0], ".scene-business-scroll");
+      if (bScroll) masterTl.to(bScroll, { opacity: 0, y: 15, duration: 0.04 }, 0.0);
+
+      const bHead = q(layers[0], "[class*='scene-business-head-line-']");
+      if (bHead) masterTl.to(bHead, { x: -40, opacity: 0, duration: 0.08, ease: "power2.in", stagger: 0.02 }, 0.08);
+
+      const bCopy = q(layers[0], ".scene-business-subline, .scene-business-meta, .scene-business-cta");
+      if (bCopy) masterTl.to(bCopy, { x: -30, opacity: 0, duration: 0.07, ease: "power2.in", stagger: 0.01 }, 0.09);
+
+      const bPanel = q(layers[0], ".scene-business-panel-wrapper, .scene-business-glow");
+      if (bPanel) masterTl.to(bPanel, { y: -20, scale: 0.94, opacity: 0, duration: 0.08, ease: "power2.in" }, 0.09);
+
+      masterTl.to(layers[0], { opacity: 0, duration: 0.03 }, 0.14);
+      masterTl.set(layers[0], { pointerEvents: "none", zIndex: 10 }, 0.15);
+
+      if (layers[1]) {
+        masterTl.set(layers[1], { pointerEvents: "auto", zIndex: 20 }, 0.15);
+        masterTl.to(layers[1], { opacity: 1, duration: 0.04 }, 0.15);
+
+        const cHead = q(layers[1], "[class*='scene-customer-head-line-']");
+        if (cHead) masterTl.to(cHead, { y: 0, opacity: 1, duration: 0.08, ease: "power3.out", stagger: 0.02 }, 0.16);
+
+        const cCopy = q(layers[1], ".scene-customer-label, .scene-customer-subline, .scene-customer-meta, .scene-customer-cta");
+        if (cCopy) masterTl.to(cCopy, { y: 0, opacity: 1, scale: 1, duration: 0.07, ease: "power3.out", stagger: 0.015 }, 0.16);
+
+        const cPanel = q(layers[1], ".scene-customer-panel-wrapper, .scene-customer-glow");
+        if (cPanel) masterTl.to(cPanel, { y: 0, scale: 1.0, opacity: 1, duration: 0.08, ease: "power3.out" }, 0.16);
+
+        const cSteps = q(layers[1], "[class*='scene-customer-step-']");
+        if (cSteps) masterTl.to(cSteps, { x: 0, opacity: 1, duration: 0.05, ease: "power2.out", stagger: 0.015 }, 0.18);
       }
 
-      // -------------------------------------------------------------
-      // PHASE B: OUTGOING BUSINESS SCENE CLEAN DISASSEMBLY (0.00 -> 0.36)
-      // -------------------------------------------------------------
-      // Scroll cue disappears first
-      if (bScroll) {
-        masterTl.to(bScroll, { opacity: 0, y: 15, duration: 0.12, ease: "power2.in" }, 0.0);
+      // =============================================================
+      // TRANSITION 2: SCENE 1 (CUSTOMER) -> SCENE 2 (STAFF)
+      // Active: 0.22 -> 0.32 | Transition: 0.28 -> 0.40 | Settle: 0.40 -> 0.50
+      // =============================================================
+      if (layers[1]) {
+        const cExitHead = q(layers[1], "[class*='scene-customer-head-line-']");
+        if (cExitHead) masterTl.to(cExitHead, { x: -40, opacity: 0, duration: 0.08, ease: "power2.in", stagger: 0.02 }, 0.28);
+
+        const cExitCopy = q(layers[1], ".scene-customer-subline, .scene-customer-meta, .scene-customer-cta");
+        if (cExitCopy) masterTl.to(cExitCopy, { x: -30, opacity: 0, duration: 0.07, ease: "power2.in" }, 0.29);
+
+        const cExitPanel = q(layers[1], ".scene-customer-panel-wrapper, .scene-customer-glow");
+        if (cExitPanel) masterTl.to(cExitPanel, { y: -20, scale: 0.94, opacity: 0, duration: 0.08, ease: "power2.in" }, 0.29);
+
+        masterTl.to(layers[1], { opacity: 0, duration: 0.03 }, 0.33);
+        masterTl.set(layers[1], { pointerEvents: "none", zIndex: 10 }, 0.34);
       }
 
-      // Kinetic Typography Disassembly on Left Flank (Clean, focused retreat)
-      if (bLine1) {
-        masterTl.to(
-          bLine1,
-          {
-            x: -45,
-            letterSpacing: "0.03em",
-            opacity: 0,
-            duration: 0.24,
-            ease: "power2.in",
-          },
-          0.05
-        );
+      if (layers[2]) {
+        masterTl.set(layers[2], { pointerEvents: "auto", zIndex: 20 }, 0.34);
+        masterTl.to(layers[2], { opacity: 1, duration: 0.04 }, 0.34);
+
+        const sHead = q(layers[2], "[class*='scene-staff-head-line-']");
+        if (sHead) masterTl.to(sHead, { y: 0, opacity: 1, duration: 0.08, ease: "power3.out", stagger: 0.02 }, 0.35);
+
+        const sCopy = q(layers[2], ".scene-staff-label, .scene-staff-subline, .scene-staff-meta, .scene-staff-cta");
+        if (sCopy) masterTl.to(sCopy, { y: 0, opacity: 1, scale: 1, duration: 0.07, ease: "power3.out", stagger: 0.015 }, 0.35);
+
+        const sPanel = q(layers[2], ".scene-staff-panel-wrapper, .scene-staff-glow");
+        if (sPanel) masterTl.to(sPanel, { y: 0, scale: 1.0, opacity: 1, duration: 0.08, ease: "power3.out" }, 0.35);
+
+        const sItems = q(layers[2], "[class*='scene-staff-item-'], .scene-staff-timeline");
+        if (sItems) masterTl.to(sItems, { x: 0, opacity: 1, duration: 0.05, ease: "power2.out", stagger: 0.015 }, 0.37);
       }
 
-      if (bLine2) {
-        masterTl.to(
-          bLine2,
-          {
-            x: -35,
-            y: 10,
-            opacity: 0,
-            duration: 0.24,
-            ease: "power2.in",
-          },
-          0.08
-        );
+      // =============================================================
+      // TRANSITION 3: SCENE 2 (STAFF) -> SCENE 3 (CONTROL)
+      // Active: 0.40 -> 0.50 | Transition: 0.46 -> 0.58 | Settle: 0.58 -> 0.68
+      // =============================================================
+      if (layers[2]) {
+        const sExitHead = q(layers[2], "[class*='scene-staff-head-line-']");
+        if (sExitHead) masterTl.to(sExitHead, { x: -40, opacity: 0, duration: 0.08, ease: "power2.in", stagger: 0.02 }, 0.46);
+
+        const sExitCopy = q(layers[2], ".scene-staff-subline, .scene-staff-meta, .scene-staff-cta");
+        if (sExitCopy) masterTl.to(sExitCopy, { x: -30, opacity: 0, duration: 0.07, ease: "power2.in" }, 0.47);
+
+        const sExitPanel = q(layers[2], ".scene-staff-panel-wrapper, .scene-staff-glow");
+        if (sExitPanel) masterTl.to(sExitPanel, { y: -20, scale: 0.94, opacity: 0, duration: 0.08, ease: "power2.in" }, 0.47);
+
+        masterTl.to(layers[2], { opacity: 0, duration: 0.03 }, 0.51);
+        masterTl.set(layers[2], { pointerEvents: "none", zIndex: 10 }, 0.52);
       }
 
-      if (bSubline) {
-        masterTl.to(
-          bSubline,
-          {
-            x: -25,
-            opacity: 0,
-            duration: 0.22,
-            ease: "power2.in",
-          },
-          0.10
-        );
+      if (layers[3]) {
+        masterTl.set(layers[3], { pointerEvents: "auto", zIndex: 20 }, 0.52);
+        masterTl.to(layers[3], { opacity: 1, duration: 0.04 }, 0.52);
+
+        const ctHead = q(layers[3], "[class*='scene-control-head-line-']");
+        if (ctHead) masterTl.to(ctHead, { y: 0, opacity: 1, duration: 0.08, ease: "power3.out", stagger: 0.02 }, 0.53);
+
+        const ctCopy = q(layers[3], ".scene-control-label, .scene-control-subline, .scene-control-meta, .scene-control-cta");
+        if (ctCopy) masterTl.to(ctCopy, { y: 0, opacity: 1, scale: 1, duration: 0.07, ease: "power3.out", stagger: 0.015 }, 0.53);
+
+        const ctPanel = q(layers[3], ".scene-control-panel-wrapper, .scene-control-glow");
+        if (ctPanel) masterTl.to(ctPanel, { y: 0, scale: 1.0, opacity: 1, duration: 0.08, ease: "power3.out" }, 0.53);
+
+        const ctMetrics = q(layers[3], "[class*='scene-control-metric-'], .scene-control-chart");
+        if (ctMetrics) masterTl.to(ctMetrics, { y: 0, opacity: 1, duration: 0.05, ease: "power2.out", stagger: 0.015 }, 0.55);
       }
 
-      if (bMeta) {
-        masterTl.to(
-          bMeta,
-          {
-            x: -20,
-            opacity: 0,
-            duration: 0.20,
-            ease: "power2.in",
-          },
-          0.12
-        );
+      // =============================================================
+      // TRANSITION 4: SCENE 3 (CONTROL) -> SCENE 4 (SYSTEM)
+      // Active: 0.58 -> 0.68 | Transition: 0.64 -> 0.76 | Settle: 0.76 -> 0.86
+      // =============================================================
+      if (layers[3]) {
+        const ctExitHead = q(layers[3], "[class*='scene-control-head-line-']");
+        if (ctExitHead) masterTl.to(ctExitHead, { x: -40, opacity: 0, duration: 0.08, ease: "power2.in", stagger: 0.02 }, 0.64);
+
+        const ctExitCopy = q(layers[3], ".scene-control-subline, .scene-control-meta, .scene-control-cta");
+        if (ctExitCopy) masterTl.to(ctExitCopy, { x: -30, opacity: 0, duration: 0.07, ease: "power2.in" }, 0.65);
+
+        const ctExitPanel = q(layers[3], ".scene-control-panel-wrapper, .scene-control-glow");
+        if (ctExitPanel) masterTl.to(ctExitPanel, { y: -20, scale: 0.94, opacity: 0, duration: 0.08, ease: "power2.in" }, 0.65);
+
+        masterTl.to(layers[3], { opacity: 0, duration: 0.03 }, 0.69);
+        masterTl.set(layers[3], { pointerEvents: "none", zIndex: 10 }, 0.70);
       }
 
-      if (bLabel) {
-        masterTl.to(
-          bLabel,
-          {
-            x: -20,
-            opacity: 0,
-            duration: 0.18,
-            ease: "power2.in",
-          },
-          0.06
-        );
+      if (layers[4]) {
+        masterTl.set(layers[4], { pointerEvents: "auto", zIndex: 20 }, 0.70);
+        masterTl.to(layers[4], { opacity: 1, duration: 0.04 }, 0.70);
+
+        const syHead = q(layers[4], "[class*='scene-system-head-line-']");
+        if (syHead) masterTl.to(syHead, { y: 0, opacity: 1, duration: 0.08, ease: "power3.out", stagger: 0.02 }, 0.71);
+
+        const syCopy = q(layers[4], ".scene-system-label, .scene-system-subline, .scene-system-meta, .scene-system-cta");
+        if (syCopy) masterTl.to(syCopy, { y: 0, opacity: 1, scale: 1, duration: 0.07, ease: "power3.out", stagger: 0.015 }, 0.71);
+
+        const syPanel = q(layers[4], ".scene-system-panel-wrapper, .scene-system-glow");
+        if (syPanel) masterTl.to(syPanel, { y: 0, scale: 1.0, opacity: 1, duration: 0.08, ease: "power3.out" }, 0.71);
+
+        const syMods = q(layers[4], "[class*='scene-system-mod-']");
+        if (syMods) masterTl.to(syMods, { scale: 1, opacity: 1, duration: 0.05, ease: "power2.out", stagger: 0.01 }, 0.73);
       }
 
-      if (bCta) {
-        masterTl.to(
-          bCta,
-          {
-            x: -25,
-            scale: 0.96,
-            opacity: 0,
-            duration: 0.20,
-            ease: "power2.in",
-          },
-          0.12
-        );
+      // =============================================================
+      // TRANSITION 5: SCENE 4 (SYSTEM) -> SCENE 5 (PLATFORM FINALE)
+      // Active: 0.76 -> 0.86 | Transition: 0.84 -> 0.94 | Settle: 0.94 -> 1.00
+      // =============================================================
+      if (layers[4]) {
+        const syExitHead = q(layers[4], "[class*='scene-system-head-line-']");
+        if (syExitHead) masterTl.to(syExitHead, { x: -40, opacity: 0, duration: 0.08, ease: "power2.in", stagger: 0.02 }, 0.84);
+
+        const syExitCopy = q(layers[4], ".scene-system-subline, .scene-system-meta, .scene-system-cta");
+        if (syExitCopy) masterTl.to(syExitCopy, { x: -30, opacity: 0, duration: 0.07, ease: "power2.in" }, 0.85);
+
+        const syExitPanel = q(layers[4], ".scene-system-panel-wrapper, .scene-system-glow");
+        if (syExitPanel) masterTl.to(syExitPanel, { y: -20, scale: 0.94, opacity: 0, duration: 0.08, ease: "power2.in" }, 0.85);
+
+        masterTl.to(layers[4], { opacity: 0, duration: 0.03 }, 0.89);
+        masterTl.set(layers[4], { pointerEvents: "none", zIndex: 10 }, 0.90);
       }
 
-      // Product UI Telemetry Panel Disassembly on Right Flank
-      if (bMetricPrimary) {
-        masterTl.to(bMetricPrimary, { y: -15, opacity: 0, duration: 0.18, ease: "power2.in" }, 0.08);
-      }
-      if (bMetricSlot) {
-        masterTl.to(bMetricSlot, { y: 15, opacity: 0, duration: 0.18, ease: "power2.in" }, 0.10);
-      }
-      if (bMetricStaff) {
-        masterTl.to(bMetricStaff, { y: 15, opacity: 0, duration: 0.18, ease: "power2.in" }, 0.12);
-      }
-      if (bCardHeader) {
-        masterTl.to(bCardHeader, { y: -10, opacity: 0, duration: 0.18, ease: "power2.in" }, 0.08);
-      }
-      if (bCardFooter) {
-        masterTl.to(bCardFooter, { y: 10, opacity: 0, duration: 0.16, ease: "power2.in" }, 0.12);
+      if (layers[5]) {
+        masterTl.set(layers[5], { pointerEvents: "auto", zIndex: 20 }, 0.90);
+        masterTl.to(layers[5], { opacity: 1, duration: 0.04 }, 0.90);
+
+        const pHead = q(layers[5], "[class*='scene-platform-head-line-']");
+        if (pHead) masterTl.to(pHead, { y: 0, opacity: 1, duration: 0.08, ease: "power3.out", stagger: 0.02 }, 0.91);
+
+        const pCopy = q(layers[5], ".scene-platform-label, .scene-platform-subline, .scene-platform-cta, .scene-platform-meta");
+        if (pCopy) masterTl.to(pCopy, { y: 0, opacity: 1, scale: 1, duration: 0.07, ease: "power3.out", stagger: 0.015 }, 0.91);
       }
 
-      if (bWrapper) {
-        masterTl.to(
-          bWrapper,
-          {
-            y: -20,
-            scale: 0.94,
-            opacity: 0,
-            duration: 0.26,
-            ease: "power2.in",
-          },
-          0.08
-        );
-      }
-
-      if (bGlow) {
-        masterTl.to(
-          bGlow,
-          {
-            scale: 0.8,
-            opacity: 0,
-            duration: 0.24,
-            ease: "power2.in",
-          },
-          0.08
-        );
-      }
-
-      // Clean Layer Hand-Off (Outgoing completely fades before Incoming enters)
-      masterTl.to(layers[0], { opacity: 0, duration: 0.06, ease: "power1.in" }, 0.34);
-      masterTl.set(layers[0], { pointerEvents: "none", zIndex: 10 }, 0.36);
-
-      // -------------------------------------------------------------
-      // PHASE C: INCOMING CUSTOMER SCENE CLEAN ASSEMBLY (0.36 -> 0.78)
-      // -------------------------------------------------------------
-      masterTl.set(layers[1], { pointerEvents: "auto", zIndex: 20 }, 0.36);
-      masterTl.to(layers[1], { opacity: 1, duration: 0.08, ease: "power1.out" }, 0.36);
-
-      // Left Flank Kinetic Typography Staggered Entry
-      if (cLabel) {
-        masterTl.to(
-          cLabel,
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.22,
-            ease: "power3.out",
-          },
-          0.38
-        );
-      }
-
-      if (cLine1) {
-        masterTl.to(
-          cLine1,
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.25,
-            ease: "power3.out",
-          },
-          0.42
-        );
-      }
-
-      if (cLine2) {
-        masterTl.to(
-          cLine2,
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.25,
-            ease: "power3.out",
-          },
-          0.46
-        );
-      }
-
-      if (cLine3) {
-        masterTl.to(
-          cLine3,
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.25,
-            ease: "power3.out",
-          },
-          0.50
-        );
-      }
-
-      if (cSubline) {
-        masterTl.to(
-          cSubline,
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.22,
-            ease: "power3.out",
-          },
-          0.54
-        );
-      }
-
-      if (cMeta) {
-        masterTl.to(
-          cMeta,
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.20,
-            ease: "power3.out",
-          },
-          0.58
-        );
-      }
-
-      if (cCta) {
-        masterTl.to(
-          cCta,
-          {
-            y: 0,
-            scale: 1,
-            opacity: 1,
-            duration: 0.22,
-            ease: "power3.out",
-          },
-          0.62
-        );
-      }
-
-      // Right Flank Customer Step Progression Card Entry
-      if (cGlow) {
-        masterTl.to(
-          cGlow,
-          {
-            scale: 1,
-            opacity: 1,
-            duration: 0.28,
-            ease: "power2.out",
-          },
-          0.40
-        );
-      }
-
-      if (cWrapper) {
-        masterTl.to(
-          cWrapper,
-          {
-            y: 0,
-            scale: 1.0,
-            opacity: 1,
-            duration: 0.28,
-            ease: "power3.out",
-          },
-          0.40
-        );
-      }
-
-      if (cCardHeader) {
-        masterTl.to(
-          cCardHeader,
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.18,
-            ease: "power3.out",
-          },
-          0.44
-        );
-      }
-
-      if (cStep1) {
-        masterTl.to(cStep1, { x: 0, opacity: 1, duration: 0.16, ease: "power2.out" }, 0.48);
-      }
-
-      if (cStep2) {
-        masterTl.to(cStep2, { x: 0, opacity: 1, duration: 0.16, ease: "power2.out" }, 0.52);
-      }
-
-      if (cStep3) {
-        masterTl.to(cStep3, { x: 0, opacity: 1, duration: 0.16, ease: "power2.out" }, 0.56);
-      }
-
-      if (cStep4) {
-        masterTl.to(cStep4, { x: 0, opacity: 1, duration: 0.16, ease: "power2.out" }, 0.60);
-      }
-
-      if (cCardFooter) {
-        masterTl.to(cCardFooter, { y: 0, opacity: 1, duration: 0.18, ease: "power3.out" }, 0.64);
-      }
-
-      // -------------------------------------------------------------
-      // PHASE D: ROCK-SOLID SETTLED PLATEAU HOLD (0.75 -> 1.15)
-      // -------------------------------------------------------------
-      masterTl.to({}, { duration: 0.4 }, 0.75);
+      // Settled Hold Plateau at the very end
+      masterTl.to({}, { duration: 0.1 }, 0.96);
 
       const refreshTimeout = setTimeout(() => {
         ScrollTrigger.refresh();

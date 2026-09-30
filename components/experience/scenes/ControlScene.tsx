@@ -12,7 +12,7 @@ export function ControlScene() {
     { label: "Total Bookings", value: "248", icon: Calendar, change: "+18%", color: "text-[#C69A4B] bg-[#FFF8ED]" },
     { label: "Total Revenue", value: "₹1,24,500", icon: TrendingUp, change: "+32%", color: "text-[#5C9E6E] bg-[#F0FDF4]" },
     { label: "New Customers", value: "86", icon: Users, change: "+14%", color: "text-[#2563EB] bg-[#EFF6FF]" },
-    { label: "Verified Rating", value: "4.8", icon: Star, change: "★ 98 reviews", color: "text-[#D89A2B] bg-[#FEFCE8]" },
+    { label: "Verified Rating", value: "4.8", icon: Star, change: "★ 98 rev", color: "text-[#D89A2B] bg-[#FEFCE8]" },
   ];
 
   const days = [
@@ -26,35 +26,67 @@ export function ControlScene() {
   ];
 
   return (
-    <div className="w-full h-full min-h-screen flex items-center justify-center px-6 sm:px-12 lg:px-16 py-20 relative overflow-hidden">
-      <div className="max-w-6xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center z-10 lg:pr-20">
-        {/* Left Editorial Typography */}
-        <div className="lg:col-span-6 flex flex-col items-start text-left">
+    <div className="w-full h-full min-h-screen flex items-center justify-between px-6 sm:px-10 lg:px-14 xl:px-20 py-20 relative overflow-hidden">
+      {/* Subtle Architectural Grid Hairlines */}
+      <div className="absolute inset-0 pointer-events-none grid grid-cols-4 max-w-7xl mx-auto px-6 sm:px-10 lg:px-14 xl:px-20 opacity-20">
+        <div className="border-r border-[#DDD6C9]/50 h-full" />
+        <div className="border-r border-[#DDD6C9]/50 h-full" />
+        <div className="border-r border-[#DDD6C9]/50 h-full" />
+        <div className="h-full" />
+      </div>
+
+      <div className="w-full max-w-[1440px] mx-auto flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-6 z-10 pointer-events-none">
+        {/* Left Editorial Typography (Strictly bound to left flank, never occluding center 3D) */}
+        <div className="w-full lg:w-[420px] xl:w-[460px] flex flex-col items-start text-left flex-shrink-0 pointer-events-auto">
           {/* Category Label */}
-          <div className="scene-control-label flex items-center gap-3 mb-6 sm:mb-8">
-            <div className="w-8 h-[1.5px] bg-[#C69A4B]" />
-            <span className="text-[11px] uppercase tracking-[0.25em] font-extrabold text-[#C69A4B]">
+          <div className="scene-control-label flex items-center gap-3.5 mb-6 sm:mb-8 will-change-transform">
+            <div className="w-9 h-[1.5px] bg-[#C69A4B]" />
+            <span className="text-[11px] uppercase tracking-[0.28em] font-extrabold text-[#C69A4B]">
               {sceneData?.number} — {sceneData?.label}
             </span>
           </div>
 
-          {/* Primary Editorial Headline */}
-          <h1 className="scene-control-headline text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-[#2A2927] leading-[1.08] mb-6 sm:mb-8 max-w-2xl">
-            EVERYTHING <br className="hidden sm:inline" />
-            HAPPENING. <br className="hidden sm:inline" />
-            <span className="text-[#C69A4B]">ONE PLACE.</span>
+          {/* Primary Editorial Kinetic Headline with Masked Line Wrappers */}
+          <h1 className="scene-control-headline text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold tracking-tight text-[#2A2927] leading-[1.06] mb-6 sm:mb-8 max-w-xl">
+            <span className="block overflow-hidden pb-1">
+              <span className="scene-control-head-line-1 inline-block will-change-transform">
+                EVERYTHING
+              </span>
+            </span>
+            <span className="block overflow-hidden py-1">
+              <span className="scene-control-head-line-2 inline-block will-change-transform">
+                HAPPENING.
+              </span>
+            </span>
+            <span className="block overflow-hidden pt-1">
+              <span className="scene-control-head-line-3 inline-block will-change-transform text-[#C69A4B]">
+                ONE PLACE.
+              </span>
+            </span>
           </h1>
 
           {/* Supporting Subline */}
-          <p className="scene-control-subline text-base sm:text-lg lg:text-xl text-[#5D5A56] max-w-lg mb-8 sm:mb-10 leading-relaxed font-normal">
+          <p className="scene-control-subline text-base sm:text-lg text-[#5D5A56] max-w-md mb-6 sm:mb-8 leading-relaxed font-normal will-change-transform">
             {sceneData?.subline}
           </p>
 
+          {/* Editorial Meta Tags */}
+          <div className="scene-control-meta flex items-center gap-3.5 text-[11px] font-mono tracking-wider uppercase text-[#8B857D] mb-8 sm:mb-10 will-change-transform">
+            <span className="flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C69A4B]" />
+              Multi-Tenant
+            </span>
+            <span className="text-[#DDD6C9]">·</span>
+            <span>Real-time Telemetry</span>
+            <span className="text-[#DDD6C9]">·</span>
+            <span>Zero Blindspots</span>
+          </div>
+
           {/* Interactive CTA */}
-          <div className="scene-control-cta">
+          <div className="scene-control-cta will-change-transform">
             <Link
               href="/dashboard/admin"
-              className="px-8 py-4 rounded-full bg-[#C69A4B] hover:bg-[#B7863D] text-white font-semibold text-sm shadow-[0_8px_25px_rgba(198,154,75,0.28)] transition-all duration-300 inline-flex items-center gap-2 group cursor-pointer"
+              className="px-7 py-3.5 rounded-full bg-[#C69A4B] hover:bg-[#B7863D] text-white font-semibold text-sm shadow-[0_8px_25px_rgba(198,154,75,0.28)] transition-all duration-300 inline-flex items-center gap-2 group cursor-pointer"
             >
               <ShieldCheck className="w-4 h-4" />
               <span>Open Executive Console</span>
@@ -63,73 +95,76 @@ export function ControlScene() {
           </div>
         </div>
 
+        {/* Center 3D Spatial Stage Clearing */}
+        <div className="hidden lg:block flex-1 min-w-[200px] pointer-events-none" />
+
         {/* Right Product UI Composition: Executive Analytics Suite */}
-        <div className="lg:col-span-6 relative w-full">
-          <div className="scene-control-panel relative">
+        <div className="w-full lg:w-[360px] xl:w-[390px] relative flex-shrink-0 pointer-events-auto" style={{ perspective: 1200 }}>
+          <div className="scene-control-panel-wrapper relative will-change-transform">
             {/* Ambient Glow */}
-            <div className="absolute -inset-4 bg-gradient-to-br from-[#D9C7A0]/20 via-[#ECE6D8]/30 to-transparent rounded-[36px] blur-2xl -z-10" />
+            <div className="scene-control-glow absolute -inset-5 bg-gradient-to-br from-[#D9C7A0]/20 via-[#ECE6D8]/30 to-transparent rounded-[36px] blur-2xl -z-10 will-change-transform" />
 
             {/* Main Glass Control Center Card */}
-            <div className="bg-[#FFFCF7]/95 backdrop-blur-2xl border border-[#DDD6C9] rounded-[28px] p-6 sm:p-8 shadow-[0_25px_70px_rgba(80,65,45,0.12)]">
+            <div className="scene-control-panel bg-[#FFFCF7]/95 backdrop-blur-2xl border border-[#DDD6C9] rounded-[24px] p-6 shadow-[0_25px_60px_rgba(80,65,45,0.12)] will-change-transform">
               {/* Header */}
-              <div className="flex items-center justify-between pb-4 mb-6 border-b border-[#ECE6D8]">
+              <div className="scene-control-card-header flex items-center justify-between pb-3.5 mb-4 border-b border-[#ECE6D8] will-change-transform">
                 <div>
-                  <h3 className="text-base font-bold text-[#2A2927]">Executive Revenue & Flow Analytics</h3>
-                  <p className="text-xs text-[#8B857D] font-medium">Real-time enterprise metrics & CRM telemetry</p>
+                  <h3 className="text-sm font-bold text-[#2A2927]">Revenue & Flow Analytics</h3>
+                  <p className="text-[11px] text-[#8B857D] font-medium">Real-time enterprise metrics & CRM</p>
                 </div>
-                <span className="text-xs font-bold text-[#C69A4B] bg-[#FFF8ED] border border-[#E8D7B2] px-3 py-1 rounded-full">
+                <span className="text-[10px] font-bold text-[#C69A4B] bg-[#FFF8ED] border border-[#E8D7B2] px-2.5 py-0.5 rounded-full">
                   Live Feed
                 </span>
               </div>
 
               {/* 4 Metric Cards Grid */}
-              <div className="grid grid-cols-2 gap-3.5 mb-6">
-                {metrics.map((m) => {
+              <div className="grid grid-cols-2 gap-2.5 mb-4">
+                {metrics.map((m, idx) => {
                   const IconComp = m.icon;
                   return (
                     <div
                       key={m.label}
-                      className="scene-control-stagger bg-white rounded-2xl p-4 border border-[#ECE6D8] shadow-sm"
+                      className={`scene-control-metric-${idx + 1} bg-white rounded-xl p-3 border border-[#ECE6D8] shadow-sm will-change-transform`}
                     >
-                      <div className="flex items-center justify-between mb-2">
-                        <div className={`w-8 h-8 rounded-xl flex items-center justify-center ${m.color}`}>
-                          <IconComp className="w-4 h-4" />
+                      <div className="flex items-center justify-between mb-1">
+                        <div className={`w-7 h-7 rounded-lg flex items-center justify-center ${m.color}`}>
+                          <IconComp className="w-3.5 h-3.5" />
                         </div>
                         <span className="text-[10px] font-bold text-[#5C9E6E]">{m.change}</span>
                       </div>
-                      <div className="text-xl sm:text-2xl font-extrabold text-[#2A2927]">{m.value}</div>
-                      <div className="text-xs text-[#8B857D] font-medium mt-0.5">{m.label}</div>
+                      <div className="text-lg font-extrabold text-[#2A2927]">{m.value}</div>
+                      <div className="text-[10px] text-[#8B857D] font-medium">{m.label}</div>
                     </div>
                   );
                 })}
               </div>
 
               {/* Weekly Performance Bar Chart */}
-              <div className="scene-control-stagger bg-white rounded-2xl p-5 border border-[#ECE6D8] shadow-sm mb-4">
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-xs font-bold text-[#2A2927]">Weekly Booking Volume</span>
-                  <span className="text-xs text-[#C69A4B] font-semibold">Peak: Sat (₹24.8k)</span>
+              <div className="scene-control-chart bg-white rounded-xl p-3.5 border border-[#ECE6D8] shadow-sm mb-3.5 will-change-transform">
+                <div className="flex items-center justify-between mb-2.5">
+                  <span className="text-[11px] font-bold text-[#2A2927]">Weekly Booking Volume</span>
+                  <span className="text-[10px] text-[#C69A4B] font-semibold">Peak: Sat (₹24.8k)</span>
                 </div>
 
-                <div className="h-28 w-full flex items-end justify-between gap-3 px-2 pt-2 border-b border-[#ECE6D8]">
+                <div className="h-20 w-full flex items-end justify-between gap-2 px-1 pt-1 border-b border-[#ECE6D8]">
                   {days.map((d) => (
-                    <div key={d.day} className="flex-1 flex flex-col items-center gap-1.5 h-full justify-end group">
+                    <div key={d.day} className="flex-1 flex flex-col items-center gap-1 h-full justify-end group">
                       <div
                         style={{ height: d.height }}
-                        className="w-full max-w-[28px] bg-gradient-to-t from-[#B7863D] to-[#C69A4B] rounded-t-lg transition-all duration-300 group-hover:from-[#C69A4B] group-hover:to-[#E8D7B2]"
+                        className="w-full max-w-[22px] bg-gradient-to-t from-[#B7863D] to-[#C69A4B] rounded-t-md transition-all duration-300 group-hover:from-[#C69A4B] group-hover:to-[#E8D7B2]"
                       />
-                      <span className="text-[10px] font-bold text-[#8B857D]">{d.day}</span>
+                      <span className="text-[9px] font-bold text-[#8B857D]">{d.day}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* Top Services Breakdown */}
-              <div className="scene-control-stagger flex items-center justify-between text-xs text-[#5D5A56] px-1 pt-1">
-                <span className="font-semibold">Top Performing:</span>
-                <span className="text-[#2A2927] font-bold">Executive Audit (42%)</span>
+              <div className="scene-control-card-footer flex items-center justify-between text-[10px] text-[#5D5A56] px-1 pt-1 will-change-transform">
+                <span className="font-semibold text-[#8B857D]">Top:</span>
+                <span className="text-[#2A2927] font-bold">Audit (42%)</span>
                 <span>·</span>
-                <span className="text-[#2A2927] font-bold">Tech Blueprint (35%)</span>
+                <span className="text-[#2A2927] font-bold">Blueprint (35%)</span>
                 <span>·</span>
                 <span className="text-[#2A2927] font-bold">Consult (23%)</span>
               </div>
