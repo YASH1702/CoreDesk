@@ -13,14 +13,6 @@ import { ControlScene } from "@/components/experience/scenes/ControlScene";
 import { SystemScene } from "@/components/experience/scenes/SystemScene";
 import { PlatformScene } from "@/components/experience/scenes/PlatformScene";
 
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ScrollToPlugin } from "gsap/ScrollToPlugin";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
-}
-
 export default function HomePage() {
   const [activeScene, setActiveScene] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -31,29 +23,11 @@ export default function HomePage() {
   }, []);
 
   const handleSelectScene = useCallback((index: number) => {
-    const st = ScrollTrigger.getById("experience-trigger");
-    if (st) {
-      // Precise resting coordinates across all 6 scenes:
-      // 0: Business (0.0), 1: Customer (0.24), 2: Staff (0.43), 3: Control (0.61), 4: System (0.80), 5: Platform (1.0)
-      const sceneTargets = [0.0, 0.24, 0.43, 0.61, 0.80, 1.0];
-      const targetProgress = sceneTargets[index] ?? (index / 5);
-      const targetY = st.start + targetProgress * (st.end - st.start);
-      gsap.to(window, {
-        scrollTo: { y: targetY, autoKill: false },
-        duration: 0.9,
-        ease: "power2.inOut",
-      });
-    } else {
-      const container = document.getElementById("experience-container");
-      if (!container) return;
-      const targetProgress = index / 5;
-      const targetY = container.offsetTop + targetProgress * (container.offsetHeight - window.innerHeight);
-      window.scrollTo({ top: targetY, behavior: "smooth" });
-    }
+    setActiveScene(index);
   }, []);
 
   return (
-    <div className="relative bg-[#F8F7F3] text-[#2A2927] selection:bg-[#C69A4B] selection:text-white overflow-x-clip">
+    <div className="relative w-full h-screen overflow-hidden bg-[#F8F7F3] text-[#2A2927] selection:bg-[#C69A4B] selection:text-white">
       {/* Persistent Navigation */}
       <ExperienceNav />
       <SceneNav
@@ -62,7 +36,7 @@ export default function HomePage() {
         onSelectScene={handleSelectScene}
       />
 
-      {/* Cinematic Pinned Scroll Experience Across All 6 Scenes */}
+      {/* Cinematic Stepped Operating System Stage Across All 6 Scenes */}
       <ScrollExperience
         activeScene={activeScene}
         onSceneChange={handleSceneChange}
@@ -97,21 +71,6 @@ export default function HomePage() {
           <PlatformScene />
         </SceneSection>
       </ScrollExperience>
-
-      {/* Minimal Editorial Footer */}
-      <footer className="py-12 px-6 sm:px-12 bg-[#F8F7F3] border-t border-[#ECE6D8] relative z-20">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <span className="text-sm font-extrabold tracking-tight text-[#2A2927]">
-              Business<span className="text-[#C69A4B]">Flow</span>
-            </span>
-            <span className="text-xs text-[#8B857D] font-mono">· OS Platform</span>
-          </div>
-          <p className="text-xs text-[#8B857D]">
-            &copy; {new Date().getFullYear()} BusinessFlow Technologies. Warm Sand & Executive Suite.
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }

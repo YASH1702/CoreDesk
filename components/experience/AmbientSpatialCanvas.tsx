@@ -73,8 +73,12 @@ export default function AmbientSpatialCanvas({
 
     // =========================================================================
     // STORY-DRIVEN LIVING BUSINESS DIORAMA (Scenes 01 → 06)
-    // 01: Business Office  -->  02: Customer Arrival  -->  03: Staff Schedule
-    // 04: Control Analytics -->  05: System Conduits -->  06: Unified Platform
+    // 0.00: Business Office
+    // 0.20: Customer Arrival & Check-In
+    // 0.40: Staff Schedule Sync
+    // 0.60: Control Analytics Monolith
+    // 0.80: System Core Synchronization
+    // 1.00: Platform Autonomous Ecosystem
     // =========================================================================
     const dioramaGroup = new THREE.Group();
     worldGroup.add(dioramaGroup);
@@ -438,7 +442,7 @@ export default function AmbientSpatialCanvas({
     // -------------------------------------------------------------
     const staffHudGroup = new THREE.Group();
     staffHudGroup.position.set(0.65, 0.65, -0.55);
-    staffHudGroup.scale.setScalar(0.001); // Hidden initially
+    staffHudGroup.scale.setScalar(0.001);
     dioramaGroup.add(staffHudGroup);
 
     const hudPlaneGeo = new THREE.PlaneGeometry(1.4, 0.75);
@@ -455,7 +459,6 @@ export default function AmbientSpatialCanvas({
     const hudPlane = new THREE.Mesh(hudPlaneGeo, hudPlaneMat);
     staffHudGroup.add(hudPlane);
 
-    // Schedule Slot Bars on the HUD
     const slotBarGeo = new THREE.BoxGeometry(1.2, 0.09, 0.01);
     disposablesGeometries.push(slotBarGeo);
     const slotBarMatActive = new THREE.MeshStandardMaterial({
@@ -483,11 +486,11 @@ export default function AmbientSpatialCanvas({
     staffHudGroup.add(slot3);
 
     // -------------------------------------------------------------
-    // 8. SCENE 04 (CONTROL): ARCHITECTURAL REVENUE & TELEMETRY PILLAR
+    // 8. SCENE 04 (CONTROL): ARCHITECTURAL REVENUE MONOLITH
     // -------------------------------------------------------------
     const controlPillarGroup = new THREE.Group();
     controlPillarGroup.position.set(1.45, -0.98, -0.75);
-    controlPillarGroup.scale.setScalar(0.001); // Hidden initially
+    controlPillarGroup.scale.setScalar(0.001);
     dioramaGroup.add(controlPillarGroup);
 
     const pillarGeo = new THREE.CylinderGeometry(0.35, 0.38, 1.5, 32);
@@ -496,7 +499,6 @@ export default function AmbientSpatialCanvas({
     pillarMesh.position.y = 0.75;
     controlPillarGroup.add(pillarMesh);
 
-    // Volumetric 3D Growth Bars rising from pillar
     const barGeo1 = new THREE.BoxGeometry(0.12, 0.45, 0.12);
     const barGeo2 = new THREE.BoxGeometry(0.12, 0.75, 0.12);
     const barGeo3 = new THREE.BoxGeometry(0.12, 1.1, 0.12);
@@ -521,7 +523,6 @@ export default function AmbientSpatialCanvas({
     systemCircuitGroup.position.set(0, -0.97, 0);
     dioramaGroup.add(systemCircuitGroup);
 
-    // Conduits connecting Terminal -> Workstation -> Control Pillar
     const conduitMat = new THREE.MeshStandardMaterial({
       color: 0xc69a4b,
       emissive: 0xc69a4b,
@@ -533,7 +534,6 @@ export default function AmbientSpatialCanvas({
     });
     disposablesMaterials.push(conduitMat);
 
-    // Circuit track 1: Customer Podium to Desk
     const track1Geo = new THREE.BoxGeometry(1.4, 0.015, 0.05);
     disposablesGeometries.push(track1Geo);
     const track1 = new THREE.Mesh(track1Geo, conduitMat);
@@ -541,7 +541,6 @@ export default function AmbientSpatialCanvas({
     track1.rotation.y = -0.55;
     systemCircuitGroup.add(track1);
 
-    // Circuit track 2: Desk to Control Pillar
     const track2Geo = new THREE.BoxGeometry(1.1, 0.015, 0.05);
     disposablesGeometries.push(track2Geo);
     const track2 = new THREE.Mesh(track2Geo, conduitMat);
@@ -549,7 +548,6 @@ export default function AmbientSpatialCanvas({
     track2.rotation.y = 0.45;
     systemCircuitGroup.add(track2);
 
-    // Pulsing data packet nodes along the conduits
     const packetGeo = new THREE.SphereGeometry(0.045, 16, 16);
     disposablesGeometries.push(packetGeo);
     const packetMat = new THREE.MeshStandardMaterial({
@@ -573,7 +571,7 @@ export default function AmbientSpatialCanvas({
     systemCircuitGroup.add(packetNode3);
 
     // -------------------------------------------------------------
-    // 10. AMBIENT WARM SAND PARTICLES & BACKGROUND LIGHT
+    // 10. AMBIENT PARTICLES
     // -------------------------------------------------------------
     const particleCount = 110;
     const particlePositions = new Float32Array(particleCount * 3);
@@ -657,17 +655,16 @@ export default function AmbientSpatialCanvas({
 
       if (!prefersReducedMotion) {
         // =====================================================================
-        // CHOREOGRAPHY ACROSS ALL 6 SCENES:
-        // Scene 1 (0.00-0.16): Business Team at desks
-        // Scene 2 (0.18-0.34): Customer walks in to podium & checks in
-        // Scene 3 (0.36-0.52): Staff Schedule HUD illuminates, team syncs
-        // Scene 4 (0.54-0.70): Control Analytics Monolith rises from plinth
-        // Scene 5 (0.72-0.88): System Conduits ignite connecting entire island
-        // Scene 6 (0.90-1.00): Grand Pull-Back of full Operating Ecosystem
+        // CHOREOGRAPHY ACROSS ALL 6 SCENES (Exactly mapped to 0.20 intervals):
+        // Scene 0: Business (0.00)
+        // Scene 1: Customer (0.20)
+        // Scene 2: Staff (0.40)
+        // Scene 3: Control (0.60)
+        // Scene 4: System (0.80)
+        // Scene 5: Platform (1.00)
         // =====================================================================
 
-        // 1. DIORAMA PERSPECTIVE & CAMERA CHOREOGRAPHY
-        let targetDioramaX = 0.18;
+        let targetDioramaX = 0.20;
         let targetDioramaY = -0.04;
         let targetDioramaZ = 0.0;
         let targetRotY = 0.32;
@@ -675,47 +672,41 @@ export default function AmbientSpatialCanvas({
         let targetCameraY = 1.15;
 
         if (p <= 0.20) {
-          // Scene 1: Focus on Desk & Specialist
+          // Transition 0 -> 1: Business focus -> Customer walks in to podium
           const t = p / 0.20;
-          targetDioramaX = THREE.MathUtils.lerp(0.20, 0.12, t);
-          targetRotY = THREE.MathUtils.lerp(0.32, 0.10, t);
-          targetCameraZ = 8.2;
-        } else if (p <= 0.38) {
-          // Scene 2: Customer Walks to Podium
-          const t = (p - 0.20) / 0.18;
-          targetDioramaX = THREE.MathUtils.lerp(0.12, 0.08, t);
-          targetDioramaZ = THREE.MathUtils.lerp(0.0, 0.3, t);
-          targetRotY = THREE.MathUtils.lerp(0.10, -0.18, t);
+          targetDioramaX = THREE.MathUtils.lerp(0.20, 0.08, t);
+          targetDioramaZ = THREE.MathUtils.lerp(0.0, 0.30, t);
+          targetRotY = THREE.MathUtils.lerp(0.32, -0.16, t);
           targetCameraZ = THREE.MathUtils.lerp(8.2, 7.8, t);
-        } else if (p <= 0.56) {
-          // Scene 3: Staff Schedule HUD reveals
-          const t = (p - 0.38) / 0.18;
-          targetDioramaX = THREE.MathUtils.lerp(0.08, 0.15, t);
-          targetDioramaZ = THREE.MathUtils.lerp(0.3, 0.2, t);
-          targetRotY = THREE.MathUtils.lerp(-0.18, 0.14, t);
+        } else if (p <= 0.40) {
+          // Transition 1 -> 2: Customer check-in -> Staff Agenda HUD
+          const t = (p - 0.20) / 0.20;
+          targetDioramaX = THREE.MathUtils.lerp(0.08, 0.16, t);
+          targetDioramaZ = THREE.MathUtils.lerp(0.30, 0.18, t);
+          targetRotY = THREE.MathUtils.lerp(-0.16, 0.16, t);
           targetCameraZ = THREE.MathUtils.lerp(7.8, 8.0, t);
-        } else if (p <= 0.74) {
-          // Scene 4: Control Analytics Monolith reveals
-          const t = (p - 0.56) / 0.18;
-          targetDioramaX = THREE.MathUtils.lerp(0.15, -0.05, t);
-          targetDioramaZ = THREE.MathUtils.lerp(0.2, 0.15, t);
-          targetRotY = THREE.MathUtils.lerp(0.14, -0.22, t);
+        } else if (p <= 0.60) {
+          // Transition 2 -> 3: Staff Agenda -> Control Revenue Monolith
+          const t = (p - 0.40) / 0.20;
+          targetDioramaX = THREE.MathUtils.lerp(0.16, -0.06, t);
+          targetDioramaZ = THREE.MathUtils.lerp(0.18, 0.12, t);
+          targetRotY = THREE.MathUtils.lerp(0.16, -0.22, t);
           targetCameraY = THREE.MathUtils.lerp(1.15, 1.30, t);
           targetCameraZ = THREE.MathUtils.lerp(8.0, 8.3, t);
-        } else if (p <= 0.90) {
-          // Scene 5: System Conduits Connect
-          const t = (p - 0.74) / 0.16;
-          targetDioramaX = THREE.MathUtils.lerp(-0.05, 0.05, t);
-          targetRotY = THREE.MathUtils.lerp(-0.22, 0.05, t);
-          targetCameraY = THREE.MathUtils.lerp(1.30, 1.45, t);
+        } else if (p <= 0.80) {
+          // Transition 3 -> 4: Control Monolith -> System Conduits
+          const t = (p - 0.60) / 0.20;
+          targetDioramaX = THREE.MathUtils.lerp(-0.06, 0.04, t);
+          targetRotY = THREE.MathUtils.lerp(-0.22, 0.04, t);
+          targetCameraY = THREE.MathUtils.lerp(1.30, 1.42, t);
           targetCameraZ = THREE.MathUtils.lerp(8.3, 8.8, t);
         } else {
-          // Scene 6: Platform Grand Pull-Back
-          const t = (p - 0.90) / 0.10;
-          targetDioramaX = 0.0;
-          targetDioramaY = THREE.MathUtils.lerp(-0.04, -0.15, t);
-          targetRotY = THREE.MathUtils.lerp(0.05, 0.12, t);
-          targetCameraY = THREE.MathUtils.lerp(1.45, 1.65, t);
+          // Transition 4 -> 5: System Conduits -> Platform Pull-Back
+          const t = (p - 0.80) / 0.20;
+          targetDioramaX = THREE.MathUtils.lerp(0.04, 0.0, t);
+          targetDioramaY = THREE.MathUtils.lerp(-0.04, -0.16, t);
+          targetRotY = THREE.MathUtils.lerp(0.04, 0.10, t);
+          targetCameraY = THREE.MathUtils.lerp(1.42, 1.65, t);
           targetCameraZ = THREE.MathUtils.lerp(8.8, 9.8, t);
         }
 
@@ -728,21 +719,20 @@ export default function AmbientSpatialCanvas({
         camera.position.y = targetCameraY - currentMouseY * 0.2;
         camera.lookAt(targetDioramaX * 0.5, 0.05, 0);
 
-        // 2. CHARACTER 1 (Specialist) Activity
+        // Specialist Typing & Turning
         specLeftArm.rotation.x = 0.65 + Math.sin(elapsedTime * 4.0) * 0.04;
         specRightArm.rotation.x = 0.65 + Math.cos(elapsedTime * 4.5) * 0.04;
-        if (p < 0.35) {
-          specHead.rotation.y = THREE.MathUtils.lerp(0, -0.5, Math.min(1, p * 3.0));
+        if (p < 0.25) {
+          specHead.rotation.y = THREE.MathUtils.lerp(0, -0.5, Math.min(1, p * 4.0));
         } else {
           specHead.rotation.y = -0.25 + Math.sin(elapsedTime * 0.6) * 0.05;
         }
 
-        // 3. CHARACTER 2 (Lead) Shift Glance
-        leadHead.rotation.y = THREE.MathUtils.lerp(0, -0.6, Math.min(1, p * 2.0)) + Math.sin(elapsedTime * 0.8) * 0.04;
+        // Lead Shift Glance
+        leadHead.rotation.y = THREE.MathUtils.lerp(0, -0.6, Math.min(1, p * 2.5)) + Math.sin(elapsedTime * 0.8) * 0.04;
 
-        // 4. CHARACTER 3 (Customer) Stride & Arrival
-        // Customer walks across floor from entrance to podium during p: 0.05 -> 0.32
-        const custProgress = Math.max(0, Math.min(1, (p - 0.04) / 0.28));
+        // Customer Walking Stride (plays smoothly during transition 0 -> 1)
+        const custProgress = Math.max(0, Math.min(1, p / 0.20));
         const custTargetX = THREE.MathUtils.lerp(2.1, -0.75, custProgress);
         const custTargetZ = THREE.MathUtils.lerp(1.4, 1.2, custProgress);
         customerGroup.position.set(custTargetX, -0.98, custTargetZ);
@@ -750,8 +740,9 @@ export default function AmbientSpatialCanvas({
         const walkAngle = THREE.MathUtils.lerp(-Math.PI * 0.65, -Math.PI * 0.48, custProgress);
         customerGroup.rotation.y = walkAngle;
 
+        // Calm, elegant walking stride
         const isWalking = custProgress > 0.02 && custProgress < 0.98;
-        const walkCycle = custProgress * Math.PI * 14.0;
+        const walkCycle = custProgress * Math.PI * 6.0;
         const strideAmp = isWalking ? 0.6 : 0.04;
 
         customerLeftLegGroup.rotation.x = Math.sin(walkCycle) * strideAmp;
@@ -767,9 +758,9 @@ export default function AmbientSpatialCanvas({
           customerRightArmGroup.rotation.y = 0;
         }
 
-        // 5. TERMINAL CONFIRMATION HALO PULSE (Scene 2+)
-        if (p > 0.22) {
-          const pulse = Math.min(1, (p - 0.22) / 0.15);
+        // Terminal Confirmation Halo (Scene 1+)
+        if (p > 0.15) {
+          const pulse = Math.min(1, (p - 0.15) / 0.10);
           terminalActiveMat.emissiveIntensity = 0.5 + pulse * 1.2 + Math.sin(elapsedTime * 3.0) * 0.2;
           confirmHaloMat.opacity = pulse * 0.3 + Math.sin(elapsedTime * 2.0) * 0.05;
           confirmHaloMesh.scale.setScalar(1.0 + pulse * 0.4);
@@ -779,27 +770,27 @@ export default function AmbientSpatialCanvas({
           confirmHaloMesh.scale.setScalar(1.0);
         }
 
-        // 6. SCENE 03 (STAFF): SCHEDULE HUD REVEAL
-        if (p > 0.32) {
-          const staffProg = Math.min(1, (p - 0.32) / 0.12);
+        // Staff Schedule HUD (Scene 2+)
+        if (p > 0.22) {
+          const staffProg = Math.min(1, (p - 0.22) / 0.15);
           staffHudGroup.scale.setScalar(staffProg);
           staffHudGroup.position.y = 0.45 + staffProg * 0.25;
         } else {
           staffHudGroup.scale.setScalar(0.001);
         }
 
-        // 7. SCENE 04 (CONTROL): REVENUE MONOLITH REVEAL
-        if (p > 0.50) {
-          const controlProg = Math.min(1, (p - 0.50) / 0.14);
+        // Control Monolith (Scene 3+)
+        if (p > 0.42) {
+          const controlProg = Math.min(1, (p - 0.42) / 0.15);
           controlPillarGroup.scale.setScalar(controlProg);
           controlPillarGroup.position.y = -0.98 + (controlProg - 1.0) * 0.5;
         } else {
           controlPillarGroup.scale.setScalar(0.001);
         }
 
-        // 8. SCENE 05 (SYSTEM): CONDUIT CIRCUITS & ENERGY FLOW
-        if (p > 0.68) {
-          const sysProg = Math.min(1, (p - 0.68) / 0.14);
+        // System Conduits & Energy Packets (Scene 4+)
+        if (p > 0.62) {
+          const sysProg = Math.min(1, (p - 0.62) / 0.15);
           conduitMat.opacity = sysProg * 0.9;
           conduitMat.emissiveIntensity = 0.2 + sysProg * 0.6 + Math.sin(elapsedTime * 4.0) * 0.3;
           packetMat.emissiveIntensity = 1.0 + Math.sin(elapsedTime * 5.0) * 0.5;
@@ -807,7 +798,7 @@ export default function AmbientSpatialCanvas({
           conduitMat.opacity = 0.0;
         }
 
-        // Dust particles gentle upward drift
+        // Upward ambient dust particles
         const posAttr = particleGeometry.attributes.position as THREE.BufferAttribute;
         const positions = posAttr.array as Float32Array;
 
