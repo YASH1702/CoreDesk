@@ -31,8 +31,9 @@ export default function AmbientSpatialCanvas({
     const width = container.clientWidth || window.innerWidth;
     const height = container.clientHeight || window.innerHeight;
 
-    const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
-    camera.position.set(0, 0, 8.2);
+    // Perspective camera with architectural lens
+    const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 100);
+    camera.position.set(0, 1.2, 8.5);
 
     // Renderer setup with alpha transparency
     const renderer = new THREE.WebGLRenderer({
@@ -43,224 +44,436 @@ export default function AmbientSpatialCanvas({
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2.0));
     renderer.setClearColor(0x000000, 0);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     container.appendChild(renderer.domElement);
 
-    // Studio Lighting (Warm Sand & Luxury Champagne Gold highlights)
-    const ambientLight = new THREE.AmbientLight(0xfffbf2, 1.9);
+    // Studio Lighting (Warm Sand & Luxury Architectural Illumination)
+    const ambientLight = new THREE.AmbientLight(0xfffbf2, 2.0);
     scene.add(ambientLight);
 
-    const keyLight = new THREE.DirectionalLight(0xfffaed, 3.4);
-    keyLight.position.set(6, 8, 6);
+    const keyLight = new THREE.DirectionalLight(0xfffaed, 3.2);
+    keyLight.position.set(6, 10, 7);
+    keyLight.castShadow = true;
+    keyLight.shadow.mapSize.width = 1024;
+    keyLight.shadow.mapSize.height = 1024;
     scene.add(keyLight);
 
-    const rimLight = new THREE.DirectionalLight(0xc69a4b, 2.6);
-    rimLight.position.set(-6, -4, 4);
+    const rimLight = new THREE.DirectionalLight(0xc69a4b, 2.4);
+    rimLight.position.set(-6, 3, -2);
     scene.add(rimLight);
 
-    const pointLight = new THREE.PointLight(0xe8c16a, 2.2, 10);
-    pointLight.position.set(2, 0, 2);
-    scene.add(pointLight);
+    const deskSpotLight = new THREE.PointLight(0xfbebc4, 1.8, 8);
+    deskSpotLight.position.set(1.5, 2.0, 1.0);
+    scene.add(deskSpotLight);
 
     // Root World Group for mouse parallax
     const worldGroup = new THREE.Group();
     scene.add(worldGroup);
 
     // =========================================================================
-    // DIRECTION 3: THE 3D SPATIAL KINETIC SEAL & ORBITAL ACCESS CARD
+    // STORY-DRIVEN ARCHITECTURAL DIORAMA:
+    // 01 — THE LIVING BUSINESS WORKSPACE  -->  02 — CUSTOMER WALKS IN TO BOOK
     // =========================================================================
-    const heroSealGroup = new THREE.Group();
-    worldGroup.add(heroSealGroup);
+    const dioramaGroup = new THREE.Group();
+    worldGroup.add(dioramaGroup);
 
     // Disposable tracking lists
     const disposablesGeometries: THREE.BufferGeometry[] = [];
     const disposablesMaterials: THREE.Material[] = [];
 
-    // Shared Materials
-    const goldPolishedMat = new THREE.MeshStandardMaterial({
-      color: 0xc69a4b,
-      metalness: 0.94,
-      roughness: 0.16,
+    // Shared Luxury Warm Sand Materials
+    const stonePlinthMat = new THREE.MeshStandardMaterial({
+      color: 0xf5efe6,
+      roughness: 0.35,
+      metalness: 0.08,
     });
-    disposablesMaterials.push(goldPolishedMat);
+    disposablesMaterials.push(stonePlinthMat);
 
-    const champagneBronzeMat = new THREE.MeshStandardMaterial({
-      color: 0xd4af63,
-      metalness: 0.88,
+    const plinthGoldBorderMat = new THREE.MeshStandardMaterial({
+      color: 0xc69a4b,
+      metalness: 0.92,
+      roughness: 0.2,
+    });
+    disposablesMaterials.push(plinthGoldBorderMat);
+
+    const deskSurfaceMat = new THREE.MeshStandardMaterial({
+      color: 0xfffcf7,
       roughness: 0.22,
+      metalness: 0.05,
     });
-    disposablesMaterials.push(champagneBronzeMat);
+    disposablesMaterials.push(deskSurfaceMat);
 
-    const goldWireMat = new THREE.LineBasicMaterial({
+    const goldChassisMat = new THREE.MeshStandardMaterial({
       color: 0xc69a4b,
-      transparent: true,
-      opacity: 0.55,
-    });
-    disposablesMaterials.push(goldWireMat);
-
-    const frostedGlassMat = new THREE.MeshPhysicalMaterial({
-      color: 0xfffcf5,
-      metalness: 0.06,
-      roughness: 0.12,
-      transmission: 0.86,
-      thickness: 1.4,
-      ior: 1.52,
-      transparent: true,
-      opacity: 0.88,
-    });
-    disposablesMaterials.push(frostedGlassMat);
-
-    const obsidianGlassMat = new THREE.MeshPhysicalMaterial({
-      color: 0x3d3830,
-      metalness: 0.4,
+      metalness: 0.95,
       roughness: 0.18,
-      transmission: 0.5,
-      thickness: 1.2,
-      transparent: true,
-      opacity: 0.92,
     });
-    disposablesMaterials.push(obsidianGlassMat);
+    disposablesMaterials.push(goldChassisMat);
 
-    const emissiveGoldMat = new THREE.MeshStandardMaterial({
+    const bronzeChassisMat = new THREE.MeshStandardMaterial({
+      color: 0x8f6b2f,
+      metalness: 0.88,
+      roughness: 0.25,
+    });
+    disposablesMaterials.push(bronzeChassisMat);
+
+    const glassMat = new THREE.MeshPhysicalMaterial({
+      color: 0xfffcf5,
+      metalness: 0.05,
+      roughness: 0.1,
+      transmission: 0.85,
+      thickness: 0.8,
+      transparent: true,
+      opacity: 0.85,
+    });
+    disposablesMaterials.push(glassMat);
+
+    const screenGlowMat = new THREE.MeshStandardMaterial({
+      color: 0xfffdf0,
+      emissive: 0xc69a4b,
+      emissiveIntensity: 0.5,
+      roughness: 0.2,
+    });
+    disposablesMaterials.push(screenGlowMat);
+
+    const terminalActiveMat = new THREE.MeshStandardMaterial({
       color: 0xc69a4b,
       emissive: 0xc69a4b,
-      emissiveIntensity: 0.6,
-      metalness: 0.9,
-      roughness: 0.15,
+      emissiveIntensity: 0.4,
+      metalness: 0.8,
+      roughness: 0.2,
     });
-    disposablesMaterials.push(emissiveGoldMat);
+    disposablesMaterials.push(terminalActiveMat);
+
+    // Character Materials
+    const alabasterSkinMat = new THREE.MeshStandardMaterial({
+      color: 0xf8f4ec,
+      roughness: 0.32,
+      metalness: 0.02,
+    });
+    disposablesMaterials.push(alabasterSkinMat);
+
+    const specialistBlazerMat = new THREE.MeshStandardMaterial({
+      color: 0x2a2927, // Executive dark slate/charcoal
+      roughness: 0.65,
+    });
+    disposablesMaterials.push(specialistBlazerMat);
+
+    const leadBlazerMat = new THREE.MeshStandardMaterial({
+      color: 0xb7863d, // Warm Sand camel coat
+      roughness: 0.55,
+      metalness: 0.1,
+    });
+    disposablesMaterials.push(leadBlazerMat);
+
+    const customerCoatMat = new THREE.MeshStandardMaterial({
+      color: 0x364052, // Sophisticated client navy coat
+      roughness: 0.55,
+    });
+    disposablesMaterials.push(customerCoatMat);
+
+    const customerTrousersMat = new THREE.MeshStandardMaterial({
+      color: 0x1f242e,
+      roughness: 0.6,
+    });
+    disposablesMaterials.push(customerTrousersMat);
 
     // -------------------------------------------------------------
-    // PART A: ORBITAL GIMBAL RINGS (Active in Scene 01)
+    // 1. ARCHITECTURAL STUDIO PLINTH (Floating Platform)
     // -------------------------------------------------------------
-    const gimbalGroup = new THREE.Group();
-    heroSealGroup.add(gimbalGroup);
+    const plinthGroup = new THREE.Group();
+    dioramaGroup.add(plinthGroup);
 
-    const outerGimbalGeo = new THREE.TorusGeometry(1.68, 0.045, 32, 120);
-    disposablesGeometries.push(outerGimbalGeo);
-    const outerGimbalMesh = new THREE.Mesh(outerGimbalGeo, goldPolishedMat);
-    gimbalGroup.add(outerGimbalMesh);
+    // Base Slab
+    const plinthGeo = new THREE.BoxGeometry(5.2, 0.22, 3.8);
+    disposablesGeometries.push(plinthGeo);
+    const plinthMesh = new THREE.Mesh(plinthGeo, stonePlinthMat);
+    plinthMesh.position.y = -1.1;
+    plinthMesh.receiveShadow = true;
+    plinthGroup.add(plinthMesh);
 
-    const middleGimbalGeo = new THREE.TorusGeometry(1.36, 0.035, 32, 100);
-    disposablesGeometries.push(middleGimbalGeo);
-    const middleGimbalMesh = new THREE.Mesh(middleGimbalGeo, champagneBronzeMat);
-    middleGimbalMesh.rotation.x = Math.PI * 0.45;
-    gimbalGroup.add(middleGimbalMesh);
-
-    // -------------------------------------------------------------
-    // PART B: EXECUTIVE MONOGRAM MEDALLION (Active in Scene 01)
-    // -------------------------------------------------------------
-    const medallionGroup = new THREE.Group();
-    heroSealGroup.add(medallionGroup);
-
-    // Medallion Disc
-    const discGeo = new THREE.CylinderGeometry(0.96, 0.96, 0.12, 64);
-    disposablesGeometries.push(discGeo);
-    const discMesh = new THREE.Mesh(discGeo, obsidianGlassMat);
-    discMesh.rotation.x = Math.PI / 2;
-    medallionGroup.add(discMesh);
-
-    // Medallion Outer Bevel Rim
-    const rimGeo = new THREE.TorusGeometry(0.96, 0.04, 32, 100);
-    disposablesGeometries.push(rimGeo);
-    const rimMesh = new THREE.Mesh(rimGeo, goldPolishedMat);
-    medallionGroup.add(rimMesh);
-
-    // Raised Geometric Monogram / Crest
-    const crestBarGeo = new THREE.BoxGeometry(0.7, 0.06, 0.05);
-    disposablesGeometries.push(crestBarGeo);
-    const crest1 = new THREE.Mesh(crestBarGeo, goldPolishedMat);
-    crest1.position.z = 0.07;
-    crest1.rotation.z = Math.PI / 4;
-    medallionGroup.add(crest1);
-
-    const crest2 = new THREE.Mesh(crestBarGeo, goldPolishedMat);
-    crest2.position.z = 0.07;
-    crest2.rotation.z = -Math.PI / 4;
-    medallionGroup.add(crest2);
-
-    // Central Crystal Keystone Facet
-    const keystoneGeo = new THREE.OctahedronGeometry(0.28, 0);
-    disposablesGeometries.push(keystoneGeo);
-    const keystoneMesh = new THREE.Mesh(keystoneGeo, frostedGlassMat);
-    keystoneMesh.position.z = 0.12;
-    medallionGroup.add(keystoneMesh);
+    // Perimeter Gold Accent Trim
+    const plinthTrimGeo = new THREE.BoxGeometry(5.26, 0.04, 3.86);
+    disposablesGeometries.push(plinthTrimGeo);
+    const plinthTrimMesh = new THREE.Mesh(plinthTrimGeo, plinthGoldBorderMat);
+    plinthTrimMesh.position.y = -1.0;
+    plinthGroup.add(plinthTrimMesh);
 
     // -------------------------------------------------------------
-    // PART C: VIP RESERVATION ACCESS CARD (Morphs in on Scroll for Scene 02)
+    // 2. EXECUTIVE WORKSTATION (Business Operations Desk)
     // -------------------------------------------------------------
-    const keycardGroup = new THREE.Group();
-    heroSealGroup.add(keycardGroup);
-    keycardGroup.visible = false; // Hidden initially at p=0
+    const deskGroup = new THREE.Group();
+    deskGroup.position.set(0.6, -0.98, -0.3);
+    dioramaGroup.add(deskGroup);
 
-    // Card Glass Body
-    const cardWidth = 1.7;
-    const cardHeight = 2.45;
-    const cardDepth = 0.09;
-    const cardGeo = new THREE.BoxGeometry(cardWidth, cardHeight, cardDepth);
-    disposablesGeometries.push(cardGeo);
+    // Desktop
+    const deskGeo = new THREE.BoxGeometry(2.3, 0.08, 1.15);
+    disposablesGeometries.push(deskGeo);
+    const deskMesh = new THREE.Mesh(deskGeo, deskSurfaceMat);
+    deskMesh.position.y = 0.72;
+    deskMesh.castShadow = true;
+    deskMesh.receiveShadow = true;
+    deskGroup.add(deskMesh);
 
-    const cardMesh = new THREE.Mesh(cardGeo, frostedGlassMat);
-    keycardGroup.add(cardMesh);
+    // Gold Tapered Desk Legs
+    const legGeo = new THREE.CylinderGeometry(0.022, 0.016, 0.72, 16);
+    disposablesGeometries.push(legGeo);
+    const legCoords = [
+      { x: 1.05, z: 0.48 },
+      { x: -1.05, z: 0.48 },
+      { x: 1.05, z: -0.48 },
+      { x: -1.05, z: -0.48 },
+    ];
+    legCoords.forEach((c) => {
+      const leg = new THREE.Mesh(legGeo, goldChassisMat);
+      leg.position.set(c.x, 0.36, c.z);
+      deskGroup.add(leg);
+    });
 
-    // Gold Bevel Edge Wireframe
-    const cardEdges = new THREE.EdgesGeometry(cardGeo);
-    disposablesGeometries.push(cardEdges);
-    const cardBezel = new THREE.LineSegments(cardEdges, goldWireMat);
-    cardMesh.add(cardBezel);
+    // Ultra-thin Workspace Monitor
+    const monitorStandGeo = new THREE.CylinderGeometry(0.018, 0.022, 0.28, 16);
+    disposablesGeometries.push(monitorStandGeo);
+    const monitorStand = new THREE.Mesh(monitorStandGeo, goldChassisMat);
+    monitorStand.position.set(0, 0.86, -0.15);
+    deskGroup.add(monitorStand);
 
-    // Embossed Gold NFC / Microchip
-    const chipGeo = new THREE.BoxGeometry(0.36, 0.28, 0.04);
-    disposablesGeometries.push(chipGeo);
-    const chipMesh = new THREE.Mesh(chipGeo, emissiveGoldMat);
-    chipMesh.position.set(-0.46, 0.65, cardDepth / 2 + 0.02);
-    keycardGroup.add(chipMesh);
+    const monitorGeo = new THREE.BoxGeometry(0.95, 0.55, 0.025);
+    disposablesGeometries.push(monitorGeo);
+    const monitorMesh = new THREE.Mesh(monitorGeo, bronzeChassisMat);
+    monitorMesh.position.set(0, 1.18, -0.15);
+    deskGroup.add(monitorMesh);
 
-    // Horizontal Holographic Telemetry Foil
-    const foilGeo = new THREE.BoxGeometry(1.45, 0.22, 0.02);
-    disposablesGeometries.push(foilGeo);
-    const foilMesh = new THREE.Mesh(foilGeo, champagneBronzeMat);
-    foilMesh.position.set(0, -0.65, cardDepth / 2 + 0.01);
-    keycardGroup.add(foilMesh);
+    const screenGeo = new THREE.PlaneGeometry(0.9, 0.5);
+    disposablesGeometries.push(screenGeo);
+    const screenMesh = new THREE.Mesh(screenGeo, screenGlowMat);
+    screenMesh.position.set(0, 1.18, -0.135);
+    deskGroup.add(screenMesh);
 
-    // Circular Verified Stamp / Seal on the Card
-    const stampGeo = new THREE.CylinderGeometry(0.24, 0.24, 0.03, 32);
-    disposablesGeometries.push(stampGeo);
-    const stampMesh = new THREE.Mesh(stampGeo, goldPolishedMat);
-    stampMesh.rotation.x = Math.PI / 2;
-    stampMesh.position.set(0.44, -0.65, cardDepth / 2 + 0.03);
-    keycardGroup.add(stampMesh);
+    // Slim Keyboard and Trackpad
+    const keyboardGeo = new THREE.BoxGeometry(0.52, 0.012, 0.16);
+    disposablesGeometries.push(keyboardGeo);
+    const keyboardMesh = new THREE.Mesh(keyboardGeo, goldChassisMat);
+    keyboardMesh.position.set(0, 0.77, 0.15);
+    deskGroup.add(keyboardMesh);
+
+    // Minimal Desk Plant (Ceramic pot with architectural sphere leaf)
+    const potGeo = new THREE.CylinderGeometry(0.07, 0.05, 0.12, 16);
+    const leafGeo = new THREE.SphereGeometry(0.09, 16, 16);
+    disposablesGeometries.push(potGeo, leafGeo);
+    const potMesh = new THREE.Mesh(potGeo, stonePlinthMat);
+    potMesh.position.set(0.85, 0.82, -0.2);
+    deskGroup.add(potMesh);
+    const leafMesh = new THREE.Mesh(leafGeo, bronzeChassisMat);
+    leafMesh.position.set(0.85, 0.94, -0.2);
+    deskGroup.add(leafMesh);
 
     // -------------------------------------------------------------
-    // PART D: RADIANT AMBIENT BACKING HALO
+    // 3. CONSULTATION / CLIENT CHECK-IN COUNTER (Customer Destination)
     // -------------------------------------------------------------
-    const haloGeo = new THREE.RingGeometry(1.4, 2.6, 64);
-    disposablesGeometries.push(haloGeo);
-    const haloMat = new THREE.MeshBasicMaterial({
+    const counterGroup = new THREE.Group();
+    counterGroup.position.set(-1.1, -0.98, 0.6);
+    dioramaGroup.add(counterGroup);
+
+    // Fluted Glass & Stone Consultation Podium
+    const counterGeo = new THREE.CylinderGeometry(0.55, 0.55, 0.95, 32);
+    disposablesGeometries.push(counterGeo);
+    const counterMesh = new THREE.Mesh(counterGeo, stonePlinthMat);
+    counterMesh.position.y = 0.475;
+    counterMesh.castShadow = true;
+    counterGroup.add(counterMesh);
+
+    const counterGoldRimGeo = new THREE.TorusGeometry(0.56, 0.02, 16, 48);
+    disposablesGeometries.push(counterGoldRimGeo);
+    const counterRim = new THREE.Mesh(counterGoldRimGeo, goldChassisMat);
+    counterRim.rotation.x = Math.PI / 2;
+    counterRim.position.y = 0.95;
+    counterGroup.add(counterRim);
+
+    // Interactive Booking Terminal / Tablet on Counter
+    const terminalGeo = new THREE.BoxGeometry(0.38, 0.28, 0.03);
+    disposablesGeometries.push(terminalGeo);
+    const terminalMesh = new THREE.Mesh(terminalGeo, terminalActiveMat);
+    terminalMesh.position.set(0, 1.08, 0);
+    terminalMesh.rotation.x = -Math.PI * 0.25;
+    counterGroup.add(terminalMesh);
+
+    // Terminal Confirmation Radiant Halo
+    const confirmHaloGeo = new THREE.RingGeometry(0.4, 0.75, 32);
+    disposablesGeometries.push(confirmHaloGeo);
+    const confirmHaloMat = new THREE.MeshBasicMaterial({
       color: 0xc69a4b,
       transparent: true,
-      opacity: 0.12,
+      opacity: 0.15,
       side: THREE.DoubleSide,
       blending: THREE.AdditiveBlending,
     });
-    disposablesMaterials.push(haloMat);
-    const haloMesh = new THREE.Mesh(haloGeo, haloMat);
-    haloMesh.position.z = -0.3;
-    heroSealGroup.add(haloMesh);
+    disposablesMaterials.push(confirmHaloMat);
+    const confirmHaloMesh = new THREE.Mesh(confirmHaloGeo, confirmHaloMat);
+    confirmHaloMesh.position.set(0, 1.15, 0);
+    confirmHaloMesh.rotation.x = -Math.PI * 0.25;
+    counterGroup.add(confirmHaloMesh);
 
     // -------------------------------------------------------------
-    // PART E: AMBIENT WARM SAND PARTICLES
+    // 4. CHARACTER 1: SPECIALIST (Seated at Desk Typing / Operating)
     // -------------------------------------------------------------
-    const particleCount = 140;
+    const specialistGroup = new THREE.Group();
+    specialistGroup.position.set(0.6, -0.98, 0.35);
+    dioramaGroup.add(specialistGroup);
+
+    // Chair
+    const chairSeatGeo = new THREE.CylinderGeometry(0.24, 0.24, 0.06, 24);
+    const chairBackGeo = new THREE.BoxGeometry(0.4, 0.45, 0.05);
+    const chairStemGeo = new THREE.CylinderGeometry(0.02, 0.02, 0.45, 16);
+    disposablesGeometries.push(chairSeatGeo, chairBackGeo, chairStemGeo);
+
+    const chairSeat = new THREE.Mesh(chairSeatGeo, deskSurfaceMat);
+    chairSeat.position.y = 0.45;
+    specialistGroup.add(chairSeat);
+
+    const chairBack = new THREE.Mesh(chairBackGeo, deskSurfaceMat);
+    chairBack.position.set(0, 0.72, 0.22);
+    specialistGroup.add(chairBack);
+
+    const chairStem = new THREE.Mesh(chairStemGeo, goldChassisMat);
+    chairStem.position.y = 0.22;
+    specialistGroup.add(chairStem);
+
+    // Specialist Body Rig
+    const specTorsoGeo = new THREE.CapsuleGeometry(0.18, 0.32, 8, 16);
+    disposablesGeometries.push(specTorsoGeo);
+    const specTorso = new THREE.Mesh(specTorsoGeo, specialistBlazerMat);
+    specTorso.position.y = 0.82;
+    specTorso.rotation.x = 0.05;
+    specialistGroup.add(specTorso);
+
+    const headGeo = new THREE.SphereGeometry(0.13, 24, 24);
+    disposablesGeometries.push(headGeo);
+    const specHead = new THREE.Mesh(headGeo, alabasterSkinMat);
+    specHead.position.set(0, 1.15, 0.02);
+    specialistGroup.add(specHead);
+
+    // Specialist Arms resting towards keyboard
+    const armGeo = new THREE.CapsuleGeometry(0.045, 0.26, 6, 12);
+    disposablesGeometries.push(armGeo);
+    const specLeftArm = new THREE.Mesh(armGeo, specialistBlazerMat);
+    specLeftArm.position.set(-0.22, 0.8, -0.1);
+    specLeftArm.rotation.set(0.65, 0, 0.2);
+    specialistGroup.add(specLeftArm);
+
+    const specRightArm = new THREE.Mesh(armGeo, specialistBlazerMat);
+    specRightArm.position.set(0.22, 0.8, -0.1);
+    specRightArm.rotation.set(0.65, 0, -0.2);
+    specialistGroup.add(specRightArm);
+
+    // -------------------------------------------------------------
+    // 5. CHARACTER 2: OPERATIONS LEAD (Standing & Coordinating)
+    // -------------------------------------------------------------
+    const leadGroup = new THREE.Group();
+    leadGroup.position.set(1.9, -0.98, -0.2);
+    leadGroup.rotation.y = -Math.PI * 0.35;
+    dioramaGroup.add(leadGroup);
+
+    // Lead Legs
+    const legCapsuleGeo = new THREE.CapsuleGeometry(0.06, 0.5, 6, 12);
+    disposablesGeometries.push(legCapsuleGeo);
+    const leadLegLeft = new THREE.Mesh(legCapsuleGeo, specialistBlazerMat);
+    leadLegLeft.position.set(-0.09, 0.3, 0);
+    leadGroup.add(leadLegLeft);
+
+    const leadLegRight = new THREE.Mesh(legCapsuleGeo, specialistBlazerMat);
+    leadLegRight.position.set(0.09, 0.3, 0);
+    leadGroup.add(leadLegRight);
+
+    // Lead Torso (Camel coat)
+    const leadTorsoGeo = new THREE.CapsuleGeometry(0.2, 0.42, 8, 16);
+    disposablesGeometries.push(leadTorsoGeo);
+    const leadTorso = new THREE.Mesh(leadTorsoGeo, leadBlazerMat);
+    leadTorso.position.y = 0.88;
+    leadGroup.add(leadTorso);
+
+    const leadHead = new THREE.Mesh(headGeo, alabasterSkinMat);
+    leadHead.position.set(0, 1.25, 0);
+    leadGroup.add(leadHead);
+
+    // Lead Tablet in hand
+    const tabletGeo = new THREE.BoxGeometry(0.18, 0.24, 0.02);
+    disposablesGeometries.push(tabletGeo);
+    const tabletMesh = new THREE.Mesh(tabletGeo, goldChassisMat);
+    tabletMesh.position.set(-0.25, 0.82, 0.2);
+    tabletMesh.rotation.set(0.4, 0.2, 0.1);
+    leadGroup.add(tabletMesh);
+
+    // -------------------------------------------------------------
+    // 6. CHARACTER 3: THE CUSTOMER (Walks In as You Scroll!)
+    // -------------------------------------------------------------
+    const customerGroup = new THREE.Group();
+    // Starting position: off to the right / entrance corridor
+    customerGroup.position.set(2.8, -0.98, 1.8);
+    dioramaGroup.add(customerGroup);
+
+    // Hinged Hip Root for Leg Stride Animation
+    const customerLeftLegGroup = new THREE.Group();
+    customerLeftLegGroup.position.set(-0.1, 0.55, 0);
+    customerGroup.add(customerLeftLegGroup);
+    const custLegL = new THREE.Mesh(legCapsuleGeo, customerTrousersMat);
+    custLegL.position.y = -0.25;
+    customerLeftLegGroup.add(custLegL);
+
+    const customerRightLegGroup = new THREE.Group();
+    customerRightLegGroup.position.set(0.1, 0.55, 0);
+    customerGroup.add(customerRightLegGroup);
+    const custLegR = new THREE.Mesh(legCapsuleGeo, customerTrousersMat);
+    custLegR.position.y = -0.25;
+    customerRightLegGroup.add(custLegR);
+
+    // Customer Torso & Head
+    const custTorsoGeo = new THREE.CapsuleGeometry(0.19, 0.42, 8, 16);
+    disposablesGeometries.push(custTorsoGeo);
+    const custTorso = new THREE.Mesh(custTorsoGeo, customerCoatMat);
+    custTorso.position.y = 0.88;
+    customerGroup.add(custTorso);
+
+    const custHead = new THREE.Mesh(headGeo, alabasterSkinMat);
+    custHead.position.set(0, 1.25, 0);
+    customerGroup.add(custHead);
+
+    // Hinged Arms for Natural Walking Swing
+    const customerLeftArmGroup = new THREE.Group();
+    customerLeftArmGroup.position.set(-0.24, 1.0, 0);
+    customerGroup.add(customerLeftArmGroup);
+    const custArmL = new THREE.Mesh(armGeo, customerCoatMat);
+    custArmL.position.y = -0.16;
+    customerLeftArmGroup.add(custArmL);
+
+    const customerRightArmGroup = new THREE.Group();
+    customerRightArmGroup.position.set(0.24, 1.0, 0);
+    customerGroup.add(customerRightArmGroup);
+    const custArmR = new THREE.Mesh(armGeo, customerCoatMat);
+    custArmR.position.y = -0.16;
+    customerRightArmGroup.add(custArmR);
+
+    // Customer holding gold phone / keycard to book
+    const custPhoneGeo = new THREE.BoxGeometry(0.08, 0.14, 0.015);
+    disposablesGeometries.push(custPhoneGeo);
+    const custPhone = new THREE.Mesh(custPhoneGeo, goldChassisMat);
+    custPhone.position.set(0, -0.28, 0.08);
+    customerRightArmGroup.add(custPhone);
+
+    // -------------------------------------------------------------
+    // 7. AMBIENT WARM SAND PARTICLES & BACKGROUND LIGHT
+    // -------------------------------------------------------------
+    const particleCount = 120;
     const particlePositions = new Float32Array(particleCount * 3);
     const particleVelocities: { y: number; xOffset: number; speed: number }[] = [];
 
     for (let i = 0; i < particleCount; i++) {
       particlePositions[i * 3] = (Math.random() - 0.5) * 16;
-      particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 12;
+      particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 10;
       particlePositions[i * 3 + 2] = (Math.random() - 0.5) * 6 - 1;
 
       particleVelocities.push({
-        y: 0.0015 + Math.random() * 0.0025,
+        y: 0.0015 + Math.random() * 0.002,
         xOffset: Math.random() * Math.PI * 2,
         speed: 0.5 + Math.random() * 0.5,
       });
@@ -272,9 +485,9 @@ export default function AmbientSpatialCanvas({
 
     const particleMaterial = new THREE.PointsMaterial({
       color: 0xc69a4b,
-      size: 0.04,
+      size: 0.038,
       transparent: true,
-      opacity: 0.38,
+      opacity: 0.35,
       blending: THREE.AdditiveBlending,
       depthWrite: false,
     });
@@ -330,74 +543,83 @@ export default function AmbientSpatialCanvas({
 
       if (!prefersReducedMotion) {
         // =====================================================================
-        // SCROLL-SCRUBBED KINETIC CHOREOGRAPHY FOR DIRECTION 3:
-        // 01 — THE BUSINESS (p = 0)  -->  02 — THE CUSTOMER (p = 1)
+        // STORY-DRIVEN KINETIC CHOREOGRAPHY:
+        // Scene 01 (p=0): Business team working at desks
+        // Scrubbing (p: 0 -> 1): Customer physically walks in across the floor
+        // Scene 02 (p=1): Customer arrives at booking counter, confirms check-in
         // =====================================================================
 
-        // 1. SPATIAL POSITION & CAMERA TRACKING
-        // In Business (p=0): Sits at x: 2.15, y: 0.05, z: 0.2
-        // During scrub: Lifts toward camera (Z-arc +1.2) and sweeps across to x: -1.75
-        // In Customer (p=1): Settles at x: -1.75, y: -0.05, z: 0.4
-        const targetX = THREE.MathUtils.lerp(2.15, -1.75, p);
-        const targetY = THREE.MathUtils.lerp(0.05, -0.05, p) + Math.sin(elapsedTime * 0.7) * 0.06;
-        const targetZ = THREE.MathUtils.lerp(0.2, 0.4, p) + Math.sin(p * Math.PI) * 1.2;
+        // 1. DIORAMA PERSPECTIVE ROTATION & GLIDE
+        // In Business: Sits at x: 1.7, angled to highlight the working team
+        // During scrub: Diorama turns gracefully to face the entrance & counter
+        // In Customer: Settles at x: -1.4, perfectly framing the booking steps!
+        const dioramaX = THREE.MathUtils.lerp(1.7, -1.4, p);
+        const dioramaY = THREE.MathUtils.lerp(0.05, 0.0, p);
+        const dioramaZ = THREE.MathUtils.lerp(0.0, 0.35, p) + Math.sin(p * Math.PI) * 0.6;
+        dioramaGroup.position.set(dioramaX, dioramaY, dioramaZ);
 
-        heroSealGroup.position.set(targetX, targetY, targetZ);
-
-        // Camera push: 8.2 -> 7.1 along Z-axis
-        camera.position.z = 8.2 - p * 1.1;
-        camera.position.x = currentMouseX * 0.25;
-        camera.position.y = -currentMouseY * 0.25;
+        // Architectural Camera Tracking
+        camera.position.z = 8.5 - p * 1.0;
+        camera.position.x = currentMouseX * 0.22;
+        camera.position.y = 1.2 - currentMouseY * 0.2;
         camera.lookAt(0, 0, 0);
 
-        // 2. KINETIC MORPH: EXECUTIVE MEDALLION -> VIP RESERVATION KEYCARD
-        if (p < 0.48) {
-          // Phase 1: Medallion & Gimbal active
-          medallionGroup.visible = true;
-          keycardGroup.visible = false;
-          gimbalGroup.visible = true;
+        // Diorama Gentle Turntable Yaw
+        dioramaGroup.rotation.y = THREE.MathUtils.lerp(0.28, -0.32, p);
+        dioramaGroup.rotation.x = THREE.MathUtils.lerp(0.12, 0.08, p);
 
-          const phaseProgress = p / 0.48;
-          // Gimbal expands and tilts
-          gimbalGroup.scale.setScalar(1.0 + phaseProgress * 0.4);
-          middleGimbalMesh.rotation.y = elapsedTime * 0.3 + phaseProgress * Math.PI;
-          outerGimbalMesh.rotation.z = -elapsedTime * 0.2 - phaseProgress * Math.PI * 0.8;
+        // 2. CHARACTER 1 (Seated Specialist) Idle Typing & Greeting Glance
+        // Subtle arm typing bounce
+        specLeftArm.rotation.x = 0.65 + Math.sin(elapsedTime * 4.0) * 0.04;
+        specRightArm.rotation.x = 0.65 + Math.cos(elapsedTime * 4.5) * 0.04;
+        // Head turns toward customer as they approach the desk
+        specHead.rotation.y = THREE.MathUtils.lerp(0, -0.55, Math.pow(p, 1.4));
 
-          // Medallion rotates on Y
-          medallionGroup.rotation.y = elapsedTime * 0.2 + phaseProgress * Math.PI;
-          medallionGroup.rotation.x = Math.sin(elapsedTime * 0.6) * 0.08;
-          medallionGroup.scale.setScalar(Math.max(0.001, 1.0 - phaseProgress * 0.3));
+        // 3. CHARACTER 2 (Operations Lead) Shift Glance
+        leadHead.rotation.y = THREE.MathUtils.lerp(0, -0.7, p) + Math.sin(elapsedTime * 0.8) * 0.05;
+
+        // 4. CHARACTER 3 (THE CUSTOMER) WALKING STRIDE & ENTRANCE PATH
+        // Start: x: 2.8, z: 1.8 (outside entrance corridor)
+        // End: x: -1.1, z: 1.3 (standing right at the consultation podium!)
+        const custTargetX = THREE.MathUtils.lerp(2.8, -1.1, p);
+        const custTargetZ = THREE.MathUtils.lerp(1.8, 1.35, p);
+        customerGroup.position.set(custTargetX, -0.98, custTargetZ);
+
+        // Turn character body toward the desk as they walk
+        const walkAngle = THREE.MathUtils.lerp(-Math.PI * 0.6, -Math.PI * 0.45, p);
+        customerGroup.rotation.y = walkAngle;
+
+        // Dynamic Walking Leg & Arm Swing (Linked to scroll scrub velocity + gentle idle)
+        const walkCycle = p * Math.PI * 12.0;
+        const isWalking = p > 0.02 && p < 0.96;
+        const strideAmp = isWalking ? 0.6 : 0.05;
+
+        customerLeftLegGroup.rotation.x = Math.sin(walkCycle) * strideAmp;
+        customerRightLegGroup.rotation.x = -Math.sin(walkCycle) * strideAmp;
+
+        customerLeftArmGroup.rotation.x = -Math.sin(walkCycle) * (strideAmp * 0.8);
+
+        if (p > 0.75) {
+          // Customer raises hand with phone towards booking terminal to verify
+          const reachProgress = (p - 0.75) / 0.25;
+          customerRightArmGroup.rotation.x = THREE.MathUtils.lerp(0, -0.75, reachProgress);
+          customerRightArmGroup.rotation.y = THREE.MathUtils.lerp(0, -0.35, reachProgress);
         } else {
-          // Phase 2: VIP Reservation Keycard takes stage and flips into settlement
-          medallionGroup.visible = false;
-          keycardGroup.visible = true;
-          gimbalGroup.visible = true;
-
-          const phaseProgress = (p - 0.48) / 0.52; // 0 -> 1
-
-          // Gimbal rings dissolve and drift back
-          gimbalGroup.scale.setScalar(1.4 + phaseProgress * 0.3);
-          outerGimbalMesh.rotation.z += 0.002;
-          middleGimbalMesh.rotation.y += 0.003;
-          outerGimbalMesh.material.opacity = THREE.MathUtils.lerp(0.5, 0.0, phaseProgress);
-          middleGimbalMesh.material.opacity = THREE.MathUtils.lerp(0.5, 0.0, phaseProgress);
-
-          // Keycard 3D Flip into alignment
-          // Flips 180 degrees from edge-on (Math.PI / 2) to facing front with subtle luxury yaw
-          const flipAngle = THREE.MathUtils.lerp(Math.PI * 0.6, 0.12, Math.pow(phaseProgress, 0.8));
-          keycardGroup.rotation.y = flipAngle;
-          keycardGroup.rotation.x = THREE.MathUtils.lerp(0.2, 0.04, phaseProgress);
-          keycardGroup.rotation.z = THREE.MathUtils.lerp(-0.15, 0.0, phaseProgress);
-          keycardGroup.scale.setScalar(THREE.MathUtils.lerp(0.65, 1.0, Math.pow(phaseProgress, 0.7)));
-
-          // Chip & Stamp Emissive Pulse when Customer composition docks
-          const glowIntensity = THREE.MathUtils.lerp(0.4, 1.5, phaseProgress);
-          emissiveGoldMat.emissiveIntensity = glowIntensity + Math.sin(elapsedTime * 3.0) * 0.18;
+          customerRightArmGroup.rotation.x = Math.sin(walkCycle) * (strideAmp * 0.8);
+          customerRightArmGroup.rotation.y = 0;
         }
 
-        // Halo expands and illuminates in Scene 02
-        haloMesh.scale.setScalar(THREE.MathUtils.lerp(1.0, 1.45, p));
-        haloMat.opacity = THREE.MathUtils.lerp(0.08, 0.32, p) + Math.sin(elapsedTime * 1.6) * 0.04;
+        // 5. TERMINAL CONFIRMATION HALO PULSE (When customer reaches Step 4)
+        if (p > 0.7) {
+          const pulse = (p - 0.7) / 0.3;
+          terminalActiveMat.emissiveIntensity = 0.5 + pulse * 1.5 + Math.sin(elapsedTime * 3.5) * 0.2;
+          confirmHaloMat.opacity = pulse * 0.35 + Math.sin(elapsedTime * 2.0) * 0.05;
+          confirmHaloMesh.scale.setScalar(1.0 + pulse * 0.5);
+        } else {
+          terminalActiveMat.emissiveIntensity = 0.4;
+          confirmHaloMat.opacity = 0.05;
+          confirmHaloMesh.scale.setScalar(1.0);
+        }
 
         // Dust particles gentle upward drift
         const posAttr = particleGeometry.attributes.position as THREE.BufferAttribute;
@@ -416,8 +638,8 @@ export default function AmbientSpatialCanvas({
       }
 
       // Parallax mouse tilt
-      worldGroup.rotation.y = currentMouseX * 0.09;
-      worldGroup.rotation.x = currentMouseY * 0.06;
+      worldGroup.rotation.y = currentMouseX * 0.08;
+      worldGroup.rotation.x = currentMouseY * 0.05;
 
       renderer.render(scene, camera);
     };
