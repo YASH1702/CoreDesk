@@ -31,12 +31,10 @@ export default function HomePage() {
   }, []);
 
   const handleSelectScene = useCallback((index: number) => {
-    if (typeof window === "undefined") return;
     const st = ScrollTrigger.getById("experience-trigger");
     if (st) {
-      // Settled timeline coordinates for the 6 scenes
-      const sceneProgresses = [0.0, 0.2, 0.4, 0.6, 0.8, 1.0];
-      const targetProgress = sceneProgresses[index] ?? index / 5;
+      // Settled timeline coordinates for Milestone 1 (0: Business, 1: Customer)
+      const targetProgress = index === 0 ? 0.0 : 1.0;
       const targetY = st.start + targetProgress * (st.end - st.start);
       gsap.to(window, {
         scrollTo: { y: targetY, autoKill: false },

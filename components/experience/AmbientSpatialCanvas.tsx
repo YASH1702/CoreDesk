@@ -5,10 +5,19 @@ import * as THREE from "three";
 
 interface AmbientSpatialCanvasProps {
   className?: string;
+  scrollProgress?: number;
 }
 
-export default function AmbientSpatialCanvas({ className = "" }: AmbientSpatialCanvasProps) {
+export default function AmbientSpatialCanvas({
+  className = "",
+  scrollProgress = 0,
+}: AmbientSpatialCanvasProps) {
   const mountRef = useRef<HTMLDivElement>(null);
+  const scrollProgressRef = useRef(scrollProgress);
+
+  useEffect(() => {
+    scrollProgressRef.current = scrollProgress;
+  }, [scrollProgress]);
 
   useEffect(() => {
     const container = mountRef.current;
@@ -239,11 +248,13 @@ export default function AmbientSpatialCanvas({ className = "" }: AmbientSpatialC
       currentMouseX += (targetMouseX - currentMouseX) * 0.04;
       currentMouseY += (targetMouseY - currentMouseY) * 0.04;
 
+      const scrollOffset = scrollProgressRef.current;
+
       if (!prefersReducedMotion) {
-        // Orbit rings rotation
+        // Orbit rings rotation with subtle scroll scrub progression
         orbitalRing.rotation.z += 0.001;
-        orbitalRing.rotation.y += 0.0006;
-        innerRing.rotation.z -= 0.0012;
+        orbitalRing.rotation.y = Math.PI * 0.15 + scrollOffset * 0.5;
+        innerRing.rotation.x = -Math.PI * 0.25 - scrollOffset * 0.4;
 
         // Crystals floating & tumbling
         crystals.forEach((item) => {
@@ -273,11 +284,12 @@ export default function AmbientSpatialCanvas({ className = "" }: AmbientSpatialC
         posAttr.needsUpdate = true;
       }
 
-      // Parallax camera & world tilt
+      // Parallax camera & world tilt with scroll-scrubbed camera push
       worldGroup.rotation.y = currentMouseX * 0.14;
       worldGroup.rotation.x = currentMouseY * 0.09;
       camera.position.x = currentMouseX * 0.35;
       camera.position.y = -currentMouseY * 0.35;
+      camera.position.z = 9.0 - scrollOffset * 0.8;
       camera.lookAt(0, 0, 0);
 
       renderer.render(scene, camera);
