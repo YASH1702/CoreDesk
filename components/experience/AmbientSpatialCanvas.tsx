@@ -23,7 +23,6 @@ export default function AmbientSpatialCanvas({
     const container = mountRef.current;
     if (!container || typeof window === "undefined") return;
 
-    // Detect reduced motion preference
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     // Scene & Camera setup
@@ -31,11 +30,9 @@ export default function AmbientSpatialCanvas({
     const width = container.clientWidth || window.innerWidth;
     const height = container.clientHeight || window.innerHeight;
 
-    // Perspective camera with refined architectural lens
     const camera = new THREE.PerspectiveCamera(36, width / height, 0.1, 100);
     camera.position.set(0, 1.15, 8.2);
 
-    // Renderer setup with alpha transparency
     const renderer = new THREE.WebGLRenderer({
       alpha: true,
       antialias: true,
@@ -48,7 +45,7 @@ export default function AmbientSpatialCanvas({
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     container.appendChild(renderer.domElement);
 
-    // Studio Lighting (Warm Sand & Luxury Architectural Illumination)
+    // Dynamic Architectural Lighting
     const ambientLight = new THREE.AmbientLight(0xfffbf2, 2.0);
     scene.add(ambientLight);
 
@@ -64,7 +61,7 @@ export default function AmbientSpatialCanvas({
     scene.add(rimLight);
 
     const deskSpotLight = new THREE.PointLight(0xfbebc4, 1.8, 8);
-    deskSpotLight.position.set(1.5, 2.0, 1.0);
+    deskSpotLight.position.set(0.65, 1.8, -0.1);
     scene.add(deskSpotLight);
 
     // Root World Group for mouse parallax
@@ -72,19 +69,12 @@ export default function AmbientSpatialCanvas({
     scene.add(worldGroup);
 
     // =========================================================================
-    // STORY-DRIVEN LIVING BUSINESS DIORAMA (Scenes 01 → 06)
-    // 0.00: Business Office
-    // 0.20: Customer Arrival & Check-In
-    // 0.40: Staff Schedule Sync
-    // 0.60: Control Analytics Monolith
-    // 0.80: System Core Synchronization
-    // 1.00: Platform Autonomous Ecosystem
+    // LIVING ARCHITECTURAL DIORAMA
     // =========================================================================
     const dioramaGroup = new THREE.Group();
     worldGroup.add(dioramaGroup);
 
-    // Responsive scaling
-    const responsiveScale = width < 768 ? 0.72 : width < 1024 ? 0.84 : 1.0;
+    const responsiveScale = width < 768 ? 0.70 : width < 1024 ? 0.82 : 1.0;
     dioramaGroup.scale.setScalar(responsiveScale);
 
     // Disposable tracking lists
@@ -94,7 +84,7 @@ export default function AmbientSpatialCanvas({
     // Shared Luxury Warm Sand Materials
     const stonePlinthMat = new THREE.MeshStandardMaterial({
       color: 0xf5efe6,
-      roughness: 0.35,
+      roughness: 0.32,
       metalness: 0.08,
     });
     disposablesMaterials.push(stonePlinthMat);
@@ -108,7 +98,7 @@ export default function AmbientSpatialCanvas({
 
     const deskSurfaceMat = new THREE.MeshStandardMaterial({
       color: 0xfffcf7,
-      roughness: 0.22,
+      roughness: 0.20,
       metalness: 0.05,
     });
     disposablesMaterials.push(deskSurfaceMat);
@@ -143,6 +133,20 @@ export default function AmbientSpatialCanvas({
       roughness: 0.2,
     });
     disposablesMaterials.push(terminalActiveMat);
+
+    const paperVoucherMat = new THREE.MeshStandardMaterial({
+      color: 0xfffef8,
+      roughness: 0.75,
+      side: THREE.DoubleSide,
+    });
+    disposablesMaterials.push(paperVoucherMat);
+
+    const plantLeafMat = new THREE.MeshStandardMaterial({
+      color: 0x4f5e43, // Muted architectural olive
+      roughness: 0.45,
+      metalness: 0.05,
+    });
+    disposablesMaterials.push(plantLeafMat);
 
     // Character Materials
     const alabasterSkinMat = new THREE.MeshStandardMaterial({
@@ -183,21 +187,21 @@ export default function AmbientSpatialCanvas({
     const plinthGroup = new THREE.Group();
     dioramaGroup.add(plinthGroup);
 
-    const plinthGeo = new THREE.BoxGeometry(5.0, 0.22, 3.6);
+    const plinthGeo = new THREE.BoxGeometry(5.2, 0.22, 3.8);
     disposablesGeometries.push(plinthGeo);
     const plinthMesh = new THREE.Mesh(plinthGeo, stonePlinthMat);
     plinthMesh.position.y = -1.1;
     plinthMesh.receiveShadow = true;
     plinthGroup.add(plinthMesh);
 
-    const plinthTrimGeo = new THREE.BoxGeometry(5.06, 0.04, 3.66);
+    const plinthTrimGeo = new THREE.BoxGeometry(5.26, 0.04, 3.86);
     disposablesGeometries.push(plinthTrimGeo);
     const plinthTrimMesh = new THREE.Mesh(plinthTrimGeo, plinthGoldBorderMat);
     plinthTrimMesh.position.y = -1.0;
     plinthGroup.add(plinthTrimMesh);
 
     // -------------------------------------------------------------
-    // 2. EXECUTIVE WORKSTATION (Business Operations Desk)
+    // 2. EXECUTIVE WORKSTATION & LIVING DESK PROPS
     // -------------------------------------------------------------
     const deskGroup = new THREE.Group();
     deskGroup.position.set(0.65, -0.98, -0.3);
@@ -225,6 +229,7 @@ export default function AmbientSpatialCanvas({
       deskGroup.add(leg);
     });
 
+    // Ultra-thin Workspace Monitor
     const monitorStandGeo = new THREE.CylinderGeometry(0.016, 0.02, 0.26, 16);
     disposablesGeometries.push(monitorStandGeo);
     const monitorStand = new THREE.Mesh(monitorStandGeo, goldChassisMat);
@@ -249,18 +254,87 @@ export default function AmbientSpatialCanvas({
     keyboardMesh.position.set(0, 0.77, 0.15);
     deskGroup.add(keyboardMesh);
 
-    const potGeo = new THREE.CylinderGeometry(0.065, 0.045, 0.11, 16);
-    const leafGeo = new THREE.SphereGeometry(0.085, 16, 16);
-    disposablesGeometries.push(potGeo, leafGeo);
-    const potMesh = new THREE.Mesh(potGeo, stonePlinthMat);
-    potMesh.position.set(0.78, 0.81, -0.18);
-    deskGroup.add(potMesh);
-    const leafMesh = new THREE.Mesh(leafGeo, bronzeChassisMat);
-    leafMesh.position.set(0.78, 0.92, -0.18);
-    deskGroup.add(leafMesh);
+    // NEW LIVING ELEMENT: Brushed Gold Cantilever Desk Lamp
+    const lampBaseGeo = new THREE.CylinderGeometry(0.06, 0.06, 0.015, 16);
+    const lampStemGeo = new THREE.CylinderGeometry(0.008, 0.008, 0.38, 12);
+    const lampShadeGeo = new THREE.ConeGeometry(0.06, 0.09, 16);
+    disposablesGeometries.push(lampBaseGeo, lampStemGeo, lampShadeGeo);
+
+    const lampBase = new THREE.Mesh(lampBaseGeo, goldChassisMat);
+    lampBase.position.set(-0.85, 0.77, -0.2);
+    deskGroup.add(lampBase);
+
+    const lampStem = new THREE.Mesh(lampStemGeo, goldChassisMat);
+    lampStem.position.set(-0.85, 0.95, -0.2);
+    lampStem.rotation.z = -0.15;
+    deskGroup.add(lampStem);
+
+    const lampShade = new THREE.Mesh(lampShadeGeo, goldChassisMat);
+    lampShade.position.set(-0.78, 1.12, -0.12);
+    lampShade.rotation.z = Math.PI * 0.75;
+    deskGroup.add(lampShade);
+
+    // NEW LIVING ELEMENT: Matte Alabaster Porcelain Espresso Cup & Rising Steam
+    const cupGeo = new THREE.CylinderGeometry(0.035, 0.025, 0.05, 16);
+    const saucerGeo = new THREE.CylinderGeometry(0.055, 0.055, 0.008, 16);
+    disposablesGeometries.push(cupGeo, saucerGeo);
+
+    const saucer = new THREE.Mesh(saucerGeo, stonePlinthMat);
+    saucer.position.set(0.72, 0.765, 0.2);
+    deskGroup.add(saucer);
+
+    const cup = new THREE.Mesh(cupGeo, stonePlinthMat);
+    cup.position.set(0.72, 0.79, 0.2);
+    deskGroup.add(cup);
+
+    // Wispy Steam Particles
+    const steamParticleCount = 4;
+    const steamParticles: THREE.Mesh[] = [];
+    const steamGeo = new THREE.SphereGeometry(0.015, 8, 8);
+    disposablesGeometries.push(steamGeo);
+    const steamMat = new THREE.MeshBasicMaterial({
+      color: 0xfffcf7,
+      transparent: true,
+      opacity: 0.25,
+    });
+    disposablesMaterials.push(steamMat);
+
+    for (let i = 0; i < steamParticleCount; i++) {
+      const sp = new THREE.Mesh(steamGeo, steamMat);
+      sp.position.set(0.72, 0.82 + i * 0.04, 0.2);
+      deskGroup.add(sp);
+      steamParticles.push(sp);
+    }
 
     // -------------------------------------------------------------
-    // 3. CONSULTATION / CLIENT CHECK-IN COUNTER (Customer Destination)
+    // 3. CORNER ARCHITECTURAL PLANT (Botanical Living Detail)
+    // -------------------------------------------------------------
+    const plantGroup = new THREE.Group();
+    plantGroup.position.set(-2.0, -0.98, -1.2);
+    dioramaGroup.add(plantGroup);
+
+    const planterGeo = new THREE.CylinderGeometry(0.24, 0.18, 0.55, 24);
+    disposablesGeometries.push(planterGeo);
+    const planter = new THREE.Mesh(planterGeo, stonePlinthMat);
+    planter.position.y = 0.275;
+    planter.castShadow = true;
+    plantGroup.add(planter);
+
+    const plantLeaves: THREE.Mesh[] = [];
+    const leafGeo = new THREE.ConeGeometry(0.18, 0.45, 5);
+    disposablesGeometries.push(leafGeo);
+
+    for (let i = 0; i < 5; i++) {
+      const angle = (i / 5) * Math.PI * 2;
+      const leaf = new THREE.Mesh(leafGeo, plantLeafMat);
+      leaf.position.set(Math.cos(angle) * 0.12, 0.65 + i * 0.08, Math.sin(angle) * 0.12);
+      leaf.rotation.set(0.4, angle, 0.3);
+      plantGroup.add(leaf);
+      plantLeaves.push(leaf);
+    }
+
+    // -------------------------------------------------------------
+    // 4. CONSULTATION PODIUM & PRINTED PAPER VOUCHER
     // -------------------------------------------------------------
     const counterGroup = new THREE.Group();
     counterGroup.position.set(-0.75, -0.98, 0.45);
@@ -302,8 +376,28 @@ export default function AmbientSpatialCanvas({
     confirmHaloMesh.rotation.x = -Math.PI * 0.25;
     counterGroup.add(confirmHaloMesh);
 
+    // NEW LIVING ELEMENT: Physical Paper Appointment Voucher Ribbon
+    const ticketGroup = new THREE.Group();
+    ticketGroup.position.set(0, 0.96, 0.26);
+    counterGroup.add(ticketGroup);
+
+    const ticketGeo = new THREE.PlaneGeometry(0.24, 0.45, 8, 8);
+    disposablesGeometries.push(ticketGeo);
+    const ticketMesh = new THREE.Mesh(ticketGeo, paperVoucherMat);
+    ticketMesh.position.set(0, -0.22, 0.04);
+    ticketMesh.rotation.x = Math.PI * 0.12;
+    ticketGroup.add(ticketMesh);
+
+    const ticketSealGeo = new THREE.CylinderGeometry(0.04, 0.04, 0.005, 16);
+    disposablesGeometries.push(ticketSealGeo);
+    const ticketSeal = new THREE.Mesh(ticketSealGeo, goldChassisMat);
+    ticketSeal.position.set(0, -0.38, 0.05);
+    ticketSeal.rotation.x = Math.PI * 0.12;
+    ticketGroup.add(ticketSeal);
+    ticketGroup.scale.setScalar(0.001); // Hidden initially, unrolls on check-in
+
     // -------------------------------------------------------------
-    // 4. CHARACTER 1: SPECIALIST (Seated at Desk Typing / Operating)
+    // 5. CHARACTER 1: SPECIALIST (Seated Desk Operator)
     // -------------------------------------------------------------
     const specialistGroup = new THREE.Group();
     specialistGroup.position.set(0.65, -0.98, 0.35);
@@ -352,7 +446,7 @@ export default function AmbientSpatialCanvas({
     specialistGroup.add(specRightArm);
 
     // -------------------------------------------------------------
-    // 5. CHARACTER 2: OPERATIONS LEAD (Standing & Coordinating)
+    // 6. CHARACTER 2: OPERATIONS LEAD (Standing & Handover Movement)
     // -------------------------------------------------------------
     const leadGroup = new THREE.Group();
     leadGroup.position.set(1.6, -0.98, -0.15);
@@ -387,7 +481,7 @@ export default function AmbientSpatialCanvas({
     leadGroup.add(tabletMesh);
 
     // -------------------------------------------------------------
-    // 6. CHARACTER 3: THE CUSTOMER (Walks In to Consultation Desk)
+    // 7. CHARACTER 3: THE CUSTOMER (Natural Walking Cadence)
     // -------------------------------------------------------------
     const customerGroup = new THREE.Group();
     customerGroup.position.set(2.1, -0.98, 1.4);
@@ -438,7 +532,7 @@ export default function AmbientSpatialCanvas({
     customerRightArmGroup.add(custPhone);
 
     // -------------------------------------------------------------
-    // 7. SCENE 03 (STAFF): FLOATING 3D AGENDA / SCHEDULE HUD
+    // 8. SCENE 03 (STAFF): MECHANICAL SWISS SPLIT-FLAP TILES
     // -------------------------------------------------------------
     const staffHudGroup = new THREE.Group();
     staffHudGroup.position.set(0.65, 0.65, -0.55);
@@ -459,8 +553,11 @@ export default function AmbientSpatialCanvas({
     const hudPlane = new THREE.Mesh(hudPlaneGeo, hudPlaneMat);
     staffHudGroup.add(hudPlane);
 
-    const slotBarGeo = new THREE.BoxGeometry(1.2, 0.09, 0.01);
+    // Mechanical Flip Tiles
+    const flipTiles: THREE.Group[] = [];
+    const slotBarGeo = new THREE.BoxGeometry(1.2, 0.09, 0.015);
     disposablesGeometries.push(slotBarGeo);
+
     const slotBarMatActive = new THREE.MeshStandardMaterial({
       color: 0xc69a4b,
       emissive: 0xc69a4b,
@@ -473,20 +570,18 @@ export default function AmbientSpatialCanvas({
     });
     disposablesMaterials.push(slotBarMatActive, slotBarMatDone);
 
-    const slot1 = new THREE.Mesh(slotBarGeo, slotBarMatDone);
-    slot1.position.set(0, 0.2, 0.01);
-    staffHudGroup.add(slot1);
-
-    const slot2 = new THREE.Mesh(slotBarGeo, slotBarMatActive);
-    slot2.position.set(0, 0.04, 0.01);
-    staffHudGroup.add(slot2);
-
-    const slot3 = new THREE.Mesh(slotBarGeo, slotBarMatActive);
-    slot3.position.set(0, -0.12, 0.01);
-    staffHudGroup.add(slot3);
+    const tileYOffsets = [0.20, 0.04, -0.12];
+    tileYOffsets.forEach((y, i) => {
+      const tileGroup = new THREE.Group();
+      tileGroup.position.set(0, y, 0.01);
+      const tileMesh = new THREE.Mesh(slotBarGeo, i === 0 ? slotBarMatDone : slotBarMatActive);
+      tileGroup.add(tileMesh);
+      staffHudGroup.add(tileGroup);
+      flipTiles.push(tileGroup);
+    });
 
     // -------------------------------------------------------------
-    // 8. SCENE 04 (CONTROL): ARCHITECTURAL REVENUE MONOLITH
+    // 9. SCENE 04 (CONTROL): REVENUE MONOLITH & ORBITAL TICKER
     // -------------------------------------------------------------
     const controlPillarGroup = new THREE.Group();
     controlPillarGroup.position.set(1.45, -0.98, -0.75);
@@ -499,6 +594,7 @@ export default function AmbientSpatialCanvas({
     pillarMesh.position.y = 0.75;
     controlPillarGroup.add(pillarMesh);
 
+    // 3 Precision Hydraulic Piston Bars
     const barGeo1 = new THREE.BoxGeometry(0.12, 0.45, 0.12);
     const barGeo2 = new THREE.BoxGeometry(0.12, 0.75, 0.12);
     const barGeo3 = new THREE.BoxGeometry(0.12, 1.1, 0.12);
@@ -516,8 +612,16 @@ export default function AmbientSpatialCanvas({
     barMesh3.position.set(0.16, 2.05, 0);
     controlPillarGroup.add(barMesh3);
 
+    // Orbital Brass Ticker Ring
+    const tickerRingGeo = new THREE.TorusGeometry(0.48, 0.015, 16, 48);
+    disposablesGeometries.push(tickerRingGeo);
+    const tickerRing = new THREE.Mesh(tickerRingGeo, goldChassisMat);
+    tickerRing.position.set(0, 1.6, 0);
+    tickerRing.rotation.x = Math.PI * 0.4;
+    controlPillarGroup.add(tickerRing);
+
     // -------------------------------------------------------------
-    // 9. SCENE 05 (SYSTEM): GOLDEN CONDUITS & ENERGY RELAY CIRCUIT
+    // 10. SCENE 05 (SYSTEM): UNDERFLOOR CONDUITS & 8 FLOATING GLYPHS
     // -------------------------------------------------------------
     const systemCircuitGroup = new THREE.Group();
     systemCircuitGroup.position.set(0, -0.97, 0);
@@ -534,46 +638,84 @@ export default function AmbientSpatialCanvas({
     });
     disposablesMaterials.push(conduitMat);
 
-    const track1Geo = new THREE.BoxGeometry(1.4, 0.015, 0.05);
+    // Underfloor channels
+    const track1Geo = new THREE.BoxGeometry(1.5, 0.018, 0.06);
     disposablesGeometries.push(track1Geo);
     const track1 = new THREE.Mesh(track1Geo, conduitMat);
     track1.position.set(-0.05, 0, 0.1);
     track1.rotation.y = -0.55;
     systemCircuitGroup.add(track1);
 
-    const track2Geo = new THREE.BoxGeometry(1.1, 0.015, 0.05);
+    const track2Geo = new THREE.BoxGeometry(1.2, 0.018, 0.06);
     disposablesGeometries.push(track2Geo);
     const track2 = new THREE.Mesh(track2Geo, conduitMat);
     track2.position.set(1.05, 0, -0.5);
     track2.rotation.y = 0.45;
     systemCircuitGroup.add(track2);
 
-    const packetGeo = new THREE.SphereGeometry(0.045, 16, 16);
+    // 8 Floating Module Glyphs
+    const moduleGlyphs: THREE.Mesh[] = [];
+    const glyphGeo = new THREE.OctahedronGeometry(0.045, 0);
+    disposablesGeometries.push(glyphGeo);
+    const glyphMat = new THREE.MeshStandardMaterial({
+      color: 0xc69a4b,
+      emissive: 0xc69a4b,
+      emissiveIntensity: 0.8,
+      metalness: 0.9,
+    });
+    disposablesMaterials.push(glyphMat);
+
+    for (let i = 0; i < 8; i++) {
+      const g = new THREE.Mesh(glyphGeo, glyphMat);
+      const angle = (i / 8) * Math.PI * 2;
+      g.position.set(Math.cos(angle) * 1.8, 0.2 + Math.sin(i) * 0.1, Math.sin(angle) * 1.2);
+      systemCircuitGroup.add(g);
+      moduleGlyphs.push(g);
+    }
+
+    // Traveling Energy Pulse Packets
+    const packetGeo = new THREE.SphereGeometry(0.04, 16, 16);
     disposablesGeometries.push(packetGeo);
     const packetMat = new THREE.MeshStandardMaterial({
       color: 0xfffdf0,
       emissive: 0xc69a4b,
-      emissiveIntensity: 1.2,
-      roughness: 0.1,
+      emissiveIntensity: 1.5,
     });
     disposablesMaterials.push(packetMat);
 
     const packetNode1 = new THREE.Mesh(packetGeo, packetMat);
-    packetNode1.position.set(-0.7, 0.02, 0.4);
     systemCircuitGroup.add(packetNode1);
-
     const packetNode2 = new THREE.Mesh(packetGeo, packetMat);
-    packetNode2.position.set(0.65, 0.02, -0.2);
     systemCircuitGroup.add(packetNode2);
 
-    const packetNode3 = new THREE.Mesh(packetGeo, packetMat);
-    packetNode3.position.set(1.45, 0.02, -0.75);
-    systemCircuitGroup.add(packetNode3);
+    // -------------------------------------------------------------
+    // 11. SCENE 06 (PLATFORM): ARCHITECTURAL CANOPY & GOLD MOTES
+    // -------------------------------------------------------------
+    const canopyGroup = new THREE.Group();
+    canopyGroup.position.set(0, 2.5, 0);
+    canopyGroup.scale.setScalar(0.001);
+    dioramaGroup.add(canopyGroup);
+
+    const canopyBeamGeo = new THREE.BoxGeometry(4.8, 0.04, 0.04);
+    disposablesGeometries.push(canopyBeamGeo);
+    const canopyBeam1 = new THREE.Mesh(canopyBeamGeo, goldChassisMat);
+    canopyBeam1.position.z = 1.4;
+    canopyGroup.add(canopyBeam1);
+
+    const canopyBeam2 = new THREE.Mesh(canopyBeamGeo, goldChassisMat);
+    canopyBeam2.position.z = -1.4;
+    canopyGroup.add(canopyBeam2);
+
+    const canopyGlassGeo = new THREE.PlaneGeometry(4.7, 2.7);
+    disposablesGeometries.push(canopyGlassGeo);
+    const canopyGlass = new THREE.Mesh(canopyGlassGeo, hudPlaneMat);
+    canopyGlass.rotation.x = Math.PI / 2;
+    canopyGroup.add(canopyGlass);
 
     // -------------------------------------------------------------
-    // 10. AMBIENT PARTICLES
+    // 12. AMBIENT LUXURY PARTICLES
     // -------------------------------------------------------------
-    const particleCount = 110;
+    const particleCount = 120;
     const particlePositions = new Float32Array(particleCount * 3);
     const particleVelocities: { y: number; xOffset: number; speed: number }[] = [];
 
@@ -595,7 +737,7 @@ export default function AmbientSpatialCanvas({
 
     const particleMaterial = new THREE.PointsMaterial({
       color: 0xc69a4b,
-      size: 0.035,
+      size: 0.038,
       transparent: true,
       opacity: 0.35,
       blending: THREE.AdditiveBlending,
@@ -626,7 +768,7 @@ export default function AmbientSpatialCanvas({
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
-      const resScale = w < 768 ? 0.72 : w < 1024 ? 0.84 : 1.0;
+      const resScale = w < 768 ? 0.70 : w < 1024 ? 0.82 : 1.0;
       dioramaGroup.scale.setScalar(resScale);
     };
 
@@ -649,19 +791,12 @@ export default function AmbientSpatialCanvas({
       const elapsedTime = clock.getElapsedTime();
       const p = Math.max(0, Math.min(1, scrollProgressRef.current));
 
-      // Mouse lerp
       currentMouseX += (targetMouseX - currentMouseX) * 0.04;
       currentMouseY += (targetMouseY - currentMouseY) * 0.04;
 
       if (!prefersReducedMotion) {
         // =====================================================================
-        // CHOREOGRAPHY ACROSS ALL 6 SCENES (Exactly mapped to 0.20 intervals):
-        // Scene 0: Business (0.00)
-        // Scene 1: Customer (0.20)
-        // Scene 2: Staff (0.40)
-        // Scene 3: Control (0.60)
-        // Scene 4: System (0.80)
-        // Scene 5: Platform (1.00)
+        // CHOREOGRAPHY ACROSS ALL 6 SCENES (0.0, 0.2, 0.4, 0.6, 0.8, 1.0)
         // =====================================================================
 
         let targetDioramaX = 0.20;
@@ -672,21 +807,21 @@ export default function AmbientSpatialCanvas({
         let targetCameraY = 1.15;
 
         if (p <= 0.20) {
-          // Transition 0 -> 1: Business focus -> Customer walks in to podium
+          // 01 -> 02: Business to Customer
           const t = p / 0.20;
           targetDioramaX = THREE.MathUtils.lerp(0.20, 0.08, t);
           targetDioramaZ = THREE.MathUtils.lerp(0.0, 0.30, t);
           targetRotY = THREE.MathUtils.lerp(0.32, -0.16, t);
           targetCameraZ = THREE.MathUtils.lerp(8.2, 7.8, t);
         } else if (p <= 0.40) {
-          // Transition 1 -> 2: Customer check-in -> Staff Agenda HUD
+          // 02 -> 03: Customer to Staff Handover
           const t = (p - 0.20) / 0.20;
           targetDioramaX = THREE.MathUtils.lerp(0.08, 0.16, t);
           targetDioramaZ = THREE.MathUtils.lerp(0.30, 0.18, t);
           targetRotY = THREE.MathUtils.lerp(-0.16, 0.16, t);
           targetCameraZ = THREE.MathUtils.lerp(7.8, 8.0, t);
         } else if (p <= 0.60) {
-          // Transition 2 -> 3: Staff Agenda -> Control Revenue Monolith
+          // 03 -> 04: Staff to Control Monolith
           const t = (p - 0.40) / 0.20;
           targetDioramaX = THREE.MathUtils.lerp(0.16, -0.06, t);
           targetDioramaZ = THREE.MathUtils.lerp(0.18, 0.12, t);
@@ -694,14 +829,14 @@ export default function AmbientSpatialCanvas({
           targetCameraY = THREE.MathUtils.lerp(1.15, 1.30, t);
           targetCameraZ = THREE.MathUtils.lerp(8.0, 8.3, t);
         } else if (p <= 0.80) {
-          // Transition 3 -> 4: Control Monolith -> System Conduits
+          // 04 -> 05: Control to System Conduits
           const t = (p - 0.60) / 0.20;
           targetDioramaX = THREE.MathUtils.lerp(-0.06, 0.04, t);
           targetRotY = THREE.MathUtils.lerp(-0.22, 0.04, t);
           targetCameraY = THREE.MathUtils.lerp(1.30, 1.42, t);
           targetCameraZ = THREE.MathUtils.lerp(8.3, 8.8, t);
         } else {
-          // Transition 4 -> 5: System Conduits -> Platform Pull-Back
+          // 05 -> 06: System to Platform Hero Pull-Back
           const t = (p - 0.80) / 0.20;
           targetDioramaX = THREE.MathUtils.lerp(0.04, 0.0, t);
           targetDioramaY = THREE.MathUtils.lerp(-0.04, -0.16, t);
@@ -719,19 +854,85 @@ export default function AmbientSpatialCanvas({
         camera.position.y = targetCameraY - currentMouseY * 0.2;
         camera.lookAt(targetDioramaX * 0.5, 0.05, 0);
 
-        // Specialist Typing & Turning
-        specLeftArm.rotation.x = 0.65 + Math.sin(elapsedTime * 4.0) * 0.04;
-        specRightArm.rotation.x = 0.65 + Math.cos(elapsedTime * 4.5) * 0.04;
-        if (p < 0.25) {
-          specHead.rotation.y = THREE.MathUtils.lerp(0, -0.5, Math.min(1, p * 4.0));
+        // -------------------------------------------------------------
+        // ATMOSPHERIC SUNLIGHT SHIFT (Morning -> Executive Daylight -> Sunset)
+        // -------------------------------------------------------------
+        if (p > 0.75) {
+          const sunsetT = (p - 0.75) / 0.25;
+          ambientLight.color.setHex(0xfff3e0);
+          keyLight.color.setHex(0xffecc7);
+          rimLight.intensity = 2.4 + sunsetT * 1.5;
         } else {
-          specHead.rotation.y = -0.25 + Math.sin(elapsedTime * 0.6) * 0.05;
+          ambientLight.color.setHex(0xfffbf2);
+          keyLight.color.setHex(0xfffaed);
+          rimLight.intensity = 2.4;
         }
 
-        // Lead Shift Glance
-        leadHead.rotation.y = THREE.MathUtils.lerp(0, -0.6, Math.min(1, p * 2.5)) + Math.sin(elapsedTime * 0.8) * 0.04;
+        // -------------------------------------------------------------
+        // LIVING PROPS: Coffee Steam & Plant Foliage Sway
+        // -------------------------------------------------------------
+        steamParticles.forEach((sp, i) => {
+          sp.position.y = 0.82 + ((elapsedTime * 0.08 + i * 0.05) % 0.18);
+          sp.position.x = 0.72 + Math.sin(elapsedTime * 2.0 + i) * 0.012;
+          (sp.material as THREE.MeshBasicMaterial).opacity = Math.max(0, 0.25 - (sp.position.y - 0.82) * 1.2);
+        });
 
-        // Customer Walking Stride (plays smoothly during transition 0 -> 1)
+        plantLeaves.forEach((leaf, i) => {
+          leaf.rotation.z = 0.3 + Math.sin(elapsedTime * 1.6 + i * 1.2) * 0.04;
+        });
+
+        // -------------------------------------------------------------
+        // CHARACTER 1 (Specialist): Social Dynamics & Handover Reaction
+        // -------------------------------------------------------------
+        if (p < 0.18) {
+          // Scene 1: Active typing
+          specLeftArm.rotation.x = 0.65 + Math.sin(elapsedTime * 4.0) * 0.04;
+          specRightArm.rotation.x = 0.65 + Math.cos(elapsedTime * 4.5) * 0.04;
+          specHead.rotation.y = THREE.MathUtils.lerp(0, -0.45, p / 0.18);
+        } else if (p < 0.40) {
+          // Scene 2 & 3: Pauses typing, acknowledges customer & turns toward Lead
+          specLeftArm.rotation.x = 0.4;
+          specRightArm.rotation.x = 0.4;
+          specHead.rotation.y = THREE.MathUtils.lerp(-0.45, 0.55, (p - 0.18) / 0.22);
+        } else {
+          // Scene 4+: Mutual coordination & forward gaze
+          specLeftArm.rotation.x = 0.55 + Math.sin(elapsedTime * 1.5) * 0.02;
+          specRightArm.rotation.x = 0.55 + Math.cos(elapsedTime * 1.5) * 0.02;
+          specHead.rotation.y = THREE.MathUtils.lerp(0.2, 0, (p - 0.40) / 0.60);
+        }
+
+        // -------------------------------------------------------------
+        // CHARACTER 2 (Operations Lead): Social Handover Step
+        // -------------------------------------------------------------
+        if (p < 0.20) {
+          // Scene 1: Standing at desk periphery
+          leadGroup.position.set(1.6, -0.98, -0.15);
+          leadGroup.rotation.y = -Math.PI * 0.35;
+          leadHead.rotation.y = THREE.MathUtils.lerp(0, -0.5, p / 0.20);
+        } else if (p < 0.45) {
+          // Scene 2 -> 3: Steps closer to Specialist's desk for the handover
+          const t = (p - 0.20) / 0.25;
+          leadGroup.position.x = THREE.MathUtils.lerp(1.6, 1.15, t);
+          leadGroup.position.z = THREE.MathUtils.lerp(-0.15, 0.10, t);
+          leadGroup.rotation.y = THREE.MathUtils.lerp(-Math.PI * 0.35, -Math.PI * 0.75, t);
+          // Extends tablet forward
+          tabletMesh.position.set(-0.35, 0.88, 0.35);
+          tabletMesh.rotation.set(0.6, 0.4, 0.2);
+        } else if (p < 0.75) {
+          // Scene 4: Executive stance facing revenue monolith
+          const t = (p - 0.45) / 0.30;
+          leadGroup.position.x = THREE.MathUtils.lerp(1.15, 1.45, t);
+          leadGroup.position.z = THREE.MathUtils.lerp(0.10, -0.15, t);
+          leadGroup.rotation.y = THREE.MathUtils.lerp(-Math.PI * 0.75, -Math.PI * 0.25, t);
+        } else {
+          // Scene 5 & 6: Settled proud stance
+          leadGroup.rotation.y = -Math.PI * 0.15;
+          leadHead.rotation.y = 0;
+        }
+
+        // -------------------------------------------------------------
+        // CHARACTER 3 (Customer): Walking Cadence & Paper Voucher Delivery
+        // -------------------------------------------------------------
         const custProgress = Math.max(0, Math.min(1, p / 0.20));
         const custTargetX = THREE.MathUtils.lerp(2.1, -0.75, custProgress);
         const custTargetZ = THREE.MathUtils.lerp(1.4, 1.2, custProgress);
@@ -740,7 +941,6 @@ export default function AmbientSpatialCanvas({
         const walkAngle = THREE.MathUtils.lerp(-Math.PI * 0.65, -Math.PI * 0.48, custProgress);
         customerGroup.rotation.y = walkAngle;
 
-        // Calm, elegant walking stride
         const isWalking = custProgress > 0.02 && custProgress < 0.98;
         const walkCycle = custProgress * Math.PI * 6.0;
         const strideAmp = isWalking ? 0.6 : 0.04;
@@ -753,12 +953,17 @@ export default function AmbientSpatialCanvas({
           const reachProgress = (custProgress - 0.70) / 0.30;
           customerRightArmGroup.rotation.x = THREE.MathUtils.lerp(0, -0.75, reachProgress);
           customerRightArmGroup.rotation.y = THREE.MathUtils.lerp(0, -0.3, reachProgress);
+
+          // Printed Appointment Voucher unrolls smoothly from podium!
+          ticketGroup.scale.setScalar(reachProgress);
+          ticketMesh.position.y = -0.10 - reachProgress * 0.14;
         } else {
           customerRightArmGroup.rotation.x = Math.sin(walkCycle) * (strideAmp * 0.8);
           customerRightArmGroup.rotation.y = 0;
+          ticketGroup.scale.setScalar(0.001);
         }
 
-        // Terminal Confirmation Halo (Scene 1+)
+        // Terminal Confirmation Halo Pulse
         if (p > 0.15) {
           const pulse = Math.min(1, (p - 0.15) / 0.10);
           terminalActiveMat.emissiveIntensity = 0.5 + pulse * 1.2 + Math.sin(elapsedTime * 3.0) * 0.2;
@@ -770,35 +975,89 @@ export default function AmbientSpatialCanvas({
           confirmHaloMesh.scale.setScalar(1.0);
         }
 
-        // Staff Schedule HUD (Scene 2+)
-        if (p > 0.22) {
-          const staffProg = Math.min(1, (p - 0.22) / 0.15);
+        // -------------------------------------------------------------
+        // SCENE 03 (STAFF): Swiss Split-Flap Tiles Flip
+        // -------------------------------------------------------------
+        if (p > 0.20) {
+          const staffProg = Math.min(1, (p - 0.20) / 0.15);
           staffHudGroup.scale.setScalar(staffProg);
           staffHudGroup.position.y = 0.45 + staffProg * 0.25;
+
+          // Sequential 180° tile flip
+          flipTiles.forEach((tile, i) => {
+            const tileDelay = 0.22 + i * 0.04;
+            if (p > tileDelay) {
+              const flipProg = Math.min(1, (p - tileDelay) / 0.08);
+              tile.rotation.x = THREE.MathUtils.lerp(Math.PI, 0, flipProg);
+            } else {
+              tile.rotation.x = Math.PI;
+            }
+          });
         } else {
           staffHudGroup.scale.setScalar(0.001);
         }
 
-        // Control Monolith (Scene 3+)
-        if (p > 0.42) {
-          const controlProg = Math.min(1, (p - 0.42) / 0.15);
+        // -------------------------------------------------------------
+        // SCENE 04 (CONTROL): Hydraulic Piston Bars & Ticker Rotation
+        // -------------------------------------------------------------
+        if (p > 0.40) {
+          const controlProg = Math.min(1, (p - 0.40) / 0.15);
           controlPillarGroup.scale.setScalar(controlProg);
           controlPillarGroup.position.y = -0.98 + (controlProg - 1.0) * 0.5;
+
+          // Hydraulic Piston Easing
+          barMesh1.scale.y = Math.min(1, controlProg * 1.2);
+          barMesh2.scale.y = Math.min(1, controlProg * 1.1);
+          barMesh3.scale.y = Math.min(1, controlProg * 1.0);
+
+          // Continuous gentle ticker orbit
+          tickerRing.rotation.z = elapsedTime * 0.4;
         } else {
           controlPillarGroup.scale.setScalar(0.001);
         }
 
-        // System Conduits & Energy Packets (Scene 4+)
-        if (p > 0.62) {
-          const sysProg = Math.min(1, (p - 0.62) / 0.15);
+        // -------------------------------------------------------------
+        // SCENE 05 (SYSTEM): Conduits, Pulse Packets & 8 Floating Glyphs
+        // -------------------------------------------------------------
+        if (p > 0.60) {
+          const sysProg = Math.min(1, (p - 0.60) / 0.15);
           conduitMat.opacity = sysProg * 0.9;
           conduitMat.emissiveIntensity = 0.2 + sysProg * 0.6 + Math.sin(elapsedTime * 4.0) * 0.3;
-          packetMat.emissiveIntensity = 1.0 + Math.sin(elapsedTime * 5.0) * 0.5;
+
+          // 8 Module Glyphs hover and rotate
+          moduleGlyphs.forEach((g, i) => {
+            g.scale.setScalar(sysProg);
+            g.position.y = 0.2 + Math.sin(elapsedTime * 2.0 + i) * 0.08;
+            g.rotation.y = elapsedTime * 0.8 + i;
+          });
+
+          // Energy Packet Sprinting
+          const packetT1 = (elapsedTime * 0.8) % 1.0;
+          packetNode1.position.x = THREE.MathUtils.lerp(-0.75, 0.65, packetT1);
+          packetNode1.position.z = THREE.MathUtils.lerp(0.45, -0.3, packetT1);
+          packetNode1.position.y = 0.02;
+
+          const packetT2 = (elapsedTime * 0.9 + 0.5) % 1.0;
+          packetNode2.position.x = THREE.MathUtils.lerp(0.65, 1.45, packetT2);
+          packetNode2.position.z = THREE.MathUtils.lerp(-0.3, -0.75, packetT2);
+          packetNode2.position.y = 0.02;
         } else {
           conduitMat.opacity = 0.0;
+          moduleGlyphs.forEach((g) => g.scale.setScalar(0.001));
         }
 
-        // Upward ambient dust particles
+        // -------------------------------------------------------------
+        // SCENE 06 (PLATFORM): Canopy Frame & Ambient Glow
+        // -------------------------------------------------------------
+        if (p > 0.80) {
+          const platProg = Math.min(1, (p - 0.80) / 0.15);
+          canopyGroup.scale.setScalar(platProg);
+          canopyGroup.position.y = 2.2 + platProg * 0.3;
+        } else {
+          canopyGroup.scale.setScalar(0.001);
+        }
+
+        // Ambient Upward Particles
         const posAttr = particleGeometry.attributes.position as THREE.BufferAttribute;
         const positions = posAttr.array as Float32Array;
 
@@ -823,7 +1082,6 @@ export default function AmbientSpatialCanvas({
 
     animate();
 
-    // Cleanup
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener("pointermove", handlePointerMove);
