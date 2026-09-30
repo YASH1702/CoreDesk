@@ -89,7 +89,7 @@ export default function ScrollExperience({
 
       // Product UI Initial State
       const bWrapper = q(layers[0], ".scene-business-panel-wrapper");
-      if (bWrapper) gsap.set(bWrapper, { x: 0, y: 0, rotateY: 0, rotateX: 0, scale: 1, opacity: 1 });
+      if (bWrapper) gsap.set(bWrapper, { x: 0, y: 0, scale: 1, opacity: 1 });
 
       const bGlow = q(layers[0], ".scene-business-glow");
       if (bGlow) gsap.set(bGlow, { scale: 1, opacity: 1 });
@@ -109,63 +109,61 @@ export default function ScrollExperience({
       const bCardFooter = q(layers[0], ".scene-business-card-footer");
       if (bCardFooter) gsap.set(bCardFooter, { y: 0, opacity: 1 });
 
-      // Layer 1: CUSTOMER EXPERIENCE — Concealed with entrance offsets
+      // Layer 1: CUSTOMER EXPERIENCE — Concealed with refined entrance offsets
       gsap.set(layers[1], { opacity: 0, pointerEvents: "none", zIndex: 10 });
 
       // Typography Entrance Pre-conditions
       const cLabel = q(layers[1], ".scene-customer-label");
-      if (cLabel) gsap.set(cLabel, { y: -25, opacity: 0 });
+      if (cLabel) gsap.set(cLabel, { y: -15, opacity: 0 });
 
       const cLine1 = q(layers[1], ".scene-customer-head-line-1");
-      if (cLine1) gsap.set(cLine1, { y: 75, x: -35, opacity: 0 });
+      if (cLine1) gsap.set(cLine1, { y: 40, opacity: 0 });
 
       const cLine2 = q(layers[1], ".scene-customer-head-line-2");
-      if (cLine2) gsap.set(cLine2, { y: 75, x: -25, opacity: 0 });
+      if (cLine2) gsap.set(cLine2, { y: 40, opacity: 0 });
 
       const cLine3 = q(layers[1], ".scene-customer-head-line-3");
-      if (cLine3) gsap.set(cLine3, { y: 75, letterSpacing: "0.04em", opacity: 0 });
+      if (cLine3) gsap.set(cLine3, { y: 40, opacity: 0 });
 
       const cSubline = q(layers[1], ".scene-customer-subline");
-      if (cSubline) gsap.set(cSubline, { y: 35, opacity: 0 });
+      if (cSubline) gsap.set(cSubline, { y: 20, opacity: 0 });
 
       const cMeta = q(layers[1], ".scene-customer-meta");
-      if (cMeta) gsap.set(cMeta, { y: 25, opacity: 0 });
+      if (cMeta) gsap.set(cMeta, { y: 15, opacity: 0 });
 
       const cCta = q(layers[1], ".scene-customer-cta");
-      if (cCta) gsap.set(cCta, { y: 20, scale: 0.94, opacity: 0 });
+      if (cCta) gsap.set(cCta, { y: 15, scale: 0.96, opacity: 0 });
 
       // Product UI Entrance Pre-conditions
       const cWrapper = q(layers[1], ".scene-customer-panel-wrapper");
       if (cWrapper) {
         gsap.set(cWrapper, {
-          x: 160,
-          rotateY: 10,
-          rotateX: -4,
-          scale: 0.90,
+          y: 25,
+          scale: 0.95,
           opacity: 0,
         });
       }
 
       const cGlow = q(layers[1], ".scene-customer-glow");
-      if (cGlow) gsap.set(cGlow, { scale: 0.75, opacity: 0 });
+      if (cGlow) gsap.set(cGlow, { scale: 0.85, opacity: 0 });
 
       const cCardHeader = q(layers[1], ".scene-customer-card-header");
-      if (cCardHeader) gsap.set(cCardHeader, { y: -20, opacity: 0 });
+      if (cCardHeader) gsap.set(cCardHeader, { y: -12, opacity: 0 });
 
       const cStep1 = q(layers[1], ".scene-customer-step-1");
-      if (cStep1) gsap.set(cStep1, { x: 60, opacity: 0 });
+      if (cStep1) gsap.set(cStep1, { x: 25, opacity: 0 });
 
       const cStep2 = q(layers[1], ".scene-customer-step-2");
-      if (cStep2) gsap.set(cStep2, { x: 60, opacity: 0 });
+      if (cStep2) gsap.set(cStep2, { x: 25, opacity: 0 });
 
       const cStep3 = q(layers[1], ".scene-customer-step-3");
-      if (cStep3) gsap.set(cStep3, { x: 60, opacity: 0 });
+      if (cStep3) gsap.set(cStep3, { x: 25, opacity: 0 });
 
       const cStep4 = q(layers[1], ".scene-customer-step-4");
-      if (cStep4) gsap.set(cStep4, { x: 60, opacity: 0 });
+      if (cStep4) gsap.set(cStep4, { x: 25, opacity: 0 });
 
       const cCardFooter = q(layers[1], ".scene-customer-card-footer");
-      if (cCardFooter) gsap.set(cCardFooter, { y: 20, opacity: 0 });
+      if (cCardFooter) gsap.set(cCardFooter, { y: 15, opacity: 0 });
 
       // Park scenes 2-5 dormant for Milestone 1
       for (let i = 2; i < layers.length; i++) {
@@ -175,7 +173,6 @@ export default function ScrollExperience({
       // -------------------------------------------------------------
       // 2. MASTER GSAP SCROLLTRIGGER SCRUBBED TIMELINE
       // -------------------------------------------------------------
-      // Responsive 1800px scrub track for immediate tactile engagement
       const masterTl = gsap.timeline({
         scrollTrigger: {
           id: "experience-trigger",
@@ -189,36 +186,34 @@ export default function ScrollExperience({
           onUpdate: (self) => {
             const p = self.progress;
             setScrollProgress(p);
-            const currentIdx = p < 0.5 ? 0 : 1;
+            const currentIdx = p < 0.4 ? 0 : 1;
             onSceneChange(currentIdx, p);
           },
         },
       });
 
       // -------------------------------------------------------------
-      // PHASE A: ENVIRONMENT & BACKGROUND MORPHING
+      // PHASE A: ENVIRONMENT & BACKGROUND HARMONY
       // -------------------------------------------------------------
-      // Smooth color transition from Warm Sand Ivory (#F8F7F3) to Luminous Champagne (#FFFDF8)
       if (stageBg) {
         masterTl.to(
           stageBg,
           {
             backgroundColor: "#FFFDF8",
-            duration: 1.4,
+            duration: 0.8,
             ease: "power1.inOut",
           },
           0.1
         );
       }
 
-      // Dynamic ambient lighting gradient sweep
       if (stageAtmosphere) {
         masterTl.to(
           stageAtmosphere,
           {
-            opacity: 1,
-            scale: 1.15,
-            duration: 1.5,
+            opacity: 0.9,
+            scale: 1.1,
+            duration: 0.8,
             ease: "power2.inOut",
           },
           0.1
@@ -226,25 +221,25 @@ export default function ScrollExperience({
       }
 
       // -------------------------------------------------------------
-      // PHASE B: OUTGOING BUSINESS SCENE KINETIC DISASSEMBLY
+      // PHASE B: OUTGOING BUSINESS SCENE CLEAN DISASSEMBLY (0.00 -> 0.36)
       // -------------------------------------------------------------
-      // Scroll cue vanishes immediately
+      // Scroll cue disappears first
       if (bScroll) {
-        masterTl.to(bScroll, { opacity: 0, y: 25, duration: 0.25, ease: "power2.in" }, 0.0);
+        masterTl.to(bScroll, { opacity: 0, y: 15, duration: 0.12, ease: "power2.in" }, 0.0);
       }
 
-      // Kinetic Typography Disassembly (Staggered line velocity & tracking expansion)
+      // Kinetic Typography Disassembly on Left Flank (Clean, focused retreat)
       if (bLine1) {
         masterTl.to(
           bLine1,
           {
-            x: -180,
-            letterSpacing: "0.06em",
+            x: -45,
+            letterSpacing: "0.03em",
             opacity: 0,
-            duration: 0.7,
+            duration: 0.24,
             ease: "power2.in",
           },
-          0.1
+          0.05
         );
       }
 
@@ -252,13 +247,13 @@ export default function ScrollExperience({
         masterTl.to(
           bLine2,
           {
-            x: -140,
-            y: 25,
+            x: -35,
+            y: 10,
             opacity: 0,
-            duration: 0.7,
+            duration: 0.24,
             ease: "power2.in",
           },
-          0.16
+          0.08
         );
       }
 
@@ -266,13 +261,12 @@ export default function ScrollExperience({
         masterTl.to(
           bSubline,
           {
-            x: -90,
-            y: -15,
+            x: -25,
             opacity: 0,
-            duration: 0.65,
+            duration: 0.22,
             ease: "power2.in",
           },
-          0.14
+          0.10
         );
       }
 
@@ -280,9 +274,9 @@ export default function ScrollExperience({
         masterTl.to(
           bMeta,
           {
-            x: -70,
+            x: -20,
             opacity: 0,
-            duration: 0.55,
+            duration: 0.20,
             ease: "power2.in",
           },
           0.12
@@ -293,12 +287,12 @@ export default function ScrollExperience({
         masterTl.to(
           bLabel,
           {
-            x: -60,
+            x: -20,
             opacity: 0,
-            duration: 0.5,
+            duration: 0.18,
             ease: "power2.in",
           },
-          0.1
+          0.06
         );
       }
 
@@ -306,99 +300,44 @@ export default function ScrollExperience({
         masterTl.to(
           bCta,
           {
-            x: -100,
-            scale: 0.94,
+            x: -25,
+            scale: 0.96,
             opacity: 0,
-            duration: 0.6,
-            ease: "power2.in",
-          },
-          0.18
-        );
-      }
-
-      // Product UI 3D Spatial Disassembly
-      if (bCardHeader) {
-        masterTl.to(
-          bCardHeader,
-          {
-            y: -25,
-            x: 40,
-            opacity: 0,
-            duration: 0.55,
+            duration: 0.20,
             ease: "power2.in",
           },
           0.12
         );
       }
 
+      // Product UI Telemetry Panel Disassembly on Right Flank
       if (bMetricPrimary) {
-        masterTl.to(
-          bMetricPrimary,
-          {
-            y: -30,
-            x: 80,
-            opacity: 0,
-            duration: 0.6,
-            ease: "power2.in",
-          },
-          0.14
-        );
+        masterTl.to(bMetricPrimary, { y: -15, opacity: 0, duration: 0.18, ease: "power2.in" }, 0.08);
       }
-
       if (bMetricSlot) {
-        masterTl.to(
-          bMetricSlot,
-          {
-            x: 100,
-            y: 30,
-            opacity: 0,
-            duration: 0.55,
-            ease: "power2.in",
-          },
-          0.18
-        );
+        masterTl.to(bMetricSlot, { y: 15, opacity: 0, duration: 0.18, ease: "power2.in" }, 0.10);
       }
-
       if (bMetricStaff) {
-        masterTl.to(
-          bMetricStaff,
-          {
-            x: 120,
-            y: 35,
-            opacity: 0,
-            duration: 0.55,
-            ease: "power2.in",
-          },
-          0.22
-        );
+        masterTl.to(bMetricStaff, { y: 15, opacity: 0, duration: 0.18, ease: "power2.in" }, 0.12);
       }
-
+      if (bCardHeader) {
+        masterTl.to(bCardHeader, { y: -10, opacity: 0, duration: 0.18, ease: "power2.in" }, 0.08);
+      }
       if (bCardFooter) {
-        masterTl.to(
-          bCardFooter,
-          {
-            y: 20,
-            opacity: 0,
-            duration: 0.45,
-            ease: "power2.in",
-          },
-          0.16
-        );
+        masterTl.to(bCardFooter, { y: 10, opacity: 0, duration: 0.16, ease: "power2.in" }, 0.12);
       }
 
       if (bWrapper) {
         masterTl.to(
           bWrapper,
           {
-            x: 160,
-            rotateY: -9,
-            rotateX: 3,
-            scale: 0.91,
+            y: -20,
+            scale: 0.94,
             opacity: 0,
-            duration: 0.75,
+            duration: 0.26,
             ease: "power2.in",
           },
-          0.15
+          0.08
         );
       }
 
@@ -406,50 +345,36 @@ export default function ScrollExperience({
         masterTl.to(
           bGlow,
           {
-            scale: 0.7,
+            scale: 0.8,
             opacity: 0,
-            duration: 0.6,
+            duration: 0.24,
             ease: "power2.in",
           },
-          0.15
+          0.08
         );
       }
 
-      // Layer 1 Activate (Overlapped choreography so 3D astrolabe bridges the scenes)
-      masterTl.set(layers[1], { pointerEvents: "auto", zIndex: 20 }, 0.45);
-      masterTl.to(
-        layers[1],
-        {
-          opacity: 1,
-          duration: 0.35,
-          ease: "power1.inOut",
-        },
-        0.45
-      );
+      // Clean Layer Hand-Off (Outgoing completely fades before Incoming enters)
+      masterTl.to(layers[0], { opacity: 0, duration: 0.06, ease: "power1.in" }, 0.34);
+      masterTl.set(layers[0], { pointerEvents: "none", zIndex: 10 }, 0.36);
 
-      // Layer 0 Exit Hand-off
-      masterTl.to(
-        layers[0],
-        {
-          opacity: 0,
-          duration: 0.35,
-          ease: "power1.inOut",
-        },
-        0.55
-      );
-      masterTl.set(layers[0], { pointerEvents: "none", zIndex: 10 }, 0.75);
+      // -------------------------------------------------------------
+      // PHASE C: INCOMING CUSTOMER SCENE CLEAN ASSEMBLY (0.36 -> 0.78)
+      // -------------------------------------------------------------
+      masterTl.set(layers[1], { pointerEvents: "auto", zIndex: 20 }, 0.36);
+      masterTl.to(layers[1], { opacity: 1, duration: 0.08, ease: "power1.out" }, 0.36);
 
-      // Kinetic Typography Masked Staggered Entry (Left Column)
+      // Left Flank Kinetic Typography Staggered Entry
       if (cLabel) {
         masterTl.to(
           cLabel,
           {
             y: 0,
             opacity: 1,
-            duration: 0.6,
+            duration: 0.22,
             ease: "power3.out",
           },
-          0.75
+          0.38
         );
       }
 
@@ -458,12 +383,11 @@ export default function ScrollExperience({
           cLine1,
           {
             y: 0,
-            x: 0,
             opacity: 1,
-            duration: 0.68,
+            duration: 0.25,
             ease: "power3.out",
           },
-          0.8
+          0.42
         );
       }
 
@@ -472,12 +396,11 @@ export default function ScrollExperience({
           cLine2,
           {
             y: 0,
-            x: 0,
             opacity: 1,
-            duration: 0.68,
+            duration: 0.25,
             ease: "power3.out",
           },
-          0.88
+          0.46
         );
       }
 
@@ -486,12 +409,11 @@ export default function ScrollExperience({
           cLine3,
           {
             y: 0,
-            letterSpacing: "normal",
             opacity: 1,
-            duration: 0.68,
+            duration: 0.25,
             ease: "power3.out",
           },
-          0.96
+          0.50
         );
       }
 
@@ -501,10 +423,10 @@ export default function ScrollExperience({
           {
             y: 0,
             opacity: 1,
-            duration: 0.65,
+            duration: 0.22,
             ease: "power3.out",
           },
-          1.02
+          0.54
         );
       }
 
@@ -514,10 +436,10 @@ export default function ScrollExperience({
           {
             y: 0,
             opacity: 1,
-            duration: 0.55,
+            duration: 0.20,
             ease: "power3.out",
           },
-          1.08
+          0.58
         );
       }
 
@@ -528,24 +450,24 @@ export default function ScrollExperience({
             y: 0,
             scale: 1,
             opacity: 1,
-            duration: 0.6,
+            duration: 0.22,
             ease: "power3.out",
           },
-          1.14
+          0.62
         );
       }
 
-      // Product UI 3D Spatial Assembly (Right Column)
+      // Right Flank Customer Step Progression Card Entry
       if (cGlow) {
         masterTl.to(
           cGlow,
           {
             scale: 1,
             opacity: 1,
-            duration: 0.8,
+            duration: 0.28,
             ease: "power2.out",
           },
-          0.8
+          0.40
         );
       }
 
@@ -553,15 +475,13 @@ export default function ScrollExperience({
         masterTl.to(
           cWrapper,
           {
-            x: 0,
-            rotateY: 0,
-            rotateX: 0,
+            y: 0,
             scale: 1.0,
             opacity: 1,
-            duration: 0.85,
+            duration: 0.28,
             ease: "power3.out",
           },
-          0.8
+          0.40
         );
       }
 
@@ -571,86 +491,38 @@ export default function ScrollExperience({
           {
             y: 0,
             opacity: 1,
-            duration: 0.55,
+            duration: 0.18,
             ease: "power3.out",
           },
-          0.92
+          0.44
         );
       }
 
-      // Cascading Step Cards Sequence with Independent Timing
       if (cStep1) {
-        masterTl.to(
-          cStep1,
-          {
-            x: 0,
-            opacity: 1,
-            duration: 0.55,
-            ease: "power2.out",
-          },
-          0.98
-        );
+        masterTl.to(cStep1, { x: 0, opacity: 1, duration: 0.16, ease: "power2.out" }, 0.48);
       }
 
       if (cStep2) {
-        masterTl.to(
-          cStep2,
-          {
-            x: 0,
-            opacity: 1,
-            duration: 0.55,
-            ease: "power2.out",
-          },
-          1.06
-        );
+        masterTl.to(cStep2, { x: 0, opacity: 1, duration: 0.16, ease: "power2.out" }, 0.52);
       }
 
       if (cStep3) {
-        masterTl.to(
-          cStep3,
-          {
-            x: 0,
-            opacity: 1,
-            duration: 0.55,
-            ease: "power2.out",
-          },
-          1.14
-        );
+        masterTl.to(cStep3, { x: 0, opacity: 1, duration: 0.16, ease: "power2.out" }, 0.56);
       }
 
       if (cStep4) {
-        masterTl.to(
-          cStep4,
-          {
-            x: 0,
-            opacity: 1,
-            duration: 0.55,
-            ease: "power2.out",
-          },
-          1.22
-        );
+        masterTl.to(cStep4, { x: 0, opacity: 1, duration: 0.16, ease: "power2.out" }, 0.60);
       }
 
       if (cCardFooter) {
-        masterTl.to(
-          cCardFooter,
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.55,
-            ease: "power3.out",
-          },
-          1.28
-        );
+        masterTl.to(cCardFooter, { y: 0, opacity: 1, duration: 0.18, ease: "power3.out" }, 0.64);
       }
 
       // -------------------------------------------------------------
-      // PHASE D: SETTLED STATE HOLD PLATEAU
+      // PHASE D: ROCK-SOLID SETTLED PLATEAU HOLD (0.75 -> 1.15)
       // -------------------------------------------------------------
-      // Hold cushion to provide stable, rock-solid settlement at progress 1.0
-      masterTl.to({}, { duration: 0.5 }, 1.5);
+      masterTl.to({}, { duration: 0.4 }, 0.75);
 
-      // Force recalculation of ScrollTrigger coordinates
       const refreshTimeout = setTimeout(() => {
         ScrollTrigger.refresh();
       }, 100);
@@ -663,7 +535,7 @@ export default function ScrollExperience({
     return () => ctx.revert();
   }, [reducedMotion, onSceneChange]);
 
-  // Reduced motion fallback: sequential standard sections
+  // Reduced motion fallback
   if (reducedMotion) {
     return (
       <div className="relative w-full">
@@ -676,7 +548,7 @@ export default function ScrollExperience({
     );
   }
 
-  // Full Cinematic Scroll Experience: Stage pinned by GSAP ScrollTrigger
+  // Full Cinematic Scroll Experience
   return (
     <div
       ref={containerRef}

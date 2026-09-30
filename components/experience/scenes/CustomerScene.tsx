@@ -49,18 +49,18 @@ export default function CustomerScene() {
   ];
 
   return (
-    <div className="w-full h-full min-h-screen flex items-center justify-center px-6 sm:px-12 lg:px-16 py-20 relative overflow-hidden">
+    <div className="w-full h-full min-h-screen flex items-center justify-between px-6 sm:px-10 lg:px-14 xl:px-20 py-20 relative overflow-hidden">
       {/* Subtle Architectural Grid Hairlines (Editorial Reference) */}
-      <div className="absolute inset-0 pointer-events-none grid grid-cols-4 max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 opacity-25">
+      <div className="absolute inset-0 pointer-events-none grid grid-cols-4 max-w-7xl mx-auto px-6 sm:px-10 lg:px-14 xl:px-20 opacity-20">
         <div className="border-r border-[#DDD6C9]/50 h-full" />
         <div className="border-r border-[#DDD6C9]/50 h-full" />
         <div className="border-r border-[#DDD6C9]/50 h-full" />
         <div className="h-full" />
       </div>
 
-      <div className="max-w-6xl w-full mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center z-10 lg:pr-20">
-        {/* Left Editorial Typography Column */}
-        <div className="lg:col-span-6 flex flex-col items-start text-left">
+      <div className="w-full max-w-[1440px] mx-auto flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-6 z-10 pointer-events-none">
+        {/* Left Editorial Typography Column (Strictly bound to left flank, never occluding center 3D) */}
+        <div className="w-full lg:w-[420px] xl:w-[460px] flex flex-col items-start text-left flex-shrink-0 pointer-events-auto">
           {/* Category Label */}
           <div className="scene-customer-label flex items-center gap-3.5 mb-6 sm:mb-8 will-change-transform">
             <div className="w-9 h-[1.5px] bg-[#C69A4B]" />
@@ -70,7 +70,7 @@ export default function CustomerScene() {
           </div>
 
           {/* Primary Editorial Kinetic Headline with Masked Line Wrappers */}
-          <h1 className="scene-customer-headline text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-[#2A2927] leading-[1.06] mb-6 sm:mb-8 max-w-2xl">
+          <h1 className="scene-customer-headline text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold tracking-tight text-[#2A2927] leading-[1.06] mb-6 sm:mb-8 max-w-xl">
             <span className="block overflow-hidden pb-1">
               <span className="scene-customer-head-line-1 inline-block will-change-transform">
                 BOOKING
@@ -89,12 +89,12 @@ export default function CustomerScene() {
           </h1>
 
           {/* Supporting Editorial Subline */}
-          <p className="scene-customer-subline text-base sm:text-lg lg:text-xl text-[#5D5A56] max-w-lg mb-6 sm:mb-8 leading-relaxed font-normal will-change-transform">
+          <p className="scene-customer-subline text-base sm:text-lg text-[#5D5A56] max-w-md mb-6 sm:mb-8 leading-relaxed font-normal will-change-transform">
             {sceneData?.subline}
           </p>
 
           {/* Architectural Meta Indicators */}
-          <div className="scene-customer-meta flex items-center gap-4 text-[11px] font-mono tracking-wider uppercase text-[#8B857D] mb-8 sm:mb-10 will-change-transform">
+          <div className="scene-customer-meta flex items-center gap-3.5 text-[11px] font-mono tracking-wider uppercase text-[#8B857D] mb-8 sm:mb-10 will-change-transform">
             <span className="flex items-center gap-1.5">
               <Zap className="w-3.5 h-3.5 text-[#C69A4B]" />
               Self-Serve Wizard
@@ -109,7 +109,7 @@ export default function CustomerScene() {
           <div className="scene-customer-cta will-change-transform">
             <Link
               href="/book"
-              className="px-8 py-4 rounded-full bg-[#C69A4B] hover:bg-[#B7863D] text-white font-semibold text-sm shadow-[0_8px_25px_rgba(198,154,75,0.28)] transition-all duration-300 inline-flex items-center gap-2.5 group cursor-pointer"
+              className="px-7 py-3.5 rounded-full bg-[#C69A4B] hover:bg-[#B7863D] text-white font-semibold text-sm shadow-[0_8px_25px_rgba(198,154,75,0.28)] transition-all duration-300 inline-flex items-center gap-2.5 group cursor-pointer"
             >
               <span>Test Customer Wizard</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -117,41 +117,44 @@ export default function CustomerScene() {
           </div>
         </div>
 
-        {/* Right Product UI Composition: Step Progression Journey */}
-        <div className="lg:col-span-6 relative w-full" style={{ perspective: 1200 }}>
+        {/* Center 3D Spatial Stage Clearing (Guarantees customer walking & check-in podium stay completely unobstructed) */}
+        <div className="hidden lg:block flex-1 min-w-[200px] pointer-events-none" />
+
+        {/* Right Product UI Composition: Step Progression Journey (Strictly bound to right flank) */}
+        <div className="w-full lg:w-[360px] xl:w-[390px] relative flex-shrink-0 pointer-events-auto" style={{ perspective: 1200 }}>
           <div className="scene-customer-panel-wrapper relative will-change-transform">
             {/* Ambient Glow */}
-            <div className="scene-customer-glow absolute -inset-5 bg-gradient-to-br from-[#E8D7B2]/25 via-[#FFF8ED]/35 to-transparent rounded-[40px] blur-2xl -z-10 will-change-transform" />
+            <div className="scene-customer-glow absolute -inset-5 bg-gradient-to-br from-[#E8D7B2]/25 via-[#FFF8ED]/35 to-transparent rounded-[36px] blur-2xl -z-10 will-change-transform" />
 
             {/* Stacked Interactive Booking Flow Container */}
-            <div className="scene-customer-panel bg-[#FFFCF7]/95 backdrop-blur-2xl border border-[#DDD6C9] rounded-[28px] p-6 sm:p-8 shadow-[0_30px_80px_rgba(80,65,45,0.14)] will-change-transform">
+            <div className="scene-customer-panel bg-[#FFFCF7]/95 backdrop-blur-2xl border border-[#DDD6C9] rounded-[24px] p-6 shadow-[0_25px_60px_rgba(80,65,45,0.12)] will-change-transform">
               {/* Header */}
-              <div className="scene-customer-card-header flex items-center justify-between pb-4 mb-6 border-b border-[#ECE6D8] will-change-transform">
+              <div className="scene-customer-card-header flex items-center justify-between pb-3.5 mb-4 border-b border-[#ECE6D8] will-change-transform">
                 <div>
-                  <h3 className="text-base font-bold text-[#2A2927]">Client Self-Booking Portal</h3>
-                  <p className="text-xs text-[#8B857D] font-medium">Deterministic availability · No overlaps</p>
+                  <h3 className="text-sm font-bold text-[#2A2927]">Client Self-Booking Portal</h3>
+                  <p className="text-[11px] text-[#8B857D] font-medium">Deterministic availability · No overlaps</p>
                 </div>
-                <div className="px-3 py-1 rounded-full bg-[#FFF8ED] border border-[#E8D7B2] text-[#C69A4B] text-[11px] font-bold">
+                <div className="px-2.5 py-0.5 rounded-full bg-[#FFF8ED] border border-[#E8D7B2] text-[#C69A4B] text-[10px] font-bold">
                   Step 4 of 4
                 </div>
               </div>
 
               {/* Step Sequence Cards */}
-              <div className="space-y-3.5">
+              <div className="space-y-2.5">
                 {steps.map((st) => {
                   const IconComp = st.icon;
                   return (
                     <div
                       key={st.num}
-                      className={`${st.selector} p-4 rounded-2xl border transition-colors duration-300 flex items-center justify-between gap-4 will-change-transform ${
+                      className={`${st.selector} p-3 rounded-xl border transition-colors duration-300 flex items-center justify-between gap-3 will-change-transform ${
                         st.active
-                          ? "bg-white border-[#C69A4B] shadow-md ring-1 ring-[#C69A4B]/20"
-                          : "bg-white/85 border-[#ECE6D8] shadow-sm hover:border-[#DDD6C9]"
+                          ? "bg-white border-[#C69A4B] shadow-sm ring-1 ring-[#C69A4B]/20"
+                          : "bg-white/85 border-[#ECE6D8] hover:border-[#DDD6C9]"
                       }`}
                     >
-                      <div className="flex items-center gap-3.5">
+                      <div className="flex items-center gap-2.5">
                         <div
-                          className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-xs ${
+                          className={`w-7 h-7 rounded-lg flex items-center justify-center font-bold text-[10px] ${
                             st.done
                               ? "bg-[#5C9E6E]/15 text-[#5C9E6E]"
                               : st.active
@@ -159,20 +162,20 @@ export default function CustomerScene() {
                               : "bg-[#F2EFE6] text-[#8B857D]"
                           }`}
                         >
-                          {st.done ? <Check className="w-4 h-4" /> : <IconComp className="w-4 h-4" />}
+                          {st.done ? <Check className="w-3.5 h-3.5" /> : <IconComp className="w-3.5 h-3.5" />}
                         </div>
                         <div>
-                          <div className="text-[11px] font-extrabold uppercase tracking-wider text-[#8B857D]">
+                          <div className="text-[10px] font-extrabold uppercase tracking-wider text-[#8B857D]">
                             {st.num} / {st.title}
                           </div>
-                          <div className="text-xs sm:text-sm font-bold text-[#2A2927] mt-0.5">
+                          <div className="text-xs font-bold text-[#2A2927] mt-0.5">
                             {st.detail}
                           </div>
                         </div>
                       </div>
 
                       <span
-                        className={`text-xs font-bold px-2.5 py-1 rounded-lg ${
+                        className={`text-[11px] font-bold px-2 py-0.5 rounded-md ${
                           st.active
                             ? "bg-[#FFF8ED] text-[#C69A4B] border border-[#E8D7B2]"
                             : "text-[#5D5A56] bg-[#F8F7F3]"
@@ -186,12 +189,12 @@ export default function CustomerScene() {
               </div>
 
               {/* Confirmation Footer */}
-              <div className="scene-customer-card-footer mt-6 pt-5 border-t border-[#ECE6D8] flex items-center justify-between will-change-transform">
-                <div className="flex items-center gap-2 text-xs text-[#5D5A56]">
-                  <Check className="w-4 h-4 text-[#5C9E6E]" />
-                  <span>Calendar invite + SMS reminder queued</span>
+              <div className="scene-customer-card-footer mt-4 pt-3.5 border-t border-[#ECE6D8] flex items-center justify-between text-[11px] will-change-transform">
+                <div className="flex items-center gap-1.5 text-[#5D5A56]">
+                  <Check className="w-3.5 h-3.5 text-[#5C9E6E]" />
+                  <span>Calendar invite queued</span>
                 </div>
-                <span className="text-xs font-bold text-[#C69A4B]">100% Automated</span>
+                <span className="font-bold text-[#C69A4B]">100% Automated</span>
               </div>
             </div>
           </div>

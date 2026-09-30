@@ -31,9 +31,9 @@ export default function AmbientSpatialCanvas({
     const width = container.clientWidth || window.innerWidth;
     const height = container.clientHeight || window.innerHeight;
 
-    // Perspective camera with architectural lens
-    const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 100);
-    camera.position.set(0, 1.2, 8.5);
+    // Perspective camera with refined architectural lens
+    const camera = new THREE.PerspectiveCamera(36, width / height, 0.1, 100);
+    camera.position.set(0, 1.15, 8.2);
 
     // Renderer setup with alpha transparency
     const renderer = new THREE.WebGLRenderer({
@@ -78,6 +78,10 @@ export default function AmbientSpatialCanvas({
     const dioramaGroup = new THREE.Group();
     worldGroup.add(dioramaGroup);
 
+    // Initial responsive scale to guarantee no clipping on any viewport
+    const responsiveScale = width < 768 ? 0.72 : width < 1024 ? 0.84 : 1.0;
+    dioramaGroup.scale.setScalar(responsiveScale);
+
     // Disposable tracking lists
     const disposablesGeometries: THREE.BufferGeometry[] = [];
     const disposablesMaterials: THREE.Material[] = [];
@@ -117,17 +121,6 @@ export default function AmbientSpatialCanvas({
       roughness: 0.25,
     });
     disposablesMaterials.push(bronzeChassisMat);
-
-    const glassMat = new THREE.MeshPhysicalMaterial({
-      color: 0xfffcf5,
-      metalness: 0.05,
-      roughness: 0.1,
-      transmission: 0.85,
-      thickness: 0.8,
-      transparent: true,
-      opacity: 0.85,
-    });
-    disposablesMaterials.push(glassMat);
 
     const screenGlowMat = new THREE.MeshStandardMaterial({
       color: 0xfffdf0,
@@ -186,7 +179,7 @@ export default function AmbientSpatialCanvas({
     dioramaGroup.add(plinthGroup);
 
     // Base Slab
-    const plinthGeo = new THREE.BoxGeometry(5.2, 0.22, 3.8);
+    const plinthGeo = new THREE.BoxGeometry(4.8, 0.22, 3.4);
     disposablesGeometries.push(plinthGeo);
     const plinthMesh = new THREE.Mesh(plinthGeo, stonePlinthMat);
     plinthMesh.position.y = -1.1;
@@ -194,7 +187,7 @@ export default function AmbientSpatialCanvas({
     plinthGroup.add(plinthMesh);
 
     // Perimeter Gold Accent Trim
-    const plinthTrimGeo = new THREE.BoxGeometry(5.26, 0.04, 3.86);
+    const plinthTrimGeo = new THREE.BoxGeometry(4.86, 0.04, 3.46);
     disposablesGeometries.push(plinthTrimGeo);
     const plinthTrimMesh = new THREE.Mesh(plinthTrimGeo, plinthGoldBorderMat);
     plinthTrimMesh.position.y = -1.0;
@@ -204,11 +197,11 @@ export default function AmbientSpatialCanvas({
     // 2. EXECUTIVE WORKSTATION (Business Operations Desk)
     // -------------------------------------------------------------
     const deskGroup = new THREE.Group();
-    deskGroup.position.set(0.6, -0.98, -0.3);
+    deskGroup.position.set(0.65, -0.98, -0.3);
     dioramaGroup.add(deskGroup);
 
     // Desktop
-    const deskGeo = new THREE.BoxGeometry(2.3, 0.08, 1.15);
+    const deskGeo = new THREE.BoxGeometry(2.1, 0.08, 1.05);
     disposablesGeometries.push(deskGeo);
     const deskMesh = new THREE.Mesh(deskGeo, deskSurfaceMat);
     deskMesh.position.y = 0.72;
@@ -217,13 +210,13 @@ export default function AmbientSpatialCanvas({
     deskGroup.add(deskMesh);
 
     // Gold Tapered Desk Legs
-    const legGeo = new THREE.CylinderGeometry(0.022, 0.016, 0.72, 16);
+    const legGeo = new THREE.CylinderGeometry(0.02, 0.015, 0.72, 16);
     disposablesGeometries.push(legGeo);
     const legCoords = [
-      { x: 1.05, z: 0.48 },
-      { x: -1.05, z: 0.48 },
-      { x: 1.05, z: -0.48 },
-      { x: -1.05, z: -0.48 },
+      { x: 0.95, z: 0.42 },
+      { x: -0.95, z: 0.42 },
+      { x: 0.95, z: -0.42 },
+      { x: -0.95, z: -0.42 },
     ];
     legCoords.forEach((c) => {
       const leg = new THREE.Mesh(legGeo, goldChassisMat);
@@ -232,58 +225,58 @@ export default function AmbientSpatialCanvas({
     });
 
     // Ultra-thin Workspace Monitor
-    const monitorStandGeo = new THREE.CylinderGeometry(0.018, 0.022, 0.28, 16);
+    const monitorStandGeo = new THREE.CylinderGeometry(0.016, 0.02, 0.26, 16);
     disposablesGeometries.push(monitorStandGeo);
     const monitorStand = new THREE.Mesh(monitorStandGeo, goldChassisMat);
-    monitorStand.position.set(0, 0.86, -0.15);
+    monitorStand.position.set(0, 0.85, -0.15);
     deskGroup.add(monitorStand);
 
-    const monitorGeo = new THREE.BoxGeometry(0.95, 0.55, 0.025);
+    const monitorGeo = new THREE.BoxGeometry(0.9, 0.52, 0.025);
     disposablesGeometries.push(monitorGeo);
     const monitorMesh = new THREE.Mesh(monitorGeo, bronzeChassisMat);
-    monitorMesh.position.set(0, 1.18, -0.15);
+    monitorMesh.position.set(0, 1.16, -0.15);
     deskGroup.add(monitorMesh);
 
-    const screenGeo = new THREE.PlaneGeometry(0.9, 0.5);
+    const screenGeo = new THREE.PlaneGeometry(0.85, 0.48);
     disposablesGeometries.push(screenGeo);
     const screenMesh = new THREE.Mesh(screenGeo, screenGlowMat);
-    screenMesh.position.set(0, 1.18, -0.135);
+    screenMesh.position.set(0, 1.16, -0.135);
     deskGroup.add(screenMesh);
 
     // Slim Keyboard and Trackpad
-    const keyboardGeo = new THREE.BoxGeometry(0.52, 0.012, 0.16);
+    const keyboardGeo = new THREE.BoxGeometry(0.5, 0.012, 0.15);
     disposablesGeometries.push(keyboardGeo);
     const keyboardMesh = new THREE.Mesh(keyboardGeo, goldChassisMat);
     keyboardMesh.position.set(0, 0.77, 0.15);
     deskGroup.add(keyboardMesh);
 
-    // Minimal Desk Plant (Ceramic pot with architectural sphere leaf)
-    const potGeo = new THREE.CylinderGeometry(0.07, 0.05, 0.12, 16);
-    const leafGeo = new THREE.SphereGeometry(0.09, 16, 16);
+    // Minimal Desk Plant
+    const potGeo = new THREE.CylinderGeometry(0.065, 0.045, 0.11, 16);
+    const leafGeo = new THREE.SphereGeometry(0.085, 16, 16);
     disposablesGeometries.push(potGeo, leafGeo);
     const potMesh = new THREE.Mesh(potGeo, stonePlinthMat);
-    potMesh.position.set(0.85, 0.82, -0.2);
+    potMesh.position.set(0.78, 0.81, -0.18);
     deskGroup.add(potMesh);
     const leafMesh = new THREE.Mesh(leafGeo, bronzeChassisMat);
-    leafMesh.position.set(0.85, 0.94, -0.2);
+    leafMesh.position.set(0.78, 0.92, -0.18);
     deskGroup.add(leafMesh);
 
     // -------------------------------------------------------------
     // 3. CONSULTATION / CLIENT CHECK-IN COUNTER (Customer Destination)
     // -------------------------------------------------------------
     const counterGroup = new THREE.Group();
-    counterGroup.position.set(-1.1, -0.98, 0.6);
+    counterGroup.position.set(-0.75, -0.98, 0.45);
     dioramaGroup.add(counterGroup);
 
     // Fluted Glass & Stone Consultation Podium
-    const counterGeo = new THREE.CylinderGeometry(0.55, 0.55, 0.95, 32);
+    const counterGeo = new THREE.CylinderGeometry(0.5, 0.5, 0.95, 32);
     disposablesGeometries.push(counterGeo);
     const counterMesh = new THREE.Mesh(counterGeo, stonePlinthMat);
     counterMesh.position.y = 0.475;
     counterMesh.castShadow = true;
     counterGroup.add(counterMesh);
 
-    const counterGoldRimGeo = new THREE.TorusGeometry(0.56, 0.02, 16, 48);
+    const counterGoldRimGeo = new THREE.TorusGeometry(0.51, 0.02, 16, 48);
     disposablesGeometries.push(counterGoldRimGeo);
     const counterRim = new THREE.Mesh(counterGoldRimGeo, goldChassisMat);
     counterRim.rotation.x = Math.PI / 2;
@@ -291,7 +284,7 @@ export default function AmbientSpatialCanvas({
     counterGroup.add(counterRim);
 
     // Interactive Booking Terminal / Tablet on Counter
-    const terminalGeo = new THREE.BoxGeometry(0.38, 0.28, 0.03);
+    const terminalGeo = new THREE.BoxGeometry(0.36, 0.26, 0.03);
     disposablesGeometries.push(terminalGeo);
     const terminalMesh = new THREE.Mesh(terminalGeo, terminalActiveMat);
     terminalMesh.position.set(0, 1.08, 0);
@@ -299,7 +292,7 @@ export default function AmbientSpatialCanvas({
     counterGroup.add(terminalMesh);
 
     // Terminal Confirmation Radiant Halo
-    const confirmHaloGeo = new THREE.RingGeometry(0.4, 0.75, 32);
+    const confirmHaloGeo = new THREE.RingGeometry(0.38, 0.72, 32);
     disposablesGeometries.push(confirmHaloGeo);
     const confirmHaloMat = new THREE.MeshBasicMaterial({
       color: 0xc69a4b,
@@ -318,7 +311,7 @@ export default function AmbientSpatialCanvas({
     // 4. CHARACTER 1: SPECIALIST (Seated at Desk Typing / Operating)
     // -------------------------------------------------------------
     const specialistGroup = new THREE.Group();
-    specialistGroup.position.set(0.6, -0.98, 0.35);
+    specialistGroup.position.set(0.65, -0.98, 0.35);
     dioramaGroup.add(specialistGroup);
 
     // Chair
@@ -370,7 +363,7 @@ export default function AmbientSpatialCanvas({
     // 5. CHARACTER 2: OPERATIONS LEAD (Standing & Coordinating)
     // -------------------------------------------------------------
     const leadGroup = new THREE.Group();
-    leadGroup.position.set(1.9, -0.98, -0.2);
+    leadGroup.position.set(1.6, -0.98, -0.15);
     leadGroup.rotation.y = -Math.PI * 0.35;
     dioramaGroup.add(leadGroup);
 
@@ -405,11 +398,11 @@ export default function AmbientSpatialCanvas({
     leadGroup.add(tabletMesh);
 
     // -------------------------------------------------------------
-    // 6. CHARACTER 3: THE CUSTOMER (Walks In as You Scroll!)
+    // 6. CHARACTER 3: THE CUSTOMER (Walks In Across Center Floor!)
     // -------------------------------------------------------------
     const customerGroup = new THREE.Group();
-    // Starting position: off to the right / entrance corridor
-    customerGroup.position.set(2.8, -0.98, 1.8);
+    // Starting position: entrance corridor on right of plinth
+    customerGroup.position.set(2.1, -0.98, 1.4);
     dioramaGroup.add(customerGroup);
 
     // Hinged Hip Root for Leg Stride Animation
@@ -463,7 +456,7 @@ export default function AmbientSpatialCanvas({
     // -------------------------------------------------------------
     // 7. AMBIENT WARM SAND PARTICLES & BACKGROUND LIGHT
     // -------------------------------------------------------------
-    const particleCount = 120;
+    const particleCount = 100;
     const particlePositions = new Float32Array(particleCount * 3);
     const particleVelocities: { y: number; xOffset: number; speed: number }[] = [];
 
@@ -485,7 +478,7 @@ export default function AmbientSpatialCanvas({
 
     const particleMaterial = new THREE.PointsMaterial({
       color: 0xc69a4b,
-      size: 0.038,
+      size: 0.035,
       transparent: true,
       opacity: 0.35,
       blending: THREE.AdditiveBlending,
@@ -516,6 +509,8 @@ export default function AmbientSpatialCanvas({
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
       renderer.setSize(w, h);
+      const resScale = w < 768 ? 0.72 : w < 1024 ? 0.84 : 1.0;
+      dioramaGroup.scale.setScalar(resScale);
     };
 
     window.addEventListener("resize", handleResize);
@@ -543,67 +538,61 @@ export default function AmbientSpatialCanvas({
 
       if (!prefersReducedMotion) {
         // =====================================================================
-        // STORY-DRIVEN KINETIC CHOREOGRAPHY:
-        // Scene 01 (p=0): Business team working at desks
-        // Scrubbing (p: 0 -> 1): Customer physically walks in across the floor
-        // Scene 02 (p=1): Customer arrives at booking counter, confirms check-in
+        // STORY-DRIVEN KINETIC CHOREOGRAPHY (Anchored Center Stage):
+        // Scene 01 (p=0): Business team working at desks (centered in clear corridor)
+        // Scrubbing (p: 0 -> 1): Customer physically walks across center floor
+        // Scene 02 (p=1): Customer arrives at consultation counter, confirms check-in
         // =====================================================================
 
-        // 1. DIORAMA PERSPECTIVE ROTATION & GLIDE
-        // In Business: Sits at x: 1.7, angled to highlight the working team
-        // During scrub: Diorama turns gracefully to face the entrance & counter
-        // In Customer: Settles at x: -1.4, perfectly framing the booking steps!
-        const dioramaX = THREE.MathUtils.lerp(1.7, -1.4, p);
-        const dioramaY = THREE.MathUtils.lerp(0.05, 0.0, p);
-        const dioramaZ = THREE.MathUtils.lerp(0.0, 0.35, p) + Math.sin(p * Math.PI) * 0.6;
+        // 1. DIORAMA PERSPECTIVE ROTATION & SUBTLE REFRAME
+        // Anchored in the center clearing (never overlapping left text or right card)
+        const dioramaX = THREE.MathUtils.lerp(0.20, 0.08, p);
+        const dioramaY = THREE.MathUtils.lerp(-0.04, 0.0, p);
+        const dioramaZ = THREE.MathUtils.lerp(0.0, 0.35, p);
         dioramaGroup.position.set(dioramaX, dioramaY, dioramaZ);
 
         // Architectural Camera Tracking
-        camera.position.z = 8.5 - p * 1.0;
-        camera.position.x = currentMouseX * 0.22;
-        camera.position.y = 1.2 - currentMouseY * 0.2;
-        camera.lookAt(0, 0, 0);
+        camera.position.z = 8.2 - p * 0.8;
+        camera.position.x = currentMouseX * 0.2;
+        camera.position.y = 1.15 + p * 0.1 - currentMouseY * 0.2;
+        camera.lookAt(0.1, 0.05, 0);
 
-        // Diorama Gentle Turntable Yaw
-        dioramaGroup.rotation.y = THREE.MathUtils.lerp(0.28, -0.32, p);
-        dioramaGroup.rotation.x = THREE.MathUtils.lerp(0.12, 0.08, p);
+        // Diorama Gentle Turntable Pivot (reveals desk in Business, reveals podium in Customer)
+        dioramaGroup.rotation.y = THREE.MathUtils.lerp(0.32, -0.18, p);
+        dioramaGroup.rotation.x = THREE.MathUtils.lerp(0.08, 0.06, p);
 
         // 2. CHARACTER 1 (Seated Specialist) Idle Typing & Greeting Glance
-        // Subtle arm typing bounce
         specLeftArm.rotation.x = 0.65 + Math.sin(elapsedTime * 4.0) * 0.04;
         specRightArm.rotation.x = 0.65 + Math.cos(elapsedTime * 4.5) * 0.04;
-        // Head turns toward customer as they approach the desk
         specHead.rotation.y = THREE.MathUtils.lerp(0, -0.55, Math.pow(p, 1.4));
 
         // 3. CHARACTER 2 (Operations Lead) Shift Glance
-        leadHead.rotation.y = THREE.MathUtils.lerp(0, -0.7, p) + Math.sin(elapsedTime * 0.8) * 0.05;
+        leadHead.rotation.y = THREE.MathUtils.lerp(0, -0.65, p) + Math.sin(elapsedTime * 0.8) * 0.05;
 
         // 4. CHARACTER 3 (THE CUSTOMER) WALKING STRIDE & ENTRANCE PATH
-        // Start: x: 2.8, z: 1.8 (outside entrance corridor)
-        // End: x: -1.1, z: 1.3 (standing right at the consultation podium!)
-        const custTargetX = THREE.MathUtils.lerp(2.8, -1.1, p);
-        const custTargetZ = THREE.MathUtils.lerp(1.8, 1.35, p);
+        // Walks across the center floor from right entrance to the consultation counter
+        const custTargetX = THREE.MathUtils.lerp(2.1, -0.75, p);
+        const custTargetZ = THREE.MathUtils.lerp(1.4, 1.2, p);
         customerGroup.position.set(custTargetX, -0.98, custTargetZ);
 
-        // Turn character body toward the desk as they walk
-        const walkAngle = THREE.MathUtils.lerp(-Math.PI * 0.6, -Math.PI * 0.45, p);
+        // Turn character body naturally along walking trajectory
+        const walkAngle = THREE.MathUtils.lerp(-Math.PI * 0.65, -Math.PI * 0.48, p);
         customerGroup.rotation.y = walkAngle;
 
         // Dynamic Walking Leg & Arm Swing (Linked to scroll scrub velocity + gentle idle)
-        const walkCycle = p * Math.PI * 12.0;
+        const walkCycle = p * Math.PI * 14.0;
         const isWalking = p > 0.02 && p < 0.96;
-        const strideAmp = isWalking ? 0.6 : 0.05;
+        const strideAmp = isWalking ? 0.6 : 0.04;
 
         customerLeftLegGroup.rotation.x = Math.sin(walkCycle) * strideAmp;
         customerRightLegGroup.rotation.x = -Math.sin(walkCycle) * strideAmp;
-
         customerLeftArmGroup.rotation.x = -Math.sin(walkCycle) * (strideAmp * 0.8);
 
-        if (p > 0.75) {
+        if (p > 0.72) {
           // Customer raises hand with phone towards booking terminal to verify
-          const reachProgress = (p - 0.75) / 0.25;
+          const reachProgress = (p - 0.72) / 0.28;
           customerRightArmGroup.rotation.x = THREE.MathUtils.lerp(0, -0.75, reachProgress);
-          customerRightArmGroup.rotation.y = THREE.MathUtils.lerp(0, -0.35, reachProgress);
+          customerRightArmGroup.rotation.y = THREE.MathUtils.lerp(0, -0.3, reachProgress);
         } else {
           customerRightArmGroup.rotation.x = Math.sin(walkCycle) * (strideAmp * 0.8);
           customerRightArmGroup.rotation.y = 0;
