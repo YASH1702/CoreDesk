@@ -149,11 +149,9 @@ export default function ScrollExperience({
       const masterTl = gsap.timeline({ paused: true });
       masterTlRef.current = masterTl;
 
-      // Atmospheric background color transitions (Harmonious Khadi tones)
+      // Consistent Khadi stage background matching header across all scenes
       if (stageBg) {
-        masterTl.to(stageBg, { backgroundColor: "#E4DFD6", duration: 1.0, ease: "power1.inOut" }, 0.5);
-        masterTl.to(stageBg, { backgroundColor: "#D8D2C7", duration: 1.0, ease: "power1.inOut" }, 2.5);
-        masterTl.to(stageBg, { backgroundColor: "#DED9D0", duration: 1.0, ease: "power1.inOut" }, 4.0);
+        masterTl.set(stageBg, { backgroundColor: "#DED9D0" }, 0.0);
       }
 
       // =============================================================
@@ -424,14 +422,10 @@ export default function ScrollExperience({
           className="absolute inset-0 w-full h-full bg-[#DED9D0] -z-30 transition-colors duration-700"
         />
 
-        {/* Dynamic Ambient Lighting Gradient Atmosphere */}
+        {/* Dynamic Ambient Lighting Gradient Atmosphere (Pure Khadi stage matching header) */}
         <div
           ref={stageAtmosphereRef}
-          className="absolute inset-0 w-full h-full pointer-events-none -z-20 opacity-60"
-          style={{
-            background:
-              "radial-gradient(circle at 70% 45%, rgba(55,38,26,0.18) 0%, rgba(138,162,186,0.14) 38%, rgba(222,217,208,0) 70%)",
-          }}
+          className="absolute inset-0 w-full h-full pointer-events-none -z-20 opacity-0"
         />
 
         {/* Persistent 3D Living Architectural Diorama Canvas */}

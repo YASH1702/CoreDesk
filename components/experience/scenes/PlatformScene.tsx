@@ -10,9 +10,6 @@ export function PlatformScene() {
 
   return (
     <div className="w-full h-full min-h-screen flex items-center justify-between px-6 sm:px-10 lg:px-14 xl:px-20 py-20 relative overflow-hidden bg-transparent">
-      {/* Subtle Atmospheric Radial Glow */}
-      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[700px] h-[700px] bg-gradient-to-tr from-[#37261A]/15 via-[#8AA2BA]/12 to-transparent rounded-full blur-3xl pointer-events-none -z-10" />
-
       {/* Decorative Minimal Line */}
       <div className="absolute top-0 right-1/3 w-px h-28 bg-gradient-to-b from-[#37261A]/40 to-transparent pointer-events-none" />
 

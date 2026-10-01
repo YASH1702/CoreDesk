@@ -27,7 +27,7 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-[#F8F7F3] text-[#2A2927] selection:bg-[#C69A4B] selection:text-white">
+    <div className="relative w-full h-screen overflow-hidden bg-[#DED9D0] text-[#1E1E1E] selection:bg-[#37261A] selection:text-[#F5F2EB]">
       {/* Persistent Navigation */}
       <ExperienceNav />
       <SceneNav
