@@ -128,7 +128,7 @@ export default function AmbientSpatialCanvas({
     const terminalActiveMat = new THREE.MeshStandardMaterial({
       color: 0xc69a4b,
       emissive: 0xc69a4b,
-      emissiveIntensity: 0.4,
+      emissiveIntensity: 0.5,
       metalness: 0.8,
       roughness: 0.2,
     });
@@ -142,7 +142,7 @@ export default function AmbientSpatialCanvas({
     disposablesMaterials.push(paperVoucherMat);
 
     const plantLeafMat = new THREE.MeshStandardMaterial({
-      color: 0x4f5e43, // Muted architectural olive
+      color: 0x4f5e43,
       roughness: 0.45,
       metalness: 0.05,
     });
@@ -229,7 +229,7 @@ export default function AmbientSpatialCanvas({
       deskGroup.add(leg);
     });
 
-    // Ultra-thin Workspace Monitor
+    // Workspace Monitor
     const monitorStandGeo = new THREE.CylinderGeometry(0.016, 0.02, 0.26, 16);
     disposablesGeometries.push(monitorStandGeo);
     const monitorStand = new THREE.Mesh(monitorStandGeo, goldChassisMat);
@@ -254,7 +254,7 @@ export default function AmbientSpatialCanvas({
     keyboardMesh.position.set(0, 0.77, 0.15);
     deskGroup.add(keyboardMesh);
 
-    // NEW LIVING ELEMENT: Brushed Gold Cantilever Desk Lamp
+    // Cantilever Desk Lamp
     const lampBaseGeo = new THREE.CylinderGeometry(0.06, 0.06, 0.015, 16);
     const lampStemGeo = new THREE.CylinderGeometry(0.008, 0.008, 0.38, 12);
     const lampShadeGeo = new THREE.ConeGeometry(0.06, 0.09, 16);
@@ -274,7 +274,7 @@ export default function AmbientSpatialCanvas({
     lampShade.rotation.z = Math.PI * 0.75;
     deskGroup.add(lampShade);
 
-    // NEW LIVING ELEMENT: Matte Alabaster Porcelain Espresso Cup & Rising Steam
+    // Espresso Cup & Wispy Steam
     const cupGeo = new THREE.CylinderGeometry(0.035, 0.025, 0.05, 16);
     const saucerGeo = new THREE.CylinderGeometry(0.055, 0.055, 0.008, 16);
     disposablesGeometries.push(cupGeo, saucerGeo);
@@ -287,7 +287,6 @@ export default function AmbientSpatialCanvas({
     cup.position.set(0.72, 0.79, 0.2);
     deskGroup.add(cup);
 
-    // Wispy Steam Particles
     const steamParticleCount = 4;
     const steamParticles: THREE.Mesh[] = [];
     const steamGeo = new THREE.SphereGeometry(0.015, 8, 8);
@@ -307,7 +306,7 @@ export default function AmbientSpatialCanvas({
     }
 
     // -------------------------------------------------------------
-    // 3. CORNER ARCHITECTURAL PLANT (Botanical Living Detail)
+    // 3. ARCHITECTURAL PLANT (Botanical Living Detail)
     // -------------------------------------------------------------
     const plantGroup = new THREE.Group();
     plantGroup.position.set(-2.0, -0.98, -1.2);
@@ -376,7 +375,6 @@ export default function AmbientSpatialCanvas({
     confirmHaloMesh.rotation.x = -Math.PI * 0.25;
     counterGroup.add(confirmHaloMesh);
 
-    // NEW LIVING ELEMENT: Physical Paper Appointment Voucher Ribbon
     const ticketGroup = new THREE.Group();
     ticketGroup.position.set(0, 0.96, 0.26);
     counterGroup.add(ticketGroup);
@@ -394,14 +392,14 @@ export default function AmbientSpatialCanvas({
     ticketSeal.position.set(0, -0.38, 0.05);
     ticketSeal.rotation.x = Math.PI * 0.12;
     ticketGroup.add(ticketSeal);
-    ticketGroup.scale.setScalar(0.001); // Hidden initially, unrolls on check-in
+    ticketGroup.scale.setScalar(0.001);
 
     // -------------------------------------------------------------
-    // 5. CHARACTER 1: SPECIALIST (Seated Desk Operator)
+    // DEDICATED DESK CHAIR (Independent from Specialist)
     // -------------------------------------------------------------
-    const specialistGroup = new THREE.Group();
-    specialistGroup.position.set(0.65, -0.98, 0.35);
-    dioramaGroup.add(specialistGroup);
+    const chairGroup = new THREE.Group();
+    chairGroup.position.set(0.65, -0.98, 0.35);
+    dioramaGroup.add(chairGroup);
 
     const chairSeatGeo = new THREE.CylinderGeometry(0.24, 0.24, 0.06, 24);
     const chairBackGeo = new THREE.BoxGeometry(0.4, 0.45, 0.05);
@@ -410,51 +408,72 @@ export default function AmbientSpatialCanvas({
 
     const chairSeat = new THREE.Mesh(chairSeatGeo, deskSurfaceMat);
     chairSeat.position.y = 0.45;
-    specialistGroup.add(chairSeat);
+    chairGroup.add(chairSeat);
 
     const chairBack = new THREE.Mesh(chairBackGeo, deskSurfaceMat);
     chairBack.position.set(0, 0.72, 0.22);
-    specialistGroup.add(chairBack);
+    chairGroup.add(chairBack);
 
     const chairStem = new THREE.Mesh(chairStemGeo, goldChassisMat);
     chairStem.position.y = 0.22;
-    specialistGroup.add(chairStem);
-
-    const specTorsoGeo = new THREE.CapsuleGeometry(0.18, 0.32, 8, 16);
-    disposablesGeometries.push(specTorsoGeo);
-    const specTorso = new THREE.Mesh(specTorsoGeo, specialistBlazerMat);
-    specTorso.position.y = 0.82;
-    specTorso.rotation.x = 0.05;
-    specialistGroup.add(specTorso);
-
-    const headGeo = new THREE.SphereGeometry(0.13, 24, 24);
-    disposablesGeometries.push(headGeo);
-    const specHead = new THREE.Mesh(headGeo, alabasterSkinMat);
-    specHead.position.set(0, 1.15, 0.02);
-    specialistGroup.add(specHead);
-
-    const armGeo = new THREE.CapsuleGeometry(0.045, 0.26, 6, 12);
-    disposablesGeometries.push(armGeo);
-    const specLeftArm = new THREE.Mesh(armGeo, specialistBlazerMat);
-    specLeftArm.position.set(-0.22, 0.8, -0.1);
-    specLeftArm.rotation.set(0.65, 0, 0.2);
-    specialistGroup.add(specLeftArm);
-
-    const specRightArm = new THREE.Mesh(armGeo, specialistBlazerMat);
-    specRightArm.position.set(0.22, 0.8, -0.1);
-    specRightArm.rotation.set(0.65, 0, -0.2);
-    specialistGroup.add(specRightArm);
+    chairGroup.add(chairStem);
 
     // -------------------------------------------------------------
-    // 6. CHARACTER 2: OPERATIONS LEAD (Standing & Handover Movement)
+    // SHARED CHARACTER GEOMETRIES
+    // -------------------------------------------------------------
+    const headGeo = new THREE.SphereGeometry(0.13, 24, 24);
+    const legCapsuleGeo = new THREE.CapsuleGeometry(0.06, 0.5, 6, 12);
+    const armGeo = new THREE.CapsuleGeometry(0.045, 0.28, 6, 12);
+    disposablesGeometries.push(headGeo, legCapsuleGeo, armGeo);
+
+    // -------------------------------------------------------------
+    // 5. CHARACTER 1: SPECIALIST (Articulated for Standup, Celebration, Pointing)
+    // -------------------------------------------------------------
+    const specialistGroup = new THREE.Group();
+    specialistGroup.position.set(0.65, -0.98, 0.35);
+    dioramaGroup.add(specialistGroup);
+
+    const specLegL = new THREE.Mesh(legCapsuleGeo, specialistBlazerMat);
+    specLegL.position.set(-0.09, 0.3, 0);
+    specialistGroup.add(specLegL);
+
+    const specLegR = new THREE.Mesh(legCapsuleGeo, specialistBlazerMat);
+    specLegR.position.set(0.09, 0.3, 0);
+    specialistGroup.add(specLegR);
+
+    const specTorsoGeo = new THREE.CapsuleGeometry(0.19, 0.38, 8, 16);
+    disposablesGeometries.push(specTorsoGeo);
+    const specTorso = new THREE.Mesh(specTorsoGeo, specialistBlazerMat);
+    specTorso.position.y = 0.88;
+    specialistGroup.add(specTorso);
+
+    const specHead = new THREE.Mesh(headGeo, alabasterSkinMat);
+    specHead.position.set(0, 1.25, 0.02);
+    specialistGroup.add(specHead);
+
+    // Articulated Shoulder Pivot Groups
+    const specLeftArmGroup = new THREE.Group();
+    specLeftArmGroup.position.set(-0.24, 1.05, 0);
+    specialistGroup.add(specLeftArmGroup);
+    const specArmL = new THREE.Mesh(armGeo, specialistBlazerMat);
+    specArmL.position.y = -0.16;
+    specLeftArmGroup.add(specArmL);
+
+    const specRightArmGroup = new THREE.Group();
+    specRightArmGroup.position.set(0.24, 1.05, 0);
+    specialistGroup.add(specRightArmGroup);
+    const specArmR = new THREE.Mesh(armGeo, specialistBlazerMat);
+    specArmR.position.y = -0.16;
+    specRightArmGroup.add(specArmR);
+
+    // -------------------------------------------------------------
+    // 6. CHARACTER 2: OPERATIONS LEAD (Articulated Shoulders)
     // -------------------------------------------------------------
     const leadGroup = new THREE.Group();
     leadGroup.position.set(1.6, -0.98, -0.15);
     leadGroup.rotation.y = -Math.PI * 0.35;
     dioramaGroup.add(leadGroup);
 
-    const legCapsuleGeo = new THREE.CapsuleGeometry(0.06, 0.5, 6, 12);
-    disposablesGeometries.push(legCapsuleGeo);
     const leadLegLeft = new THREE.Mesh(legCapsuleGeo, specialistBlazerMat);
     leadLegLeft.position.set(-0.09, 0.3, 0);
     leadGroup.add(leadLegLeft);
@@ -473,15 +492,29 @@ export default function AmbientSpatialCanvas({
     leadHead.position.set(0, 1.25, 0);
     leadGroup.add(leadHead);
 
+    const leadLeftArmGroup = new THREE.Group();
+    leadLeftArmGroup.position.set(-0.25, 1.05, 0);
+    leadGroup.add(leadLeftArmGroup);
+    const leadArmL = new THREE.Mesh(armGeo, leadBlazerMat);
+    leadArmL.position.y = -0.16;
+    leadLeftArmGroup.add(leadArmL);
+
+    const leadRightArmGroup = new THREE.Group();
+    leadRightArmGroup.position.set(0.25, 1.05, 0);
+    leadGroup.add(leadRightArmGroup);
+    const leadArmR = new THREE.Mesh(armGeo, leadBlazerMat);
+    leadArmR.position.y = -0.16;
+    leadRightArmGroup.add(leadArmR);
+
     const tabletGeo = new THREE.BoxGeometry(0.18, 0.24, 0.02);
     disposablesGeometries.push(tabletGeo);
     const tabletMesh = new THREE.Mesh(tabletGeo, goldChassisMat);
-    tabletMesh.position.set(-0.25, 0.82, 0.2);
+    tabletMesh.position.set(0, -0.28, 0.08);
     tabletMesh.rotation.set(0.4, 0.2, 0.1);
-    leadGroup.add(tabletMesh);
+    leadRightArmGroup.add(tabletMesh);
 
     // -------------------------------------------------------------
-    // 7. CHARACTER 3: THE CUSTOMER (Natural Walking Cadence)
+    // 7. CHARACTER 3: CUSTOMER / TEAM MEMBER (Articulated Shoulders)
     // -------------------------------------------------------------
     const customerGroup = new THREE.Group();
     customerGroup.position.set(2.1, -0.98, 1.4);
@@ -512,14 +545,14 @@ export default function AmbientSpatialCanvas({
     customerGroup.add(custHead);
 
     const customerLeftArmGroup = new THREE.Group();
-    customerLeftArmGroup.position.set(-0.24, 1.0, 0);
+    customerLeftArmGroup.position.set(-0.24, 1.05, 0);
     customerGroup.add(customerLeftArmGroup);
     const custArmL = new THREE.Mesh(armGeo, customerCoatMat);
     custArmL.position.y = -0.16;
     customerLeftArmGroup.add(custArmL);
 
     const customerRightArmGroup = new THREE.Group();
-    customerRightArmGroup.position.set(0.24, 1.0, 0);
+    customerRightArmGroup.position.set(0.24, 1.05, 0);
     customerGroup.add(customerRightArmGroup);
     const custArmR = new THREE.Mesh(armGeo, customerCoatMat);
     custArmR.position.y = -0.16;
@@ -535,11 +568,11 @@ export default function AmbientSpatialCanvas({
     // 8. SCENE 03 (STAFF): MECHANICAL SWISS SPLIT-FLAP TILES
     // -------------------------------------------------------------
     const staffHudGroup = new THREE.Group();
-    staffHudGroup.position.set(0.65, 0.65, -0.55);
+    staffHudGroup.position.set(0.0, 1.45, -0.2);
     staffHudGroup.scale.setScalar(0.001);
     dioramaGroup.add(staffHudGroup);
 
-    const hudPlaneGeo = new THREE.PlaneGeometry(1.4, 0.75);
+    const hudPlaneGeo = new THREE.PlaneGeometry(1.6, 0.85);
     disposablesGeometries.push(hudPlaneGeo);
     const hudPlaneMat = new THREE.MeshPhysicalMaterial({
       color: 0xfffbf2,
@@ -553,9 +586,8 @@ export default function AmbientSpatialCanvas({
     const hudPlane = new THREE.Mesh(hudPlaneGeo, hudPlaneMat);
     staffHudGroup.add(hudPlane);
 
-    // Mechanical Flip Tiles
     const flipTiles: THREE.Group[] = [];
-    const slotBarGeo = new THREE.BoxGeometry(1.2, 0.09, 0.015);
+    const slotBarGeo = new THREE.BoxGeometry(1.35, 0.11, 0.015);
     disposablesGeometries.push(slotBarGeo);
 
     const slotBarMatActive = new THREE.MeshStandardMaterial({
@@ -570,7 +602,7 @@ export default function AmbientSpatialCanvas({
     });
     disposablesMaterials.push(slotBarMatActive, slotBarMatDone);
 
-    const tileYOffsets = [0.20, 0.04, -0.12];
+    const tileYOffsets = [0.22, 0.05, -0.12];
     tileYOffsets.forEach((y, i) => {
       const tileGroup = new THREE.Group();
       tileGroup.position.set(0, y, 0.01);
@@ -581,7 +613,7 @@ export default function AmbientSpatialCanvas({
     });
 
     // -------------------------------------------------------------
-    // 9. SCENE 04 (CONTROL): REVENUE MONOLITH & ORBITAL TICKER
+    // 9. SCENE 04 (CONTROL): REVENUE MONOLITH & HYDRAULIC PISTONS
     // -------------------------------------------------------------
     const controlPillarGroup = new THREE.Group();
     controlPillarGroup.position.set(1.45, -0.98, -0.75);
@@ -594,7 +626,6 @@ export default function AmbientSpatialCanvas({
     pillarMesh.position.y = 0.75;
     controlPillarGroup.add(pillarMesh);
 
-    // 3 Precision Hydraulic Piston Bars
     const barGeo1 = new THREE.BoxGeometry(0.12, 0.45, 0.12);
     const barGeo2 = new THREE.BoxGeometry(0.12, 0.75, 0.12);
     const barGeo3 = new THREE.BoxGeometry(0.12, 1.1, 0.12);
@@ -612,13 +643,237 @@ export default function AmbientSpatialCanvas({
     barMesh3.position.set(0.16, 2.05, 0);
     controlPillarGroup.add(barMesh3);
 
-    // Orbital Brass Ticker Ring
     const tickerRingGeo = new THREE.TorusGeometry(0.48, 0.015, 16, 48);
     disposablesGeometries.push(tickerRingGeo);
     const tickerRing = new THREE.Mesh(tickerRingGeo, goldChassisMat);
     tickerRing.position.set(0, 1.6, 0);
     tickerRing.rotation.x = Math.PI * 0.4;
     controlPillarGroup.add(tickerRing);
+
+    // -------------------------------------------------------------
+    // NEW: SCENE 04 (CONTROL) BACKGROUND GRAPHICAL RANDOM DATA WALL
+    // -------------------------------------------------------------
+    const controlDataBgGroup = new THREE.Group();
+    controlDataBgGroup.position.set(0, 0.35, -2.4);
+    controlDataBgGroup.scale.setScalar(0.001);
+    dioramaGroup.add(controlDataBgGroup);
+
+    // Translucent Dark Glass Backdrop
+    const dataBackdropGeo = new THREE.PlaneGeometry(6.6, 2.8);
+    disposablesGeometries.push(dataBackdropGeo);
+    const dataBackdropMat = new THREE.MeshStandardMaterial({
+      color: 0x22201d,
+      roughness: 0.35,
+      metalness: 0.2,
+      transparent: true,
+      opacity: 0.14,
+      side: THREE.DoubleSide,
+    });
+    disposablesMaterials.push(dataBackdropMat);
+    const dataBackdrop = new THREE.Mesh(dataBackdropGeo, dataBackdropMat);
+    controlDataBgGroup.add(dataBackdrop);
+
+    // 22 Dynamic Fluctuating Equalizer & Financial Telemetry Bars
+    const dataBarsCount = 22;
+    const dataBars: { mesh: THREE.Mesh; baseHeight: number; speed: number; phase: number }[] = [];
+    const dataBarGeo = new THREE.BoxGeometry(0.14, 1.0, 0.04);
+    disposablesGeometries.push(dataBarGeo);
+
+    const dataBarGoldMat = new THREE.MeshStandardMaterial({
+      color: 0xc69a4b,
+      emissive: 0xc69a4b,
+      emissiveIntensity: 0.6,
+      metalness: 0.8,
+      roughness: 0.2,
+    });
+    const dataBarBronzeMat = new THREE.MeshStandardMaterial({
+      color: 0xb7863d,
+      emissive: 0x8f6b2f,
+      emissiveIntensity: 0.4,
+      metalness: 0.85,
+      roughness: 0.25,
+    });
+    const dataBarEmeraldMat = new THREE.MeshStandardMaterial({
+      color: 0x5c9e6e,
+      emissive: 0x5c9e6e,
+      emissiveIntensity: 0.5,
+      metalness: 0.8,
+      roughness: 0.2,
+    });
+    disposablesMaterials.push(dataBarGoldMat, dataBarBronzeMat, dataBarEmeraldMat);
+
+    for (let i = 0; i < dataBarsCount; i++) {
+      const mat = i % 4 === 0 ? dataBarEmeraldMat : i % 2 === 0 ? dataBarGoldMat : dataBarBronzeMat;
+      const bar = new THREE.Mesh(dataBarGeo, mat);
+      const x = (i - (dataBarsCount - 1) / 2) * 0.26;
+      const baseH = 0.4 + Math.sin(i * 1.3) * 0.25 + (i % 3) * 0.18;
+      bar.position.set(x, baseH * 0.5 - 0.7, 0.02);
+      bar.scale.y = baseH;
+      controlDataBgGroup.add(bar);
+
+      dataBars.push({
+        mesh: bar,
+        baseHeight: baseH,
+        speed: 1.8 + (i % 5) * 0.7,
+        phase: i * 0.65,
+      });
+    }
+
+    // Telemetry Scatter Nodes
+    const dataScatterNodes: THREE.Mesh[] = [];
+    const scatterGeo = new THREE.OctahedronGeometry(0.045, 0);
+    disposablesGeometries.push(scatterGeo);
+
+    for (let i = 0; i < 14; i++) {
+      const node = new THREE.Mesh(scatterGeo, dataBarGoldMat);
+      node.position.set(
+        Math.sin(i * 2.4) * 2.8,
+        0.3 + Math.cos(i * 1.7) * 0.7,
+        0.08 + (i % 3) * 0.04
+      );
+      controlDataBgGroup.add(node);
+      dataScatterNodes.push(node);
+    }
+
+    // Benchmark Datum Lines
+    const datumLineGeo = new THREE.BoxGeometry(6.2, 0.012, 0.02);
+    disposablesGeometries.push(datumLineGeo);
+    [-0.2, 0.35, 0.85].forEach((y) => {
+      const line = new THREE.Mesh(datumLineGeo, dataBarBronzeMat);
+      line.position.set(0, y, 0.015);
+      controlDataBgGroup.add(line);
+    });
+
+    // -------------------------------------------------------------
+    // NEW: SCENE 05 (SYSTEM) BACKGROUND SYSTEM DESIGN CONNECTED CHARTS
+    // -------------------------------------------------------------
+    const systemArchitectureBgGroup = new THREE.Group();
+    systemArchitectureBgGroup.position.set(0, 0.45, -2.1);
+    systemArchitectureBgGroup.scale.setScalar(0.001);
+    dioramaGroup.add(systemArchitectureBgGroup);
+
+    const archBoxGeo = new THREE.BoxGeometry(0.85, 0.32, 0.08);
+    const archDbGeo = new THREE.CylinderGeometry(0.3, 0.3, 0.42, 24);
+    disposablesGeometries.push(archBoxGeo, archDbGeo);
+
+    const archNodeMat = new THREE.MeshStandardMaterial({
+      color: 0xfffcf7,
+      roughness: 0.25,
+      metalness: 0.15,
+    });
+    const archNodeBorderMat = new THREE.MeshStandardMaterial({
+      color: 0xc69a4b,
+      metalness: 0.9,
+      roughness: 0.2,
+      emissive: 0xc69a4b,
+      emissiveIntensity: 0.3,
+    });
+    const archConduitMat = new THREE.MeshStandardMaterial({
+      color: 0xc69a4b,
+      emissive: 0xc69a4b,
+      emissiveIntensity: 0.8,
+      metalness: 0.9,
+    });
+    disposablesMaterials.push(archNodeMat, archNodeBorderMat, archConduitMat);
+
+    const createArchNode = (x: number, y: number, isDb = false) => {
+      const node = new THREE.Group();
+      node.position.set(x, y, 0);
+
+      if (isDb) {
+        const dbMesh = new THREE.Mesh(archDbGeo, archNodeMat);
+        node.add(dbMesh);
+        const ring1Geo = new THREE.TorusGeometry(0.305, 0.015, 12, 32);
+        disposablesGeometries.push(ring1Geo);
+        const ring1 = new THREE.Mesh(ring1Geo, archNodeBorderMat);
+        ring1.rotation.x = Math.PI / 2;
+        ring1.position.y = 0.1;
+        node.add(ring1);
+        const ring2Geo = new THREE.TorusGeometry(0.305, 0.015, 12, 32);
+        disposablesGeometries.push(ring2Geo);
+        const ring2 = new THREE.Mesh(ring2Geo, archNodeBorderMat);
+        ring2.rotation.x = Math.PI / 2;
+        ring2.position.y = -0.1;
+        node.add(ring2);
+      } else {
+        const body = new THREE.Mesh(archBoxGeo, archNodeMat);
+        node.add(body);
+        const trimGeo = new THREE.BoxGeometry(0.88, 0.03, 0.085);
+        disposablesGeometries.push(trimGeo);
+        const trim = new THREE.Mesh(trimGeo, archNodeBorderMat);
+        trim.position.y = 0.16;
+        node.add(trim);
+        const dotGeo = new THREE.SphereGeometry(0.035, 12, 12);
+        disposablesGeometries.push(dotGeo);
+        const dot = new THREE.Mesh(dotGeo, terminalActiveMat);
+        dot.position.set(-0.32, 0, 0.045);
+        node.add(dot);
+      }
+
+      systemArchitectureBgGroup.add(node);
+      return node;
+    };
+
+    // Architecture Nodes
+    createArchNode(0, 1.1); // Gateway
+    createArchNode(-1.9, 0.45); // Auth
+    createArchNode(-0.65, 0.45); // Booking
+    createArchNode(0.65, 0.45); // Payments
+    createArchNode(1.9, 0.45); // Workflows
+    createArchNode(-1.1, -0.4, true); // Postgres
+    createArchNode(0.0, -0.4, true); // Redis
+    createArchNode(1.1, -0.4, true); // EventBus
+
+    // Connected Conduits linking architecture diagram
+    const addConduit = (x1: number, y1: number, x2: number, y2: number) => {
+      const dx = x2 - x1;
+      const dy = y2 - y1;
+      const len = Math.sqrt(dx * dx + dy * dy);
+      const angle = Math.atan2(dy, dx) - Math.PI / 2;
+
+      const tubeGeo = new THREE.CylinderGeometry(0.012, 0.012, len, 8);
+      disposablesGeometries.push(tubeGeo);
+      const tube = new THREE.Mesh(tubeGeo, archConduitMat);
+      tube.position.set((x1 + x2) / 2, (y1 + y2) / 2, -0.02);
+      tube.rotation.z = angle;
+      systemArchitectureBgGroup.add(tube);
+    };
+
+    addConduit(0, 0.95, -1.9, 0.6);
+    addConduit(0, 0.95, -0.65, 0.6);
+    addConduit(0, 0.95, 0.65, 0.6);
+    addConduit(0, 0.95, 1.9, 0.6);
+    addConduit(-1.9, 0.3, -1.1, -0.2);
+    addConduit(-0.65, 0.3, -1.1, -0.2);
+    addConduit(-0.65, 0.3, 0.0, -0.2);
+    addConduit(0.65, 0.3, 0.0, -0.2);
+    addConduit(0.65, 0.3, 1.1, -0.2);
+    addConduit(1.9, 0.3, 1.1, -0.2);
+
+    // Traveling Data Packets through architecture chart
+    const archPackets: { mesh: THREE.Mesh; start: THREE.Vector2; end: THREE.Vector2; speed: number; offset: number }[] = [];
+    const archPacketGeo = new THREE.SphereGeometry(0.035, 12, 12);
+    disposablesGeometries.push(archPacketGeo);
+
+    const flowPaths = [
+      { start: new THREE.Vector2(0, 0.95), end: new THREE.Vector2(-1.9, 0.6) },
+      { start: new THREE.Vector2(0, 0.95), end: new THREE.Vector2(-0.65, 0.6) },
+      { start: new THREE.Vector2(0, 0.95), end: new THREE.Vector2(0.65, 0.6) },
+      { start: new THREE.Vector2(-0.65, 0.3), end: new THREE.Vector2(-1.1, -0.2) },
+      { start: new THREE.Vector2(0.65, 0.3), end: new THREE.Vector2(1.1, -0.2) },
+    ];
+
+    flowPaths.forEach((path, i) => {
+      const pMesh = new THREE.Mesh(archPacketGeo, terminalActiveMat);
+      systemArchitectureBgGroup.add(pMesh);
+      archPackets.push({
+        mesh: pMesh,
+        start: path.start,
+        end: path.end,
+        speed: 0.9 + i * 0.15,
+        offset: i * 0.22,
+      });
+    });
 
     // -------------------------------------------------------------
     // 10. SCENE 05 (SYSTEM): UNDERFLOOR CONDUITS & 8 FLOATING GLYPHS
@@ -638,7 +893,6 @@ export default function AmbientSpatialCanvas({
     });
     disposablesMaterials.push(conduitMat);
 
-    // Underfloor channels
     const track1Geo = new THREE.BoxGeometry(1.5, 0.018, 0.06);
     disposablesGeometries.push(track1Geo);
     const track1 = new THREE.Mesh(track1Geo, conduitMat);
@@ -653,7 +907,6 @@ export default function AmbientSpatialCanvas({
     track2.rotation.y = 0.45;
     systemCircuitGroup.add(track2);
 
-    // 8 Floating Module Glyphs
     const moduleGlyphs: THREE.Mesh[] = [];
     const glyphGeo = new THREE.OctahedronGeometry(0.045, 0);
     disposablesGeometries.push(glyphGeo);
@@ -673,7 +926,6 @@ export default function AmbientSpatialCanvas({
       moduleGlyphs.push(g);
     }
 
-    // Traveling Energy Pulse Packets
     const packetGeo = new THREE.SphereGeometry(0.04, 16, 16);
     disposablesGeometries.push(packetGeo);
     const packetMat = new THREE.MeshStandardMaterial({
@@ -748,7 +1000,7 @@ export default function AmbientSpatialCanvas({
     const particles = new THREE.Points(particleGeometry, particleMaterial);
     worldGroup.add(particles);
 
-    // Interactive pointer parallax
+    // Pointer Parallax
     let targetMouseX = 0;
     let targetMouseY = 0;
     let currentMouseX = 0;
@@ -776,7 +1028,7 @@ export default function AmbientSpatialCanvas({
 
     // Animation Loop
     let animationFrameId: number;
-    let clock = new THREE.Clock();
+    const clock = new THREE.Clock();
     let isTabVisible = !document.hidden;
 
     const handleVisibilityChange = () => {
@@ -796,9 +1048,8 @@ export default function AmbientSpatialCanvas({
 
       if (!prefersReducedMotion) {
         // =====================================================================
-        // CHOREOGRAPHY ACROSS ALL 6 SCENES (0.0, 0.2, 0.4, 0.6, 0.8, 1.0)
+        // CAMERA & DIORAMA ORCHESTRATION ACROSS ALL 6 SCENES
         // =====================================================================
-
         let targetDioramaX = 0.20;
         let targetDioramaY = -0.04;
         let targetDioramaZ = 0.0;
@@ -814,35 +1065,35 @@ export default function AmbientSpatialCanvas({
           targetRotY = THREE.MathUtils.lerp(0.32, -0.16, t);
           targetCameraZ = THREE.MathUtils.lerp(8.2, 7.8, t);
         } else if (p <= 0.40) {
-          // 02 -> 03: Customer to Staff Handover
+          // 02 -> 03: Customer to Team Assembly
           const t = (p - 0.20) / 0.20;
-          targetDioramaX = THREE.MathUtils.lerp(0.08, 0.16, t);
-          targetDioramaZ = THREE.MathUtils.lerp(0.30, 0.18, t);
-          targetRotY = THREE.MathUtils.lerp(-0.16, 0.16, t);
+          targetDioramaX = THREE.MathUtils.lerp(0.08, 0.0, t);
+          targetDioramaZ = THREE.MathUtils.lerp(0.30, 0.15, t);
+          targetRotY = THREE.MathUtils.lerp(-0.16, 0.0, t);
           targetCameraZ = THREE.MathUtils.lerp(7.8, 8.0, t);
         } else if (p <= 0.60) {
-          // 03 -> 04: Staff to Control Monolith
+          // 03 -> 04: Team to Control Celebration
           const t = (p - 0.40) / 0.20;
-          targetDioramaX = THREE.MathUtils.lerp(0.16, -0.06, t);
-          targetDioramaZ = THREE.MathUtils.lerp(0.18, 0.12, t);
-          targetRotY = THREE.MathUtils.lerp(0.16, -0.22, t);
-          targetCameraY = THREE.MathUtils.lerp(1.15, 1.30, t);
-          targetCameraZ = THREE.MathUtils.lerp(8.0, 8.3, t);
+          targetDioramaX = THREE.MathUtils.lerp(0.0, 0.0, t);
+          targetDioramaZ = THREE.MathUtils.lerp(0.15, 0.10, t);
+          targetRotY = THREE.MathUtils.lerp(0.0, -0.05, t);
+          targetCameraY = THREE.MathUtils.lerp(1.15, 1.25, t);
+          targetCameraZ = THREE.MathUtils.lerp(8.0, 8.4, t);
         } else if (p <= 0.80) {
-          // 04 -> 05: Control to System Conduits
+          // 04 -> 05: Control to System Architecture
           const t = (p - 0.60) / 0.20;
-          targetDioramaX = THREE.MathUtils.lerp(-0.06, 0.04, t);
-          targetRotY = THREE.MathUtils.lerp(-0.22, 0.04, t);
-          targetCameraY = THREE.MathUtils.lerp(1.30, 1.42, t);
-          targetCameraZ = THREE.MathUtils.lerp(8.3, 8.8, t);
+          targetDioramaX = THREE.MathUtils.lerp(0.0, 0.0, t);
+          targetRotY = THREE.MathUtils.lerp(-0.05, 0.0, t);
+          targetCameraY = THREE.MathUtils.lerp(1.25, 1.35, t);
+          targetCameraZ = THREE.MathUtils.lerp(8.4, 8.8, t);
         } else {
-          // 05 -> 06: System to Platform Hero Pull-Back
+          // 05 -> 06: System to Platform SHIFT TO LEFT & WIDE VIEW
           const t = (p - 0.80) / 0.20;
-          targetDioramaX = THREE.MathUtils.lerp(0.04, 0.0, t);
-          targetDioramaY = THREE.MathUtils.lerp(-0.04, -0.16, t);
-          targetRotY = THREE.MathUtils.lerp(0.04, 0.10, t);
-          targetCameraY = THREE.MathUtils.lerp(1.42, 1.65, t);
-          targetCameraZ = THREE.MathUtils.lerp(8.8, 9.8, t);
+          targetDioramaX = THREE.MathUtils.lerp(0.0, -1.35, t); // Shifts to left!
+          targetDioramaY = THREE.MathUtils.lerp(-0.04, -0.15, t);
+          targetRotY = THREE.MathUtils.lerp(0.0, 0.22, t);
+          targetCameraY = THREE.MathUtils.lerp(1.35, 1.45, t);
+          targetCameraZ = THREE.MathUtils.lerp(8.8, 9.3, t);
         }
 
         dioramaGroup.position.set(targetDioramaX, targetDioramaY, targetDioramaZ);
@@ -852,10 +1103,10 @@ export default function AmbientSpatialCanvas({
         camera.position.z = targetCameraZ;
         camera.position.x = currentMouseX * 0.2;
         camera.position.y = targetCameraY - currentMouseY * 0.2;
-        camera.lookAt(targetDioramaX * 0.5, 0.05, 0);
+        camera.lookAt(targetDioramaX * 0.4, 0.05, 0);
 
         // -------------------------------------------------------------
-        // ATMOSPHERIC SUNLIGHT SHIFT (Morning -> Executive Daylight -> Sunset)
+        // ATMOSPHERIC SUNLIGHT SHIFT (Morning -> Daylight -> Sunset)
         // -------------------------------------------------------------
         if (p > 0.75) {
           const sunsetT = (p - 0.75) / 0.25;
@@ -882,108 +1133,201 @@ export default function AmbientSpatialCanvas({
         });
 
         // -------------------------------------------------------------
-        // CHARACTER 1 (Specialist): Social Dynamics & Handover Reaction
-        // -------------------------------------------------------------
-        if (p < 0.18) {
-          // Scene 1: Active typing
-          specLeftArm.rotation.x = 0.65 + Math.sin(elapsedTime * 4.0) * 0.04;
-          specRightArm.rotation.x = 0.65 + Math.cos(elapsedTime * 4.5) * 0.04;
-          specHead.rotation.y = THREE.MathUtils.lerp(0, -0.45, p / 0.18);
-        } else if (p < 0.40) {
-          // Scene 2 & 3: Pauses typing, acknowledges customer & turns toward Lead
-          specLeftArm.rotation.x = 0.4;
-          specRightArm.rotation.x = 0.4;
-          specHead.rotation.y = THREE.MathUtils.lerp(-0.45, 0.55, (p - 0.18) / 0.22);
-        } else {
-          // Scene 4+: Mutual coordination & forward gaze
-          specLeftArm.rotation.x = 0.55 + Math.sin(elapsedTime * 1.5) * 0.02;
-          specRightArm.rotation.x = 0.55 + Math.cos(elapsedTime * 1.5) * 0.02;
-          specHead.rotation.y = THREE.MathUtils.lerp(0.2, 0, (p - 0.40) / 0.60);
-        }
-
-        // -------------------------------------------------------------
-        // CHARACTER 2 (Operations Lead): Social Handover Step
+        // CHARACTER 1 (Specialist): Sit -> Greet -> Team Lineup -> Hands Up -> Point Right
         // -------------------------------------------------------------
         if (p < 0.20) {
-          // Scene 1: Standing at desk periphery
+          // Scene 1: Seated active typing
+          specialistGroup.position.set(0.65, -0.98, 0.35);
+          specialistGroup.rotation.y = 0;
+          specLeftArmGroup.rotation.set(0.65 + Math.sin(elapsedTime * 4.0) * 0.04, 0, 0.2);
+          specRightArmGroup.rotation.set(0.65 + Math.cos(elapsedTime * 4.5) * 0.04, 0, -0.2);
+          specHead.rotation.set(0, THREE.MathUtils.lerp(0, -0.45, p / 0.20), 0);
+        } else if (p < 0.40) {
+          // Scene 2: Pauses typing, acknowledges customer at podium
+          specialistGroup.position.set(0.65, -0.98, 0.35);
+          specialistGroup.rotation.y = 0;
+          specLeftArmGroup.rotation.set(0.35, 0, 0.15);
+          specRightArmGroup.rotation.set(0.35, 0, -0.15);
+          specHead.rotation.set(0, THREE.MathUtils.lerp(-0.45, 0.45, (p - 0.20) / 0.20), 0);
+        } else if (p < 0.60) {
+          // Scene 3 (TEAM): STEPS OUT IN FRONT OF DESK TO JOIN TEAM LINEUP!
+          const teamT = (p - 0.40) / 0.20;
+          const sX = THREE.MathUtils.lerp(0.65, 0.0, teamT);
+          const sZ = THREE.MathUtils.lerp(0.35, 0.88, teamT);
+          specialistGroup.position.set(sX, -0.98, sZ);
+          specialistGroup.rotation.y = 0; // Faces user straight on
+          specLeftArmGroup.rotation.set(0.08, 0, 0.06);
+          specRightArmGroup.rotation.set(0.08, 0, -0.06);
+          specHead.rotation.set(0, 0, 0);
+        } else if (p < 0.80) {
+          // Scene 4 (CONTROL): ALL HANDS UPWARD IN THE AIR CELEBRATING CONTROL!
+          const ctrlT = (p - 0.60) / 0.20;
+          specialistGroup.position.set(0.0, -0.98, 0.88);
+          specialistGroup.rotation.y = 0;
+          const upArmX = THREE.MathUtils.lerp(0.08, -2.4, ctrlT) + Math.sin(elapsedTime * 3.5) * 0.06;
+          specLeftArmGroup.rotation.set(upArmX, 0, THREE.MathUtils.lerp(0.06, 0.35, ctrlT));
+          specRightArmGroup.rotation.set(upArmX, 0, THREE.MathUtils.lerp(-0.06, -0.35, ctrlT));
+          specHead.rotation.set(-0.2, 0, 0);
+        } else if (p < 0.90) {
+          // Scene 5 (SYSTEM): Observant posture reviewing architecture
+          specialistGroup.position.set(0.0, -0.98, 0.88);
+          specialistGroup.rotation.y = 0;
+          specLeftArmGroup.rotation.set(0.25, 0, 0.08);
+          specRightArmGroup.rotation.set(0.25, 0, -0.08);
+          specHead.rotation.set(0, 0, 0);
+        } else {
+          // Scene 6 (PLATFORM): WELCOMING POINTING TOWARDS RIGHT BUTTONS!
+          const platT = (p - 0.90) / 0.10;
+          const sX = THREE.MathUtils.lerp(0.0, -0.4, platT);
+          specialistGroup.position.set(sX, -0.98, 0.82);
+          specialistGroup.rotation.y = THREE.MathUtils.lerp(0, Math.PI * 0.24, platT);
+          // Right arm points right to buttons, left arm welcoming on chest
+          specRightArmGroup.rotation.set(-1.1, 0.25, -1.15);
+          specLeftArmGroup.rotation.set(0.45, 0.15, 0.25);
+          specHead.rotation.set(0, 0.35, 0);
+        }
+
+        // -------------------------------------------------------------
+        // CHARACTER 2 (Operations Lead): Side -> Handover -> Front Team -> Hands Up -> Point Right
+        // -------------------------------------------------------------
+        if (p < 0.20) {
           leadGroup.position.set(1.6, -0.98, -0.15);
           leadGroup.rotation.y = -Math.PI * 0.35;
-          leadHead.rotation.y = THREE.MathUtils.lerp(0, -0.5, p / 0.20);
-        } else if (p < 0.45) {
-          // Scene 2 -> 3: Steps closer to Specialist's desk for the handover
-          const t = (p - 0.20) / 0.25;
-          leadGroup.position.x = THREE.MathUtils.lerp(1.6, 1.15, t);
-          leadGroup.position.z = THREE.MathUtils.lerp(-0.15, 0.10, t);
-          leadGroup.rotation.y = THREE.MathUtils.lerp(-Math.PI * 0.35, -Math.PI * 0.75, t);
-          // Extends tablet forward
-          tabletMesh.position.set(-0.35, 0.88, 0.35);
-          tabletMesh.rotation.set(0.6, 0.4, 0.2);
-        } else if (p < 0.75) {
-          // Scene 4: Executive stance facing revenue monolith
-          const t = (p - 0.45) / 0.30;
-          leadGroup.position.x = THREE.MathUtils.lerp(1.15, 1.45, t);
-          leadGroup.position.z = THREE.MathUtils.lerp(0.10, -0.15, t);
-          leadGroup.rotation.y = THREE.MathUtils.lerp(-Math.PI * 0.75, -Math.PI * 0.25, t);
+          leadLeftArmGroup.rotation.set(0.1, 0, 0.05);
+          leadRightArmGroup.rotation.set(0.4, 0.2, 0.1);
+          leadHead.rotation.set(0, THREE.MathUtils.lerp(0, -0.5, p / 0.20), 0);
+        } else if (p < 0.40) {
+          // Scene 2: Steps closer for tablet review
+          const t = (p - 0.20) / 0.20;
+          leadGroup.position.x = THREE.MathUtils.lerp(1.6, 1.25, t);
+          leadGroup.position.z = THREE.MathUtils.lerp(-0.15, 0.15, t);
+          leadGroup.rotation.y = THREE.MathUtils.lerp(-Math.PI * 0.35, -Math.PI * 0.55, t);
+          leadRightArmGroup.rotation.set(0.6, 0.3, 0.15);
+          leadLeftArmGroup.rotation.set(0.1, 0, 0.05);
+        } else if (p < 0.60) {
+          // Scene 3 (TEAM): STEPS FORWARD INTO FRONT TEAM LINEUP (RIGHT FLANK)
+          const teamT = (p - 0.40) / 0.20;
+          leadGroup.position.x = THREE.MathUtils.lerp(1.25, 0.65, teamT);
+          leadGroup.position.z = THREE.MathUtils.lerp(0.15, 0.82, teamT);
+          leadGroup.rotation.y = THREE.MathUtils.lerp(-Math.PI * 0.55, -0.12, teamT);
+          leadLeftArmGroup.rotation.set(0.08, 0, 0.06);
+          leadRightArmGroup.rotation.set(0.12, 0, -0.06);
+          leadHead.rotation.set(0, 0, 0);
+        } else if (p < 0.80) {
+          // Scene 4 (CONTROL): ALL HANDS UPWARD IN THE AIR!
+          const ctrlT = (p - 0.60) / 0.20;
+          leadGroup.position.set(0.65, -0.98, 0.82);
+          leadGroup.rotation.y = -0.12;
+          const upArmX = THREE.MathUtils.lerp(0.08, -2.4, ctrlT) + Math.sin(elapsedTime * 3.5 + 1) * 0.06;
+          leadLeftArmGroup.rotation.set(upArmX, 0, THREE.MathUtils.lerp(0.06, 0.35, ctrlT));
+          leadRightArmGroup.rotation.set(upArmX, 0, THREE.MathUtils.lerp(-0.06, -0.35, ctrlT));
+          leadHead.rotation.set(-0.2, 0, 0);
+        } else if (p < 0.90) {
+          // Scene 5 (SYSTEM): Observant posture
+          leadGroup.position.set(0.65, -0.98, 0.82);
+          leadGroup.rotation.y = -0.12;
+          leadLeftArmGroup.rotation.set(0.25, 0, 0.08);
+          leadRightArmGroup.rotation.set(0.25, 0, -0.08);
+          leadHead.rotation.set(0, 0, 0);
         } else {
-          // Scene 5 & 6: Settled proud stance
-          leadGroup.rotation.y = -Math.PI * 0.15;
-          leadHead.rotation.y = 0;
+          // Scene 6 (PLATFORM): WELCOMING POINTING TOWARDS RIGHT BUTTONS!
+          const platT = (p - 0.90) / 0.10;
+          const lX = THREE.MathUtils.lerp(0.65, 0.15, platT);
+          leadGroup.position.set(lX, -0.98, 0.82);
+          leadGroup.rotation.y = THREE.MathUtils.lerp(-0.12, Math.PI * 0.24, platT);
+          leadRightArmGroup.rotation.set(-1.1, 0.25, -1.15);
+          leadLeftArmGroup.rotation.set(0.45, 0.15, 0.25);
+          leadHead.rotation.set(0, 0.35, 0);
         }
 
         // -------------------------------------------------------------
-        // CHARACTER 3 (Customer): Walking Cadence & Paper Voucher Delivery
+        // CHARACTER 3 (Customer / Member): Walk In -> Podium -> Front Team -> Hands Up -> Point Right
         // -------------------------------------------------------------
-        const custProgress = Math.max(0, Math.min(1, p / 0.20));
-        const custTargetX = THREE.MathUtils.lerp(2.1, -0.75, custProgress);
-        const custTargetZ = THREE.MathUtils.lerp(1.4, 1.2, custProgress);
-        customerGroup.position.set(custTargetX, -0.98, custTargetZ);
+        if (p < 0.40) {
+          const custProgress = Math.max(0, Math.min(1, p / 0.20));
+          const custTargetX = THREE.MathUtils.lerp(2.1, -0.75, custProgress);
+          const custTargetZ = THREE.MathUtils.lerp(1.4, 1.2, custProgress);
+          customerGroup.position.set(custTargetX, -0.98, custTargetZ);
 
-        const walkAngle = THREE.MathUtils.lerp(-Math.PI * 0.65, -Math.PI * 0.48, custProgress);
-        customerGroup.rotation.y = walkAngle;
+          const walkAngle = THREE.MathUtils.lerp(-Math.PI * 0.65, -Math.PI * 0.48, custProgress);
+          customerGroup.rotation.y = walkAngle;
 
-        const isWalking = custProgress > 0.02 && custProgress < 0.98;
-        const walkCycle = custProgress * Math.PI * 6.0;
-        const strideAmp = isWalking ? 0.6 : 0.04;
+          const isWalking = custProgress > 0.02 && custProgress < 0.98;
+          const walkCycle = custProgress * Math.PI * 6.0;
+          const strideAmp = isWalking ? 0.6 : 0.04;
 
-        customerLeftLegGroup.rotation.x = Math.sin(walkCycle) * strideAmp;
-        customerRightLegGroup.rotation.x = -Math.sin(walkCycle) * strideAmp;
-        customerLeftArmGroup.rotation.x = -Math.sin(walkCycle) * (strideAmp * 0.8);
+          customerLeftLegGroup.rotation.x = Math.sin(walkCycle) * strideAmp;
+          customerRightLegGroup.rotation.x = -Math.sin(walkCycle) * strideAmp;
+          customerLeftArmGroup.rotation.x = -Math.sin(walkCycle) * (strideAmp * 0.8);
 
-        if (custProgress > 0.70) {
-          const reachProgress = (custProgress - 0.70) / 0.30;
-          customerRightArmGroup.rotation.x = THREE.MathUtils.lerp(0, -0.75, reachProgress);
-          customerRightArmGroup.rotation.y = THREE.MathUtils.lerp(0, -0.3, reachProgress);
-
-          // Printed Appointment Voucher unrolls smoothly from podium!
-          ticketGroup.scale.setScalar(reachProgress);
-          ticketMesh.position.y = -0.10 - reachProgress * 0.14;
-        } else {
-          customerRightArmGroup.rotation.x = Math.sin(walkCycle) * (strideAmp * 0.8);
-          customerRightArmGroup.rotation.y = 0;
+          if (custProgress > 0.70) {
+            const reachProgress = (custProgress - 0.70) / 0.30;
+            customerRightArmGroup.rotation.set(THREE.MathUtils.lerp(0, -0.75, reachProgress), THREE.MathUtils.lerp(0, -0.3, reachProgress), 0);
+            ticketGroup.scale.setScalar(reachProgress);
+            ticketMesh.position.y = -0.10 - reachProgress * 0.14;
+          } else {
+            customerRightArmGroup.rotation.set(Math.sin(walkCycle) * (strideAmp * 0.8), 0, 0);
+            ticketGroup.scale.setScalar(0.001);
+          }
+        } else if (p < 0.60) {
+          // Scene 3 (TEAM): STEPS FORWARD INTO FRONT TEAM LINEUP (LEFT FLANK)
+          const teamT = (p - 0.40) / 0.20;
+          customerLeftLegGroup.rotation.x = 0;
+          customerRightLegGroup.rotation.x = 0;
           ticketGroup.scale.setScalar(0.001);
+          customerGroup.position.x = THREE.MathUtils.lerp(-0.75, -0.65, teamT);
+          customerGroup.position.z = THREE.MathUtils.lerp(1.2, 0.82, teamT);
+          customerGroup.rotation.y = THREE.MathUtils.lerp(-Math.PI * 0.48, 0.12, teamT);
+          customerLeftArmGroup.rotation.set(0.08, 0, 0.06);
+          customerRightArmGroup.rotation.set(0.08, 0, -0.06);
+          custHead.rotation.set(0, 0, 0);
+        } else if (p < 0.80) {
+          // Scene 4 (CONTROL): ALL HANDS UPWARD IN THE AIR!
+          const ctrlT = (p - 0.60) / 0.20;
+          customerGroup.position.set(-0.65, -0.98, 0.82);
+          customerGroup.rotation.y = 0.12;
+          const upArmX = THREE.MathUtils.lerp(0.08, -2.4, ctrlT) + Math.sin(elapsedTime * 3.5 + 2) * 0.06;
+          customerLeftArmGroup.rotation.set(upArmX, 0, THREE.MathUtils.lerp(0.06, 0.35, ctrlT));
+          customerRightArmGroup.rotation.set(upArmX, 0, THREE.MathUtils.lerp(-0.06, -0.35, ctrlT));
+          custHead.rotation.set(-0.2, 0, 0);
+        } else if (p < 0.90) {
+          // Scene 5 (SYSTEM): Observant posture
+          customerGroup.position.set(-0.65, -0.98, 0.82);
+          customerGroup.rotation.y = 0.12;
+          customerLeftArmGroup.rotation.set(0.25, 0, 0.08);
+          customerRightArmGroup.rotation.set(0.25, 0, -0.08);
+          custHead.rotation.set(0, 0, 0);
+        } else {
+          // Scene 6 (PLATFORM): WELCOMING POINTING TOWARDS RIGHT BUTTONS!
+          const platT = (p - 0.90) / 0.10;
+          const cX = THREE.MathUtils.lerp(-0.65, -0.95, platT);
+          customerGroup.position.set(cX, -0.98, 0.82);
+          customerGroup.rotation.y = THREE.MathUtils.lerp(0.12, Math.PI * 0.24, platT);
+          customerRightArmGroup.rotation.set(-1.1, 0.25, -1.15);
+          customerLeftArmGroup.rotation.set(0.45, 0.15, 0.25);
+          custHead.rotation.set(0, 0.35, 0);
         }
 
-        // Terminal Confirmation Halo Pulse
-        if (p > 0.15) {
+        // Terminal Confirmation Halo Pulse in Scene 2
+        if (p > 0.15 && p < 0.40) {
           const pulse = Math.min(1, (p - 0.15) / 0.10);
           terminalActiveMat.emissiveIntensity = 0.5 + pulse * 1.2 + Math.sin(elapsedTime * 3.0) * 0.2;
           confirmHaloMat.opacity = pulse * 0.3 + Math.sin(elapsedTime * 2.0) * 0.05;
           confirmHaloMesh.scale.setScalar(1.0 + pulse * 0.4);
         } else {
           terminalActiveMat.emissiveIntensity = 0.4;
-          confirmHaloMat.opacity = 0.05;
+          confirmHaloMat.opacity = 0.02;
           confirmHaloMesh.scale.setScalar(1.0);
         }
 
         // -------------------------------------------------------------
-        // SCENE 03 (STAFF): Swiss Split-Flap Tiles Flip
+        // SCENE 03 (STAFF / TEAM): Swiss Split-Flap Schedule Tiles Flip
         // -------------------------------------------------------------
-        if (p > 0.20) {
+        if (p > 0.20 && p < 0.58) {
           const staffProg = Math.min(1, (p - 0.20) / 0.15);
           staffHudGroup.scale.setScalar(staffProg);
-          staffHudGroup.position.y = 0.45 + staffProg * 0.25;
+          staffHudGroup.position.y = 1.35 + staffProg * 0.15;
 
-          // Sequential 180° tile flip
           flipTiles.forEach((tile, i) => {
             const tileDelay = 0.22 + i * 0.04;
             if (p > tileDelay) {
@@ -998,40 +1342,59 @@ export default function AmbientSpatialCanvas({
         }
 
         // -------------------------------------------------------------
-        // SCENE 04 (CONTROL): Hydraulic Piston Bars & Ticker Rotation
+        // SCENE 04 (CONTROL): Monolith, Pistons & RANDOM DATA BACKGROUND WALL
         // -------------------------------------------------------------
-        if (p > 0.40) {
-          const controlProg = Math.min(1, (p - 0.40) / 0.15);
-          controlPillarGroup.scale.setScalar(controlProg);
-          controlPillarGroup.position.y = -0.98 + (controlProg - 1.0) * 0.5;
+        if (p > 0.45 && p < 0.78) {
+          const ctrlProg = Math.min(1, Math.max(0, (p - 0.45) / 0.15));
+          controlPillarGroup.scale.setScalar(ctrlProg);
+          controlPillarGroup.position.y = -0.98 + (ctrlProg - 1.0) * 0.5;
 
-          // Hydraulic Piston Easing
-          barMesh1.scale.y = Math.min(1, controlProg * 1.2);
-          barMesh2.scale.y = Math.min(1, controlProg * 1.1);
-          barMesh3.scale.y = Math.min(1, controlProg * 1.0);
-
-          // Continuous gentle ticker orbit
+          barMesh1.scale.y = Math.min(1, ctrlProg * 1.2);
+          barMesh2.scale.y = Math.min(1, ctrlProg * 1.1);
+          barMesh3.scale.y = Math.min(1, ctrlProg * 1.0);
           tickerRing.rotation.z = elapsedTime * 0.4;
+
+          // Background Random Data Wall Animation
+          controlDataBgGroup.scale.setScalar(ctrlProg);
+          dataBars.forEach((b) => {
+            const dynamicH = b.baseHeight + Math.sin(elapsedTime * b.speed + b.phase) * (b.baseHeight * 0.42);
+            b.mesh.scale.y = Math.max(0.1, dynamicH);
+            b.mesh.position.y = (b.mesh.scale.y * 0.5) - 0.7;
+          });
+
+          dataScatterNodes.forEach((node, i) => {
+            node.position.y = 0.3 + Math.sin(elapsedTime * 2.5 + i) * 0.12;
+            node.rotation.y = elapsedTime * 1.2 + i;
+          });
         } else {
           controlPillarGroup.scale.setScalar(0.001);
+          controlDataBgGroup.scale.setScalar(0.001);
         }
 
         // -------------------------------------------------------------
-        // SCENE 05 (SYSTEM): Conduits, Pulse Packets & 8 Floating Glyphs
+        // SCENE 05 (SYSTEM): Connected Charts Architecture Background & Conduits
         // -------------------------------------------------------------
-        if (p > 0.60) {
-          const sysProg = Math.min(1, (p - 0.60) / 0.15);
+        if (p > 0.65 && p < 0.92) {
+          const sysProg = Math.min(1, Math.max(0, (p - 0.65) / 0.15));
+          systemArchitectureBgGroup.scale.setScalar(sysProg);
+
+          // Animate Traveling Packets through System Architecture Charts
+          archPackets.forEach((pkt) => {
+            const t = (elapsedTime * pkt.speed + pkt.offset) % 1.0;
+            pkt.mesh.position.x = THREE.MathUtils.lerp(pkt.start.x, pkt.end.x, t);
+            pkt.mesh.position.y = THREE.MathUtils.lerp(pkt.start.y, pkt.end.y, t);
+            pkt.mesh.position.z = 0.05;
+          });
+
           conduitMat.opacity = sysProg * 0.9;
           conduitMat.emissiveIntensity = 0.2 + sysProg * 0.6 + Math.sin(elapsedTime * 4.0) * 0.3;
 
-          // 8 Module Glyphs hover and rotate
           moduleGlyphs.forEach((g, i) => {
             g.scale.setScalar(sysProg);
             g.position.y = 0.2 + Math.sin(elapsedTime * 2.0 + i) * 0.08;
             g.rotation.y = elapsedTime * 0.8 + i;
           });
 
-          // Energy Packet Sprinting
           const packetT1 = (elapsedTime * 0.8) % 1.0;
           packetNode1.position.x = THREE.MathUtils.lerp(-0.75, 0.65, packetT1);
           packetNode1.position.z = THREE.MathUtils.lerp(0.45, -0.3, packetT1);
@@ -1042,6 +1405,7 @@ export default function AmbientSpatialCanvas({
           packetNode2.position.z = THREE.MathUtils.lerp(-0.3, -0.75, packetT2);
           packetNode2.position.y = 0.02;
         } else {
+          systemArchitectureBgGroup.scale.setScalar(0.001);
           conduitMat.opacity = 0.0;
           moduleGlyphs.forEach((g) => g.scale.setScalar(0.001));
         }
@@ -1057,7 +1421,7 @@ export default function AmbientSpatialCanvas({
           canopyGroup.scale.setScalar(0.001);
         }
 
-        // Ambient Upward Particles
+        // Ambient Upward Dust Particles
         const posAttr = particleGeometry.attributes.position as THREE.BufferAttribute;
         const positions = posAttr.array as Float32Array;
 
