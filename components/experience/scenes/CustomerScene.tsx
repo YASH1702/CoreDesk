@@ -127,9 +127,9 @@ export default function CustomerScene() {
             <div className="scene-customer-glow absolute -inset-5 bg-gradient-to-br from-[#E8D7B2]/25 via-[#FFF8ED]/35 to-transparent rounded-[36px] blur-2xl -z-10 will-change-transform" />
 
             {/* Stacked Interactive Booking Flow Container */}
-            <div className="scene-customer-panel bg-[#FFFCF7]/95 backdrop-blur-2xl border border-[#DDD6C9] rounded-[24px] p-6 shadow-[0_25px_60px_rgba(80,65,45,0.12)] will-change-transform">
+            <div className="scene-customer-panel bg-[#FFFCF7]/80 backdrop-blur-2xl border border-[#DDD6C9]/80 rounded-[24px] p-6 shadow-[0_25px_60px_rgba(80,65,45,0.12)] ring-1 ring-white/50 will-change-transform">
               {/* Header */}
-              <div className="scene-customer-card-header flex items-center justify-between pb-3.5 mb-4 border-b border-[#ECE6D8] will-change-transform">
+              <div className="scene-customer-card-header flex items-center justify-between pb-3.5 mb-4 border-b border-[#ECE6D8]/70 will-change-transform">
                 <div>
                   <h3 className="text-sm font-bold text-[#2A2927]">Client Self-Booking Portal</h3>
                   <p className="text-[11px] text-[#8B857D] font-medium">Deterministic availability · No overlaps</p>
@@ -148,8 +148,8 @@ export default function CustomerScene() {
                       key={st.num}
                       className={`${st.selector} p-3 rounded-xl border transition-colors duration-300 flex items-center justify-between gap-3 will-change-transform ${
                         st.active
-                          ? "bg-white border-[#C69A4B] shadow-sm ring-1 ring-[#C69A4B]/20"
-                          : "bg-white/85 border-[#ECE6D8] hover:border-[#DDD6C9]"
+                          ? "bg-[#FFF8ED]/85 backdrop-blur-md border-[#C69A4B]/80 shadow-xs ring-1 ring-[#C69A4B]/20"
+                          : "bg-white/70 backdrop-blur-md border-[#ECE6D8]/80 hover:border-[#DDD6C9]"
                       }`}
                     >
                       <div className="flex items-center gap-2.5">
@@ -178,7 +178,7 @@ export default function CustomerScene() {
                         className={`text-[11px] font-bold px-2 py-0.5 rounded-md ${
                           st.active
                             ? "bg-[#FFF8ED] text-[#C69A4B] border border-[#E8D7B2]"
-                            : "text-[#5D5A56] bg-[#F8F7F3]"
+                            : "text-[#5D5A56] bg-[#F8F7F3]/80"
                         }`}
                       >
                         {st.price}
@@ -189,7 +189,7 @@ export default function CustomerScene() {
               </div>
 
               {/* Confirmation Footer */}
-              <div className="scene-customer-card-footer mt-4 pt-3.5 border-t border-[#ECE6D8] flex items-center justify-between text-[11px] will-change-transform">
+              <div className="scene-customer-card-footer mt-4 pt-3.5 border-t border-[#ECE6D8]/70 flex items-center justify-between text-[11px] will-change-transform">
                 <div className="flex items-center gap-1.5 text-[#5D5A56]">
                   <Check className="w-3.5 h-3.5 text-[#5C9E6E]" />
                   <span>Calendar invite queued</span>

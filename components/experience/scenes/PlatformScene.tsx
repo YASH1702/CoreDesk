@@ -50,49 +50,54 @@ export function PlatformScene() {
           </p>
 
           {/* Dual Action Live Console Card */}
-          <div className="scene-platform-cta w-full bg-[#FFFCF7]/95 backdrop-blur-2xl border border-[#DDD6C9] rounded-[24px] p-6 sm:p-7 shadow-[0_25px_60px_rgba(80,65,45,0.12)] flex flex-col gap-4 will-change-transform">
-            <div className="flex items-center justify-between pb-3.5 border-b border-[#ECE6D8]">
-              <span className="text-xs uppercase tracking-wider font-extrabold text-[#C69A4B]">
-                Live Ecosystem Launch
-              </span>
-              <span className="text-[10px] font-bold text-[#5C9E6E] bg-[#F0FDF4] border border-[#BBF7D0] px-2.5 py-0.5 rounded-full flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#16A34A] animate-pulse" />
-                Live Cloud Deployed
-              </span>
-            </div>
+          <div className="scene-platform-panel-wrapper relative w-full will-change-transform">
+            {/* Ambient Glow */}
+            <div className="scene-platform-glow absolute -inset-5 bg-gradient-to-br from-[#C69A4B]/20 via-[#E8D7B2]/25 to-transparent rounded-[36px] blur-2xl -z-10 will-change-transform" />
 
-            <div className="flex flex-col gap-3.5">
-              <Link
-                href="/book"
-                className="w-full px-6 py-4 rounded-xl bg-gradient-to-r from-[#C69A4B] to-[#B7863D] hover:from-[#B7863D] hover:to-[#9F722D] text-white font-bold text-sm shadow-[0_10px_25px_rgba(198,154,75,0.32)] transition-all duration-300 flex items-center justify-between group cursor-pointer"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
-                    <Sparkles className="w-4 h-4 text-[#FFF8ED]" />
-                  </div>
-                  <div className="text-left">
-                    <div className="text-sm font-bold">Launch Live Experience</div>
-                    <div className="text-[10px] text-[#FFF8ED]/80 font-normal">Customer booking & slot checkout</div>
-                  </div>
-                </div>
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
-              </Link>
+            <div className="scene-platform-cta w-full bg-[#FFFCF7]/80 backdrop-blur-2xl border border-[#DDD6C9]/80 rounded-[24px] p-6 sm:p-7 shadow-[0_25px_60px_rgba(80,65,45,0.12)] ring-1 ring-white/50 flex flex-col gap-4 will-change-transform">
+              <div className="flex items-center justify-between pb-3.5 border-b border-[#ECE6D8]/70">
+                <span className="text-xs uppercase tracking-wider font-extrabold text-[#C69A4B]">
+                  Live Ecosystem Launch
+                </span>
+                <span className="text-[10px] font-bold text-[#5C9E6E] bg-[#F0FDF4]/90 border border-[#BBF7D0] px-2.5 py-0.5 rounded-full flex items-center gap-1.5 backdrop-blur-sm">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#16A34A] animate-pulse" />
+                  Live Cloud Deployed
+                </span>
+              </div>
 
-              <Link
-                href="/login"
-                className="w-full px-6 py-3.5 rounded-xl bg-white hover:bg-[#FDFBF7] text-[#2A2927] border border-[#DDD6C9] hover:border-[#C69A4B] font-semibold text-sm shadow-sm transition-all duration-300 flex items-center justify-between group cursor-pointer"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-[#F8F7F3] border border-[#ECE6D8] flex items-center justify-center text-[#8B857D] group-hover:text-[#C69A4B]">
-                    <ShieldCheck className="w-4 h-4" />
+              <div className="flex flex-col gap-3.5">
+                <Link
+                  href="/book"
+                  className="w-full px-6 py-4 rounded-xl bg-gradient-to-r from-[#C69A4B] to-[#B7863D] hover:from-[#B7863D] hover:to-[#9F722D] text-white font-bold text-sm shadow-[0_10px_25px_rgba(198,154,75,0.32)] transition-all duration-300 flex items-center justify-between group cursor-pointer"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
+                      <Sparkles className="w-4 h-4 text-[#FFF8ED]" />
+                    </div>
+                    <div className="text-left">
+                      <div className="text-sm font-bold">Launch Live Experience</div>
+                      <div className="text-[10px] text-[#FFF8ED]/80 font-normal">Customer booking & slot checkout</div>
+                    </div>
                   </div>
-                  <div className="text-left">
-                    <div className="text-sm font-bold text-[#2A2927]">Sign In to Admin</div>
-                    <div className="text-[10px] text-[#8B857D]">Command center, analytics & team</div>
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
+                </Link>
+
+                <Link
+                  href="/login"
+                  className="w-full px-6 py-3.5 rounded-xl bg-white/70 backdrop-blur-md hover:bg-white/90 text-[#2A2927] border border-[#DDD6C9]/80 hover:border-[#C69A4B] font-semibold text-sm shadow-xs transition-all duration-300 flex items-center justify-between group cursor-pointer"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-[#F8F7F3] border border-[#ECE6D8] flex items-center justify-center text-[#8B857D] group-hover:text-[#C69A4B]">
+                      <ShieldCheck className="w-4 h-4" />
+                    </div>
+                    <div className="text-left">
+                      <div className="text-sm font-bold text-[#2A2927]">Sign In to Admin</div>
+                      <div className="text-[10px] text-[#8B857D]">Command center, analytics & team</div>
+                    </div>
                   </div>
-                </div>
-                <ArrowRight className="w-4 h-4 text-[#8B857D] group-hover:text-[#C69A4B] group-hover:translate-x-1 transition-transform" />
-              </Link>
+                  <ArrowRight className="w-4 h-4 text-[#8B857D] group-hover:text-[#C69A4B] group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </div>
             </div>
           </div>
 

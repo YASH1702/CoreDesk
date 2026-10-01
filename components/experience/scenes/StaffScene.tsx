@@ -114,9 +114,9 @@ export function StaffScene() {
             <div className="scene-staff-glow absolute -inset-5 bg-gradient-to-br from-[#E8D7B2]/20 via-[#D9C7A0]/20 to-transparent rounded-[36px] blur-2xl -z-10 will-change-transform" />
 
             {/* Main Operational Glass Card */}
-            <div className="scene-staff-panel bg-[#FFFCF7]/95 backdrop-blur-2xl border border-[#DDD6C9] rounded-[24px] p-6 shadow-[0_25px_60px_rgba(80,65,45,0.12)] will-change-transform">
+            <div className="scene-staff-panel bg-[#FFFCF7]/80 backdrop-blur-2xl border border-[#DDD6C9]/80 rounded-[24px] p-6 shadow-[0_25px_60px_rgba(80,65,45,0.12)] ring-1 ring-white/50 will-change-transform">
               {/* Header */}
-              <div className="scene-staff-card-header flex items-center justify-between pb-3.5 mb-4 border-b border-[#ECE6D8] will-change-transform">
+              <div className="scene-staff-card-header flex items-center justify-between pb-3.5 mb-4 border-b border-[#ECE6D8]/70 will-change-transform">
                 <div className="flex items-center gap-2.5">
                   <div className="w-9 h-9 rounded-xl bg-[#FFF8ED] border border-[#E8D7B2] flex items-center justify-center text-[#C69A4B]">
                     <Calendar className="w-4 h-4" />
@@ -136,7 +136,7 @@ export function StaffScene() {
                 {staffMembers.map((staff, idx) => (
                   <div
                     key={staff.name}
-                    className={`scene-staff-item-${idx + 1} bg-white rounded-xl p-3 border border-[#ECE6D8] shadow-sm flex items-center justify-between gap-3 will-change-transform`}
+                    className={`scene-staff-item-${idx + 1} bg-white/70 backdrop-blur-md rounded-xl p-3 border border-[#ECE6D8]/80 shadow-xs flex items-center justify-between gap-3 will-change-transform`}
                   >
                     <div className="flex items-center gap-2.5">
                       <div className={`w-8 h-8 rounded-lg border flex items-center justify-center font-bold text-[11px] ${staff.color}`}>
@@ -156,7 +156,7 @@ export function StaffScene() {
               </div>
 
               {/* Operational Schedule Timeline Bar */}
-              <div className="scene-staff-timeline bg-white rounded-xl p-3 border border-[#ECE6D8] shadow-sm will-change-transform">
+              <div className="scene-staff-timeline bg-white/70 backdrop-blur-md rounded-xl p-3 border border-[#ECE6D8]/80 shadow-xs will-change-transform">
                 <div className="flex items-center justify-between text-[11px] font-bold text-[#2A2927] mb-2">
                   <span className="flex items-center gap-1.5">
                     <Clock className="w-3 h-3 text-[#C69A4B]" /> Shift Hours (09:00 - 17:00)
