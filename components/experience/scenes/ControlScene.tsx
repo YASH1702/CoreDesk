@@ -105,9 +105,9 @@ export function ControlScene() {
             <div className="scene-control-glow absolute -inset-5 bg-gradient-to-br from-[#D9C7A0]/20 via-[#ECE6D8]/30 to-transparent rounded-[36px] blur-2xl -z-10 will-change-transform" />
 
             {/* Main Glass Control Center Card */}
-            <div className="scene-control-panel bg-[#FFFCF7]/80 backdrop-blur-2xl border border-[#DDD6C9]/80 rounded-[24px] p-6 shadow-[0_25px_60px_rgba(80,65,45,0.12)] ring-1 ring-white/50 will-change-transform">
+            <div className="scene-control-panel bg-[#FFFCF7]/95 backdrop-blur-2xl border border-[#DDD6C9] rounded-[24px] p-6 shadow-[0_25px_60px_rgba(80,65,45,0.12)] will-change-transform">
               {/* Header */}
-              <div className="scene-control-card-header flex items-center justify-between pb-3.5 mb-4 border-b border-[#ECE6D8]/70 will-change-transform">
+              <div className="scene-control-card-header flex items-center justify-between pb-3.5 mb-4 border-b border-[#ECE6D8] will-change-transform">
                 <div>
                   <h3 className="text-sm font-bold text-[#2A2927]">Revenue & Flow Analytics</h3>
                   <p className="text-[11px] text-[#8B857D] font-medium">Real-time enterprise metrics & CRM</p>
@@ -124,7 +124,7 @@ export function ControlScene() {
                   return (
                     <div
                       key={m.label}
-                      className={`scene-control-metric-${idx + 1} bg-white/70 backdrop-blur-md rounded-xl p-3 border border-[#ECE6D8]/80 shadow-xs will-change-transform`}
+                      className={`scene-control-metric-${idx + 1} bg-white rounded-xl p-3 border border-[#ECE6D8] shadow-sm will-change-transform`}
                     >
                       <div className="flex items-center justify-between mb-1">
                         <div className={`w-7 h-7 rounded-lg flex items-center justify-center ${m.color}`}>
@@ -140,7 +140,7 @@ export function ControlScene() {
               </div>
 
               {/* Weekly Performance Bar Chart */}
-              <div className="scene-control-chart bg-white/70 backdrop-blur-md rounded-xl p-3.5 border border-[#ECE6D8]/80 shadow-xs mb-3.5 will-change-transform">
+              <div className="scene-control-chart bg-white rounded-xl p-3.5 border border-[#ECE6D8] shadow-sm mb-3.5 will-change-transform">
                 <div className="flex items-center justify-between mb-2.5">
                   <span className="text-[11px] font-bold text-[#2A2927]">Weekly Booking Volume</span>
                   <span className="text-[10px] text-[#C69A4B] font-semibold">Peak: Sat (₹24.8k)</span>

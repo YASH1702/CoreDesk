@@ -98,9 +98,9 @@ export function SystemScene() {
             <div className="scene-system-glow absolute -inset-5 bg-gradient-to-br from-[#E8D7B2]/20 via-[#D9C7A0]/20 to-transparent rounded-[36px] blur-2xl -z-10 will-change-transform" />
 
             {/* Main Connected Glass Container */}
-            <div className="scene-system-panel bg-[#FFFCF7]/80 backdrop-blur-2xl border border-[#DDD6C9]/80 rounded-[24px] p-5 shadow-[0_25px_60px_rgba(80,65,45,0.12)] ring-1 ring-white/50 will-change-transform">
+            <div className="scene-system-panel bg-[#FFFCF7]/95 backdrop-blur-2xl border border-[#DDD6C9] rounded-[24px] p-5 shadow-[0_25px_60px_rgba(80,65,45,0.12)] will-change-transform">
               {/* Header */}
-              <div className="scene-system-card-header flex items-center justify-between pb-3 mb-3.5 border-b border-[#ECE6D8]/70 will-change-transform">
+              <div className="scene-system-card-header flex items-center justify-between pb-3 mb-3.5 border-b border-[#ECE6D8] will-change-transform">
                 <div>
                   <h3 className="text-sm font-bold text-[#2A2927]">Core Synchronization</h3>
                   <p className="text-[10px] text-[#8B857D] font-medium">8 unified state modules via event bus</p>
@@ -118,7 +118,7 @@ export function SystemScene() {
                   return (
                     <div
                       key={mod.id}
-                      className={`scene-system-mod-${idx + 1} bg-white/70 backdrop-blur-md rounded-xl p-2.5 border border-[#ECE6D8]/80 shadow-xs flex flex-col items-center text-center will-change-transform`}
+                      className={`scene-system-mod-${idx + 1} bg-white rounded-xl p-2.5 border border-[#ECE6D8] shadow-xs flex flex-col items-center text-center will-change-transform`}
                     >
                       <div className={`w-8 h-8 rounded-lg flex items-center justify-center mb-1.5 ${mod.color}`}>
                         <IconComp className="w-4 h-4" />
@@ -131,7 +131,7 @@ export function SystemScene() {
               </div>
 
               {/* Data Flow Legend Bar */}
-              <div className="scene-system-card-footer pt-2.5 border-t border-[#ECE6D8]/70 flex items-center justify-between text-[10px] text-[#8B857D] will-change-transform">
+              <div className="scene-system-card-footer pt-2.5 border-t border-[#ECE6D8] flex items-center justify-between text-[10px] text-[#8B857D] will-change-transform">
                 <span className="flex items-center gap-1 font-medium">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#C69A4B]" /> Single Source of Truth
                 </span>

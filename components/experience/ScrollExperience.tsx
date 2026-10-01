@@ -319,9 +319,6 @@ export default function ScrollExperience({
 
         const pCopy = q(layers[5], ".scene-platform-label, .scene-platform-subline, .scene-platform-cta, .scene-platform-meta");
         if (pCopy) masterTl.to(pCopy, { y: 0, opacity: 1, scale: 1, duration: 0.32, ease: "power3.out", stagger: 0.05 }, 4.44);
-
-        const pPanel = q(layers[5], ".scene-platform-panel-wrapper, .scene-platform-glow");
-        if (pPanel) masterTl.to(pPanel, { y: 0, scale: 1.0, opacity: 1, duration: 0.35, ease: "power3.out" }, 4.44);
       }
     }, container);
 

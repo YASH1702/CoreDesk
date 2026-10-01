@@ -92,9 +92,9 @@ export default function BusinessScene() {
             <div className="scene-business-glow absolute -inset-5 bg-gradient-to-tr from-[#C69A4B]/20 via-[#E8D7B2]/25 to-transparent rounded-[36px] blur-2xl -z-10 will-change-transform" />
 
             {/* Main Glass Workspace Card */}
-            <div className="scene-business-panel bg-[#FFFCF7]/80 backdrop-blur-2xl border border-[#DDD6C9]/80 rounded-[24px] p-6 shadow-[0_25px_60px_rgba(80,65,45,0.12)] ring-1 ring-white/50 will-change-transform">
+            <div className="scene-business-panel bg-[#FFFCF7]/92 backdrop-blur-2xl border border-[#DDD6C9] rounded-[24px] p-6 shadow-[0_25px_60px_rgba(80,65,45,0.12)] will-change-transform">
               {/* Window Header */}
-              <div className="scene-business-card-header flex items-center justify-between pb-4 mb-5 border-b border-[#ECE6D8]/70 will-change-transform">
+              <div className="scene-business-card-header flex items-center justify-between pb-4 mb-5 border-b border-[#ECE6D8] will-change-transform">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#C69A4B] to-[#8F6B2F] text-white flex items-center justify-center font-bold text-base shadow-sm">
                     <Sparkles className="w-4 h-4" />
@@ -111,7 +111,7 @@ export default function BusinessScene() {
               </div>
 
               {/* Primary Metric Panel */}
-              <div className="scene-business-metric-primary bg-white/70 backdrop-blur-md rounded-xl p-4 border border-[#ECE6D8]/80 shadow-xs mb-3.5 will-change-transform">
+              <div className="scene-business-metric-primary bg-white rounded-xl p-4 border border-[#ECE6D8] shadow-sm mb-3.5 will-change-transform">
                 <div className="flex items-center justify-between mb-1.5">
                   <span className="text-[11px] font-semibold text-[#8B857D] uppercase tracking-wider">Today's Revenue</span>
                   <span className="text-[10px] font-bold text-[#5C9E6E] bg-[#5C9E6E]/10 px-2 py-0.5 rounded-full flex items-center gap-1">
@@ -125,7 +125,7 @@ export default function BusinessScene() {
 
               {/* Sub Metrics Grid */}
               <div className="grid grid-cols-2 gap-3 mb-3.5">
-                <div className="scene-business-metric-slot bg-white/70 backdrop-blur-md rounded-xl p-3 border border-[#ECE6D8]/80 shadow-xs will-change-transform">
+                <div className="scene-business-metric-slot bg-white rounded-xl p-3 border border-[#ECE6D8] shadow-sm will-change-transform">
                   <div className="flex items-center gap-1.5 text-[#C69A4B] mb-1">
                     <Calendar className="w-3.5 h-3.5" />
                     <span className="text-[11px] font-semibold text-[#8B857D]">Confirmed</span>
@@ -134,7 +134,7 @@ export default function BusinessScene() {
                   <p className="text-[10px] text-[#5C9E6E] mt-0.5 font-medium">100% capacity</p>
                 </div>
 
-                <div className="scene-business-metric-staff bg-white/70 backdrop-blur-md rounded-xl p-3 border border-[#ECE6D8]/80 shadow-xs will-change-transform">
+                <div className="scene-business-metric-staff bg-white rounded-xl p-3 border border-[#ECE6D8] shadow-sm will-change-transform">
                   <div className="flex items-center gap-1.5 text-[#C69A4B] mb-1">
                     <Users className="w-3.5 h-3.5" />
                     <span className="text-[11px] font-semibold text-[#8B857D]">Staff Online</span>
@@ -145,7 +145,7 @@ export default function BusinessScene() {
               </div>
 
               {/* Live Status Telemetry Footer */}
-              <div className="scene-business-card-footer pt-2.5 border-t border-[#ECE6D8]/70 flex items-center justify-between text-[11px] text-[#8B857D] will-change-transform">
+              <div className="scene-business-card-footer pt-2.5 border-t border-[#ECE6D8]/60 flex items-center justify-between text-[11px] text-[#8B857D] will-change-transform">
                 <span className="flex items-center gap-1.5">
                   <Activity className="w-3 h-3 text-[#C69A4B]" />
                   <span>Real-time webhook sync</span>
