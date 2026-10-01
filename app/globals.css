@@ -5,13 +5,16 @@
 @tailwind utilities;
 
 :root {
-  --background: #F8F7F3;
-  --foreground: #2A2927;
+  --background: #F1EACD;
+  --foreground: #2F4364;
+  --wine: #441417;
+  --lemonade: #F1EACD;
+  --eighties: #2F4364;
 }
 
 html.dark {
-  --background: #0B0E17;
-  --foreground: #F8F7F3;
+  --background: #111823;
+  --foreground: #F1EACD;
 }
 
 body {
@@ -24,147 +27,147 @@ body {
   letter-spacing: -0.01em;
 }
 
-/* Warm Sand & Luxury Dark Glassmorphism Utility Classes */
+/* Lemonade, Wine & The Eighties Glassmorphism Utility Classes */
 .glass-panel {
-  background: rgba(255, 252, 247, 0.75);
+  background: rgba(250, 246, 235, 0.85);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(170, 150, 120, 0.15);
+  border: 1px solid rgba(222, 214, 184, 0.50);
   border-radius: 28px;
-  box-shadow: 0 20px 60px rgba(80, 65, 45, 0.08);
+  box-shadow: 0 20px 60px rgba(47, 67, 100, 0.08);
 }
 
 html.dark .glass-panel {
-  background: rgba(27, 34, 56, 0.80);
+  background: rgba(29, 43, 66, 0.85);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(217, 199, 160, 0.12);
+  border: 1px solid rgba(222, 214, 184, 0.15);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
 }
 
 .glass-panel-interactive {
-  background: rgba(255, 252, 247, 0.75);
+  background: rgba(250, 246, 235, 0.85);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(170, 150, 120, 0.15);
+  border: 1px solid rgba(222, 214, 184, 0.50);
   border-radius: 28px;
-  box-shadow: 0 20px 60px rgba(80, 65, 45, 0.08);
+  box-shadow: 0 20px 60px rgba(47, 67, 100, 0.08);
   transition: all 400ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 html.dark .glass-panel-interactive {
-  background: rgba(27, 34, 56, 0.80);
+  background: rgba(29, 43, 66, 0.85);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(217, 199, 160, 0.12);
+  border: 1px solid rgba(222, 214, 184, 0.15);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
 }
 
 .glass-panel-interactive:hover {
-  border-color: #D6C6A5;
-  box-shadow: 0 25px 70px rgba(80, 65, 45, 0.12);
+  border-color: #441417;
+  box-shadow: 0 25px 70px rgba(68, 20, 23, 0.12);
   transform: translateY(-3px) scale(1.01);
 }
 
 html.dark .glass-panel-interactive:hover {
-  border-color: #C69A4B;
+  border-color: #F1EACD;
   box-shadow: 0 25px 70px rgba(0, 0, 0, 0.65);
 }
 
 .glass-input {
   background: #FFFFFF;
-  border: 1px solid #DDD6C9;
-  color: #2A2927;
+  border: 1px solid #DED6B8;
+  color: #2F4364;
   border-radius: 12px;
   transition: all 250ms ease;
 }
 
 html.dark .glass-input {
-  background: #111625;
-  border: 1px solid #27314A;
-  color: #F8F7F3;
+  background: #1D2B42;
+  border: 1px solid #2F4364;
+  color: #F1EACD;
 }
 
 .glass-input:focus {
   outline: none;
-  border-color: #C69A4B;
-  box-shadow: 0 0 0 3px rgba(198, 154, 75, 0.15);
+  border-color: #441417;
+  box-shadow: 0 0 0 3px rgba(68, 20, 23, 0.15);
 }
 
-.gold-text {
-  background: linear-gradient(135deg, #C69A4B 0%, #8F6B2F 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.gold-text, .wine-text {
+  color: #441417;
 }
 
-html.dark .gold-text {
-  background: linear-gradient(135deg, #E8D7B2 0%, #C69A4B 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+html.dark .gold-text, html.dark .wine-text {
+  color: #F1EACD;
 }
 
-.gold-button-primary {
-  background: #C69A4B;
-  color: #FFFFFF;
+.gold-button-primary, .wine-button-primary {
+  background: #441417;
+  color: #F1EACD;
   border-radius: 16px;
-  box-shadow: 0 8px 25px rgba(198, 154, 75, 0.25);
+  box-shadow: 0 8px 25px rgba(68, 20, 23, 0.28);
   transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.gold-button-primary:hover {
-  background: #B7863D;
+.gold-button-primary:hover, .wine-button-primary:hover {
+  background: #561B1F;
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(198, 154, 75, 0.35);
+  box-shadow: 0 12px 30px rgba(68, 20, 23, 0.38);
 }
 
 .secondary-button-warm {
   background: #FFFFFF;
-  border: 1px solid #DDD6C9;
-  color: #2A2927;
+  border: 1px solid #DED6B8;
+  color: #2F4364;
   border-radius: 16px;
   transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 html.dark .secondary-button-warm {
-  background: #1B2238;
-  border: 1px solid #27314A;
-  color: #F8F7F3;
+  background: #1D2B42;
+  border: 1px solid #2F4364;
+  color: #F1EACD;
 }
 
 .secondary-button-warm:hover {
-  background: #F6F2EA;
-  border-color: #D6C6A5;
+  background: #FAF6EB;
+  border-color: #441417;
   transform: translateY(-2px);
 }
 
 html.dark .secondary-button-warm:hover {
-  background: #27314A;
-  border-color: #C69A4B;
+  background: #253652;
+  border-color: #F1EACD;
 }
 
-/* Custom Warm Sand Scrollbar */
+/* Custom Lemonade & Wine Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #F8F7F3;
+  background: #F1EACD;
 }
 
 html.dark ::-webkit-scrollbar-track {
-  background: #0B0E17;
+  background: #111823;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #D9C7A0;
+  background: #DED6B8;
   border-radius: 4px;
 }
 
 html.dark ::-webkit-scrollbar-thumb {
-  background: #27314A;
+  background: #2F4364;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #C69A4B;
+  background: #441417;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #FAF6EB;
 }

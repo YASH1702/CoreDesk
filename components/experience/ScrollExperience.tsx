@@ -149,11 +149,11 @@ export default function ScrollExperience({
       const masterTl = gsap.timeline({ paused: true });
       masterTlRef.current = masterTl;
 
-      // Atmospheric background color transitions
+      // Atmospheric background color transitions (Harmonious Lemonade tones)
       if (stageBg) {
-        masterTl.to(stageBg, { backgroundColor: "#FFFDF8", duration: 1.0, ease: "power1.inOut" }, 0.5);
-        masterTl.to(stageBg, { backgroundColor: "#F9F6EE", duration: 1.0, ease: "power1.inOut" }, 2.5);
-        masterTl.to(stageBg, { backgroundColor: "#F8F7F3", duration: 1.0, ease: "power1.inOut" }, 4.0);
+        masterTl.to(stageBg, { backgroundColor: "#F4EED8", duration: 1.0, ease: "power1.inOut" }, 0.5);
+        masterTl.to(stageBg, { backgroundColor: "#ECE4C2", duration: 1.0, ease: "power1.inOut" }, 2.5);
+        masterTl.to(stageBg, { backgroundColor: "#F1EACD", duration: 1.0, ease: "power1.inOut" }, 4.0);
       }
 
       // =============================================================
@@ -418,10 +418,10 @@ export default function ScrollExperience({
         ref={stageRef}
         className="w-full h-full overflow-hidden relative"
       >
-        {/* Dynamic Warm Sand Stage Background */}
+        {/* Dynamic Lemonade Stage Background */}
         <div
           ref={stageBgRef}
-          className="absolute inset-0 w-full h-full bg-[#F8F7F3] -z-30 transition-colors duration-700"
+          className="absolute inset-0 w-full h-full bg-[#F1EACD] -z-30 transition-colors duration-700"
         />
 
         {/* Dynamic Ambient Lighting Gradient Atmosphere */}
@@ -430,7 +430,7 @@ export default function ScrollExperience({
           className="absolute inset-0 w-full h-full pointer-events-none -z-20 opacity-60"
           style={{
             background:
-              "radial-gradient(circle at 70% 45%, rgba(198,154,75,0.18) 0%, rgba(232,215,178,0.10) 35%, rgba(248,247,243,0) 70%)",
+              "radial-gradient(circle at 70% 45%, rgba(68,20,23,0.18) 0%, rgba(47,67,100,0.12) 35%, rgba(241,234,205,0) 70%)",
           }}
         />
 
