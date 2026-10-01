@@ -102,10 +102,10 @@ export function ControlScene() {
         <div className="w-full lg:w-[360px] xl:w-[390px] relative flex-shrink-0 pointer-events-auto" style={{ perspective: 1200 }}>
           <div className="scene-control-panel-wrapper relative will-change-transform">
             {/* Ambient Glow */}
-            <div className="scene-control-glow absolute -inset-5 bg-gradient-to-br from-[#D9C7A0]/20 via-[#ECE6D8]/30 to-transparent rounded-[36px] blur-2xl -z-10 will-change-transform" />
+            <div className="scene-control-glow absolute -inset-5 bg-gradient-to-tr from-[#C69A4B]/20 via-[#E8D7B2]/25 to-transparent rounded-[36px] blur-2xl -z-10 will-change-transform" />
 
             {/* Main Glass Control Center Card */}
-            <div className="scene-control-panel bg-[#FFFCF7]/95 backdrop-blur-2xl border border-[#DDD6C9] rounded-[24px] p-6 shadow-[0_25px_60px_rgba(80,65,45,0.12)] will-change-transform">
+            <div className="scene-control-panel bg-[#FFFCF7]/92 backdrop-blur-2xl border border-[#DDD6C9] rounded-[24px] p-6 shadow-[0_25px_60px_rgba(80,65,45,0.12)] will-change-transform">
               {/* Header */}
               <div className="scene-control-card-header flex items-center justify-between pb-3.5 mb-4 border-b border-[#ECE6D8] will-change-transform">
                 <div>

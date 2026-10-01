@@ -95,10 +95,10 @@ export function SystemScene() {
         <div className="w-full lg:w-[380px] xl:w-[410px] relative flex-shrink-0 pointer-events-auto" style={{ perspective: 1200 }}>
           <div className="scene-system-panel-wrapper relative will-change-transform">
             {/* Ambient Glow */}
-            <div className="scene-system-glow absolute -inset-5 bg-gradient-to-br from-[#E8D7B2]/20 via-[#D9C7A0]/20 to-transparent rounded-[36px] blur-2xl -z-10 will-change-transform" />
+            <div className="scene-system-glow absolute -inset-5 bg-gradient-to-tr from-[#C69A4B]/20 via-[#E8D7B2]/25 to-transparent rounded-[36px] blur-2xl -z-10 will-change-transform" />
 
             {/* Main Connected Glass Container */}
-            <div className="scene-system-panel bg-[#FFFCF7]/95 backdrop-blur-2xl border border-[#DDD6C9] rounded-[24px] p-5 shadow-[0_25px_60px_rgba(80,65,45,0.12)] will-change-transform">
+            <div className="scene-system-panel bg-[#FFFCF7]/92 backdrop-blur-2xl border border-[#DDD6C9] rounded-[24px] p-5 shadow-[0_25px_60px_rgba(80,65,45,0.12)] will-change-transform">
               {/* Header */}
               <div className="scene-system-card-header flex items-center justify-between pb-3 mb-3.5 border-b border-[#ECE6D8] will-change-transform">
                 <div>

@@ -124,10 +124,10 @@ export default function CustomerScene() {
         <div className="w-full lg:w-[360px] xl:w-[390px] relative flex-shrink-0 pointer-events-auto" style={{ perspective: 1200 }}>
           <div className="scene-customer-panel-wrapper relative will-change-transform">
             {/* Ambient Glow */}
-            <div className="scene-customer-glow absolute -inset-5 bg-gradient-to-br from-[#E8D7B2]/25 via-[#FFF8ED]/35 to-transparent rounded-[36px] blur-2xl -z-10 will-change-transform" />
+            <div className="scene-customer-glow absolute -inset-5 bg-gradient-to-tr from-[#C69A4B]/20 via-[#E8D7B2]/25 to-transparent rounded-[36px] blur-2xl -z-10 will-change-transform" />
 
             {/* Stacked Interactive Booking Flow Container */}
-            <div className="scene-customer-panel bg-[#FFFCF7]/95 backdrop-blur-2xl border border-[#DDD6C9] rounded-[24px] p-6 shadow-[0_25px_60px_rgba(80,65,45,0.12)] will-change-transform">
+            <div className="scene-customer-panel bg-[#FFFCF7]/92 backdrop-blur-2xl border border-[#DDD6C9] rounded-[24px] p-6 shadow-[0_25px_60px_rgba(80,65,45,0.12)] will-change-transform">
               {/* Header */}
               <div className="scene-customer-card-header flex items-center justify-between pb-3.5 mb-4 border-b border-[#ECE6D8] will-change-transform">
                 <div>
@@ -149,7 +149,7 @@ export default function CustomerScene() {
                       className={`${st.selector} p-3 rounded-xl border transition-colors duration-300 flex items-center justify-between gap-3 will-change-transform ${
                         st.active
                           ? "bg-white border-[#C69A4B] shadow-sm ring-1 ring-[#C69A4B]/20"
-                          : "bg-white/85 border-[#ECE6D8] hover:border-[#DDD6C9]"
+                          : "bg-white border-[#ECE6D8] hover:border-[#DDD6C9]"
                       }`}
                     >
                       <div className="flex items-center gap-2.5">
