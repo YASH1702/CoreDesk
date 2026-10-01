@@ -149,11 +149,11 @@ export default function ScrollExperience({
       const masterTl = gsap.timeline({ paused: true });
       masterTlRef.current = masterTl;
 
-      // Atmospheric background color transitions (Harmonious Lemonade tones)
+      // Atmospheric background color transitions (Harmonious Khadi tones)
       if (stageBg) {
-        masterTl.to(stageBg, { backgroundColor: "#F4EED8", duration: 1.0, ease: "power1.inOut" }, 0.5);
-        masterTl.to(stageBg, { backgroundColor: "#ECE4C2", duration: 1.0, ease: "power1.inOut" }, 2.5);
-        masterTl.to(stageBg, { backgroundColor: "#F1EACD", duration: 1.0, ease: "power1.inOut" }, 4.0);
+        masterTl.to(stageBg, { backgroundColor: "#E4DFD6", duration: 1.0, ease: "power1.inOut" }, 0.5);
+        masterTl.to(stageBg, { backgroundColor: "#D8D2C7", duration: 1.0, ease: "power1.inOut" }, 2.5);
+        masterTl.to(stageBg, { backgroundColor: "#DED9D0", duration: 1.0, ease: "power1.inOut" }, 4.0);
       }
 
       // =============================================================
@@ -418,10 +418,10 @@ export default function ScrollExperience({
         ref={stageRef}
         className="w-full h-full overflow-hidden relative"
       >
-        {/* Dynamic Lemonade Stage Background */}
+        {/* Dynamic Khadi Stage Background */}
         <div
           ref={stageBgRef}
-          className="absolute inset-0 w-full h-full bg-[#F1EACD] -z-30 transition-colors duration-700"
+          className="absolute inset-0 w-full h-full bg-[#DED9D0] -z-30 transition-colors duration-700"
         />
 
         {/* Dynamic Ambient Lighting Gradient Atmosphere */}
@@ -430,7 +430,7 @@ export default function ScrollExperience({
           className="absolute inset-0 w-full h-full pointer-events-none -z-20 opacity-60"
           style={{
             background:
-              "radial-gradient(circle at 70% 45%, rgba(68,20,23,0.18) 0%, rgba(47,67,100,0.12) 35%, rgba(241,234,205,0) 70%)",
+              "radial-gradient(circle at 70% 45%, rgba(55,38,26,0.18) 0%, rgba(138,162,186,0.14) 38%, rgba(222,217,208,0) 70%)",
           }}
         />
 

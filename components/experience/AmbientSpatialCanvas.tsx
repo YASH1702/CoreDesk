@@ -45,22 +45,22 @@ export default function AmbientSpatialCanvas({
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     container.appendChild(renderer.domElement);
 
-    // Dynamic Architectural Lighting (Warm Lemonade & Rich Wine Glow)
-    const ambientLight = new THREE.AmbientLight(0xfbf6e3, 2.0);
+    // Dynamic Architectural Lighting (Warm Khadi Ambient & Marlborough Blue/Dark Chocolate Accents)
+    const ambientLight = new THREE.AmbientLight(0xf5f1e8, 2.0);
     scene.add(ambientLight);
 
-    const keyLight = new THREE.DirectionalLight(0xfff8ea, 3.2);
+    const keyLight = new THREE.DirectionalLight(0xfaf7f0, 3.2);
     keyLight.position.set(6, 10, 7);
     keyLight.castShadow = true;
     keyLight.shadow.mapSize.width = 1024;
     keyLight.shadow.mapSize.height = 1024;
     scene.add(keyLight);
 
-    const rimLight = new THREE.DirectionalLight(0xb35a64, 2.4);
+    const rimLight = new THREE.DirectionalLight(0x8aa2ba, 2.4);
     rimLight.position.set(-6, 3, -2);
     scene.add(rimLight);
 
-    const deskSpotLight = new THREE.PointLight(0xf4e9c8, 1.8, 8);
+    const deskSpotLight = new THREE.PointLight(0xf5e6d3, 1.8, 8);
     deskSpotLight.position.set(0.65, 1.8, -0.1);
     scene.add(deskSpotLight);
 
@@ -81,61 +81,61 @@ export default function AmbientSpatialCanvas({
     const disposablesGeometries: THREE.BufferGeometry[] = [];
     const disposablesMaterials: THREE.Material[] = [];
 
-    // Shared Editorial Lemonade, Wine & The Eighties Materials
+    // Shared Editorial Dark Chocolate, Marlborough B. & Khadi Materials
     const stonePlinthMat = new THREE.MeshStandardMaterial({
-      color: 0xf1eacd,
-      roughness: 0.32,
-      metalness: 0.08,
+      color: 0xded9d0,
+      roughness: 0.35,
+      metalness: 0.06,
     });
     disposablesMaterials.push(stonePlinthMat);
 
     const plinthGoldBorderMat = new THREE.MeshStandardMaterial({
-      color: 0x441417,
+      color: 0x37261a,
       metalness: 0.88,
       roughness: 0.22,
     });
     disposablesMaterials.push(plinthGoldBorderMat);
 
     const deskSurfaceMat = new THREE.MeshStandardMaterial({
-      color: 0xfaf6eb,
+      color: 0xf5f2eb,
       roughness: 0.20,
       metalness: 0.05,
     });
     disposablesMaterials.push(deskSurfaceMat);
 
     const goldChassisMat = new THREE.MeshStandardMaterial({
-      color: 0x441417,
-      metalness: 0.95,
-      roughness: 0.18,
+      color: 0x37261a,
+      metalness: 0.92,
+      roughness: 0.22,
     });
     disposablesMaterials.push(goldChassisMat);
 
     const bronzeChassisMat = new THREE.MeshStandardMaterial({
-      color: 0x2f4364,
-      metalness: 0.88,
-      roughness: 0.25,
+      color: 0x8aa2ba,
+      metalness: 0.85,
+      roughness: 0.28,
     });
     disposablesMaterials.push(bronzeChassisMat);
 
     const screenGlowMat = new THREE.MeshStandardMaterial({
-      color: 0xfaf6eb,
-      emissive: 0x441417,
-      emissiveIntensity: 0.5,
+      color: 0xf5f2eb,
+      emissive: 0x8aa2ba,
+      emissiveIntensity: 0.45,
       roughness: 0.2,
     });
     disposablesMaterials.push(screenGlowMat);
 
     const terminalActiveMat = new THREE.MeshStandardMaterial({
-      color: 0x441417,
-      emissive: 0x441417,
-      emissiveIntensity: 0.6,
+      color: 0x37261a,
+      emissive: 0x37261a,
+      emissiveIntensity: 0.5,
       metalness: 0.8,
       roughness: 0.2,
     });
     disposablesMaterials.push(terminalActiveMat);
 
     const paperVoucherMat = new THREE.MeshStandardMaterial({
-      color: 0xfaf6eb,
+      color: 0xf5f2eb,
       roughness: 0.75,
       side: THREE.DoubleSide,
     });
@@ -150,33 +150,33 @@ export default function AmbientSpatialCanvas({
 
     // Character Materials
     const alabasterSkinMat = new THREE.MeshStandardMaterial({
-      color: 0xfaf6eb,
+      color: 0xf5f2eb,
       roughness: 0.32,
       metalness: 0.02,
     });
     disposablesMaterials.push(alabasterSkinMat);
 
     const specialistBlazerMat = new THREE.MeshStandardMaterial({
-      color: 0x2f4364,
+      color: 0x8aa2ba,
       roughness: 0.65,
     });
     disposablesMaterials.push(specialistBlazerMat);
 
     const leadBlazerMat = new THREE.MeshStandardMaterial({
-      color: 0x441417,
+      color: 0x37261a,
       roughness: 0.55,
       metalness: 0.1,
     });
     disposablesMaterials.push(leadBlazerMat);
 
     const customerCoatMat = new THREE.MeshStandardMaterial({
-      color: 0x2f4364,
+      color: 0x8aa2ba,
       roughness: 0.55,
     });
     disposablesMaterials.push(customerCoatMat);
 
     const customerTrousersMat = new THREE.MeshStandardMaterial({
-      color: 0x1d2b42,
+      color: 0x1e1e1e,
       roughness: 0.6,
     });
     disposablesMaterials.push(customerTrousersMat);
@@ -365,7 +365,7 @@ export default function AmbientSpatialCanvas({
     const confirmHaloGeo = new THREE.RingGeometry(0.38, 0.72, 32);
     disposablesGeometries.push(confirmHaloGeo);
     const confirmHaloMat = new THREE.MeshBasicMaterial({
-      color: 0x441417,
+      color: 0x37261a,
       transparent: true,
       opacity: 0.18,
       side: THREE.DoubleSide,
@@ -577,7 +577,7 @@ export default function AmbientSpatialCanvas({
     const hudPlaneGeo = new THREE.PlaneGeometry(1.6, 0.85);
     disposablesGeometries.push(hudPlaneGeo);
     const hudPlaneMat = new THREE.MeshStandardMaterial({
-      color: 0xfaf6eb,
+      color: 0xf5f2eb,
       roughness: 0.2,
       metalness: 0.1,
       transparent: true,
@@ -592,8 +592,8 @@ export default function AmbientSpatialCanvas({
     disposablesGeometries.push(slotBarGeo);
 
     const slotBarMatActive = new THREE.MeshStandardMaterial({
-      color: 0x441417,
-      emissive: 0x441417,
+      color: 0x37261a,
+      emissive: 0x37261a,
       emissiveIntensity: 0.5,
     });
     const slotBarMatDone = new THREE.MeshStandardMaterial({
@@ -662,7 +662,7 @@ export default function AmbientSpatialCanvas({
     const dataBackdropGeo = new THREE.PlaneGeometry(6.6, 2.8);
     disposablesGeometries.push(dataBackdropGeo);
     const dataBackdropMat = new THREE.MeshStandardMaterial({
-      color: 0x1d2b42,
+      color: 0x1e1e1e,
       roughness: 0.35,
       metalness: 0.2,
       transparent: true,
@@ -678,16 +678,16 @@ export default function AmbientSpatialCanvas({
     const dataBarGeo = new THREE.BoxGeometry(0.14, 1.0, 0.04);
     disposablesGeometries.push(dataBarGeo);
 
-    const dataBarWineMat = new THREE.MeshStandardMaterial({
-      color: 0x441417,
-      emissive: 0x441417,
+    const dataBarChocolateMat = new THREE.MeshStandardMaterial({
+      color: 0x37261a,
+      emissive: 0x37261a,
       emissiveIntensity: 0.6,
       metalness: 0.8,
       roughness: 0.2,
     });
-    const dataBarEightiesMat = new THREE.MeshStandardMaterial({
-      color: 0x2f4364,
-      emissive: 0x253652,
+    const dataBarMarlboroughMat = new THREE.MeshStandardMaterial({
+      color: 0x8aa2ba,
+      emissive: 0x5e7790,
       emissiveIntensity: 0.4,
       metalness: 0.85,
       roughness: 0.25,
@@ -699,10 +699,10 @@ export default function AmbientSpatialCanvas({
       metalness: 0.8,
       roughness: 0.2,
     });
-    disposablesMaterials.push(dataBarWineMat, dataBarEightiesMat, dataBarEmeraldMat);
+    disposablesMaterials.push(dataBarChocolateMat, dataBarMarlboroughMat, dataBarEmeraldMat);
 
     for (let i = 0; i < dataBarsCount; i++) {
-      const mat = i % 4 === 0 ? dataBarEmeraldMat : i % 2 === 0 ? dataBarWineMat : dataBarEightiesMat;
+      const mat = i % 4 === 0 ? dataBarEmeraldMat : i % 2 === 0 ? dataBarChocolateMat : dataBarMarlboroughMat;
       const bar = new THREE.Mesh(dataBarGeo, mat);
       const x = (i - (dataBarsCount - 1) / 2) * 0.26;
       const baseH = 0.4 + Math.sin(i * 1.3) * 0.25 + (i % 3) * 0.18;
@@ -723,7 +723,7 @@ export default function AmbientSpatialCanvas({
     disposablesGeometries.push(scatterGeo);
 
     for (let i = 0; i < 14; i++) {
-      const node = new THREE.Mesh(scatterGeo, dataBarWineMat);
+      const node = new THREE.Mesh(scatterGeo, dataBarChocolateMat);
       node.position.set(
         Math.sin(i * 2.4) * 2.8,
         0.3 + Math.cos(i * 1.7) * 0.7,
@@ -736,7 +736,7 @@ export default function AmbientSpatialCanvas({
     const datumLineGeo = new THREE.BoxGeometry(6.2, 0.012, 0.02);
     disposablesGeometries.push(datumLineGeo);
     [-0.2, 0.35, 0.85].forEach((y) => {
-      const line = new THREE.Mesh(datumLineGeo, dataBarEightiesMat);
+      const line = new THREE.Mesh(datumLineGeo, dataBarMarlboroughMat);
       line.position.set(0, y, 0.015);
       controlDataBgGroup.add(line);
     });
@@ -754,20 +754,20 @@ export default function AmbientSpatialCanvas({
     disposablesGeometries.push(archBoxGeo, archDbGeo);
 
     const archNodeMat = new THREE.MeshStandardMaterial({
-      color: 0xfaf6eb,
+      color: 0xf5f2eb,
       roughness: 0.25,
       metalness: 0.15,
     });
     const archNodeBorderMat = new THREE.MeshStandardMaterial({
-      color: 0x441417,
+      color: 0x37261a,
       metalness: 0.9,
       roughness: 0.2,
-      emissive: 0x441417,
+      emissive: 0x37261a,
       emissiveIntensity: 0.35,
     });
     const archConduitMat = new THREE.MeshStandardMaterial({
-      color: 0x2f4364,
-      emissive: 0x441417,
+      color: 0x8aa2ba,
+      emissive: 0x37261a,
       emissiveIntensity: 0.8,
       metalness: 0.9,
     });
@@ -880,8 +880,8 @@ export default function AmbientSpatialCanvas({
     dioramaGroup.add(systemCircuitGroup);
 
     const conduitMat = new THREE.MeshStandardMaterial({
-      color: 0x2f4364,
-      emissive: 0x441417,
+      color: 0x8aa2ba,
+      emissive: 0x37261a,
       emissiveIntensity: 0.15,
       metalness: 0.9,
       roughness: 0.2,
@@ -908,8 +908,8 @@ export default function AmbientSpatialCanvas({
     const glyphGeo = new THREE.OctahedronGeometry(0.045, 0);
     disposablesGeometries.push(glyphGeo);
     const glyphMat = new THREE.MeshStandardMaterial({
-      color: 0x441417,
-      emissive: 0x441417,
+      color: 0x37261a,
+      emissive: 0x37261a,
       emissiveIntensity: 0.8,
       metalness: 0.9,
     });
@@ -926,8 +926,8 @@ export default function AmbientSpatialCanvas({
     const packetGeo = new THREE.SphereGeometry(0.04, 16, 16);
     disposablesGeometries.push(packetGeo);
     const packetMat = new THREE.MeshStandardMaterial({
-      color: 0xfaf6eb,
-      emissive: 0x441417,
+      color: 0xf5f2eb,
+      emissive: 0x8aa2ba,
       emissiveIntensity: 1.5,
     });
     disposablesMaterials.push(packetMat);
@@ -987,7 +987,7 @@ export default function AmbientSpatialCanvas({
     particleGeometry.setAttribute("position", new THREE.BufferAttribute(particlePositions, 3));
 
     const particleMaterial = new THREE.PointsMaterial({
-      color: 0x441417,
+      color: 0x37261a,
       size: 0.038,
       transparent: true,
       opacity: 0.35,
@@ -1119,15 +1119,15 @@ export default function AmbientSpatialCanvas({
         camera.position.y = targetCameraY - currentMouseY * 0.2;
         camera.lookAt(lookAtX, 0.1, 0);
 
-        // Atmosphere lighting transition across scenes (Lemonade hues)
+        // Atmosphere lighting transition across scenes (Warm Khadi hues)
         if (p > 0.75) {
           const sunsetT = (p - 0.75) / 0.25;
-          ambientLight.color.setHex(0xf4eed8);
-          keyLight.color.setHex(0xfaf6eb);
+          ambientLight.color.setHex(0xe4dfd6);
+          keyLight.color.setHex(0xf5f2eb);
           rimLight.intensity = 2.4 + sunsetT * 1.5;
         } else {
-          ambientLight.color.setHex(0xfbf6e3);
-          keyLight.color.setHex(0xfff8ea);
+          ambientLight.color.setHex(0xf5f1e8);
+          keyLight.color.setHex(0xfaf7f0);
           rimLight.intensity = 2.4;
         }
 
