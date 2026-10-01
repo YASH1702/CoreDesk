@@ -202,6 +202,7 @@ export default function AmbientSpatialCanvas({
 
     // -------------------------------------------------------------
     // 2. EXECUTIVE WORKSTATION & LIVING DESK PROPS
+    // (Spans Z: -0.825 to +0.225. Everything Z >= 1.25 is completely free!)
     // -------------------------------------------------------------
     const deskGroup = new THREE.Group();
     deskGroup.position.set(0.65, -0.98, -0.3);
@@ -334,6 +335,7 @@ export default function AmbientSpatialCanvas({
 
     // -------------------------------------------------------------
     // 4. CONSULTATION PODIUM & PRINTED PAPER VOUCHER
+    // (Center is at X: -0.75, Z: 0.45. Front of counter is Z: 0.95. Customer stands at Z: 1.25)
     // -------------------------------------------------------------
     const counterGroup = new THREE.Group();
     counterGroup.position.set(-0.75, -0.98, 0.45);
@@ -451,7 +453,6 @@ export default function AmbientSpatialCanvas({
     specHead.position.set(0, 1.25, 0.02);
     specialistGroup.add(specHead);
 
-    // Shoulder Pivot Groups for full rotation
     const specLeftArmGroup = new THREE.Group();
     specLeftArmGroup.position.set(-0.24, 1.05, 0);
     specialistGroup.add(specLeftArmGroup);
@@ -470,7 +471,7 @@ export default function AmbientSpatialCanvas({
     // 6. CHARACTER 2: OPERATIONS LEAD (Articulated Shoulders)
     // -------------------------------------------------------------
     const leadGroup = new THREE.Group();
-    leadGroup.position.set(1.65, -0.98, -0.15);
+    leadGroup.position.set(1.60, -0.98, 0.20);
     leadGroup.rotation.y = -Math.PI * 0.35;
     dioramaGroup.add(leadGroup);
 
@@ -515,9 +516,10 @@ export default function AmbientSpatialCanvas({
 
     // -------------------------------------------------------------
     // 7. CHARACTER 3: CUSTOMER / TEAM MEMBER (Articulated Shoulders)
+    // Starts at X: 2.4, Z: 1.35 on the front promenade!
     // -------------------------------------------------------------
     const customerGroup = new THREE.Group();
-    customerGroup.position.set(2.4, -0.98, 1.4);
+    customerGroup.position.set(2.4, -0.98, 1.35);
     dioramaGroup.add(customerGroup);
 
     const customerLeftLegGroup = new THREE.Group();
@@ -574,11 +576,10 @@ export default function AmbientSpatialCanvas({
 
     const hudPlaneGeo = new THREE.PlaneGeometry(1.6, 0.85);
     disposablesGeometries.push(hudPlaneGeo);
-    const hudPlaneMat = new THREE.MeshPhysicalMaterial({
-      color: 0xfffbf2,
-      transmission: 0.9,
-      roughness: 0.1,
-      thickness: 0.5,
+    const hudPlaneMat = new THREE.MeshStandardMaterial({
+      color: 0xfffcf7,
+      roughness: 0.2,
+      metalness: 0.1,
       transparent: true,
       opacity: 0.85,
     });
@@ -672,7 +673,6 @@ export default function AmbientSpatialCanvas({
     const dataBackdrop = new THREE.Mesh(dataBackdropGeo, dataBackdropMat);
     controlDataBgGroup.add(dataBackdrop);
 
-    // 22 Dynamic Fluctuating Equalizer & Financial Telemetry Bars
     const dataBarsCount = 22;
     const dataBars: { mesh: THREE.Mesh; baseHeight: number; speed: number; phase: number }[] = [];
     const dataBarGeo = new THREE.BoxGeometry(0.14, 1.0, 0.04);
@@ -718,7 +718,6 @@ export default function AmbientSpatialCanvas({
       });
     }
 
-    // Telemetry Scatter Nodes
     const dataScatterNodes: THREE.Mesh[] = [];
     const scatterGeo = new THREE.OctahedronGeometry(0.045, 0);
     disposablesGeometries.push(scatterGeo);
@@ -734,7 +733,6 @@ export default function AmbientSpatialCanvas({
       dataScatterNodes.push(node);
     }
 
-    // Benchmark Datum Lines
     const datumLineGeo = new THREE.BoxGeometry(6.2, 0.012, 0.02);
     disposablesGeometries.push(datumLineGeo);
     [-0.2, 0.35, 0.85].forEach((y) => {
@@ -940,28 +938,30 @@ export default function AmbientSpatialCanvas({
     systemCircuitGroup.add(packetNode2);
 
     // -------------------------------------------------------------
-    // 11. SCENE 06 (PLATFORM): ARCHITECTURAL CANOPY & GOLD MOTES
+    // 11. SCENE 06 (PLATFORM): LUXURY PERGOLA CANOPY (Zero Transmissive Glitching)
     // -------------------------------------------------------------
     const canopyGroup = new THREE.Group();
-    canopyGroup.position.set(0, 2.5, 0);
+    canopyGroup.position.set(0, 2.3, 0);
     canopyGroup.scale.setScalar(0.001);
     dioramaGroup.add(canopyGroup);
 
-    const canopyBeamGeo = new THREE.BoxGeometry(4.8, 0.04, 0.04);
+    const canopyBeamGeo = new THREE.BoxGeometry(4.6, 0.035, 0.035);
     disposablesGeometries.push(canopyBeamGeo);
     const canopyBeam1 = new THREE.Mesh(canopyBeamGeo, goldChassisMat);
-    canopyBeam1.position.z = 1.4;
+    canopyBeam1.position.z = 1.35;
     canopyGroup.add(canopyBeam1);
 
     const canopyBeam2 = new THREE.Mesh(canopyBeamGeo, goldChassisMat);
-    canopyBeam2.position.z = -1.4;
+    canopyBeam2.position.z = -1.35;
     canopyGroup.add(canopyBeam2);
 
-    const canopyGlassGeo = new THREE.PlaneGeometry(4.7, 2.7);
-    disposablesGeometries.push(canopyGlassGeo);
-    const canopyGlass = new THREE.Mesh(canopyGlassGeo, hudPlaneMat);
-    canopyGlass.rotation.x = Math.PI / 2;
-    canopyGroup.add(canopyGlass);
+    const canopyCrossBeamGeo = new THREE.BoxGeometry(0.025, 0.025, 2.7);
+    disposablesGeometries.push(canopyCrossBeamGeo);
+    for (let i = -4; i <= 4; i++) {
+      const crossBeam = new THREE.Mesh(canopyCrossBeamGeo, bronzeChassisMat);
+      crossBeam.position.set(i * 0.52, 0.015, 0);
+      canopyGroup.add(crossBeam);
+    }
 
     // -------------------------------------------------------------
     // 12. AMBIENT LUXURY PARTICLES
@@ -1050,7 +1050,6 @@ export default function AmbientSpatialCanvas({
       if (!prefersReducedMotion) {
         // =====================================================================
         // SCENE STEPPER TRANSITION PROGRESS METRICS
-        // 5 distinct 0.20 intervals connecting all 6 categories:
         // t01: 0.00 -> 0.20 (Business -> Customer)
         // t12: 0.20 -> 0.40 (Customer -> Team)
         // t23: 0.40 -> 0.60 (Team -> Control)
@@ -1072,35 +1071,43 @@ export default function AmbientSpatialCanvas({
         let targetRotY = 0.32;
         let targetCameraZ = 8.2;
         let targetCameraY = 1.15;
+        let lookAtX = 0.0;
 
         if (p <= 0.20) {
           targetDioramaX = THREE.MathUtils.lerp(0.20, 0.08, t01);
-          targetDioramaZ = THREE.MathUtils.lerp(0.0, 0.25, t01);
+          targetDioramaZ = THREE.MathUtils.lerp(0.0, 0.20, t01);
           targetRotY = THREE.MathUtils.lerp(0.32, -0.14, t01);
           targetCameraZ = THREE.MathUtils.lerp(8.2, 7.8, t01);
+          lookAtX = 0.0;
         } else if (p <= 0.40) {
           targetDioramaX = THREE.MathUtils.lerp(0.08, 0.0, t12);
-          targetDioramaZ = THREE.MathUtils.lerp(0.25, 0.15, t12);
+          targetDioramaZ = THREE.MathUtils.lerp(0.20, 0.10, t12);
           targetRotY = THREE.MathUtils.lerp(-0.14, 0.0, t12);
           targetCameraZ = THREE.MathUtils.lerp(7.8, 8.0, t12);
+          lookAtX = 0.0;
         } else if (p <= 0.60) {
           targetDioramaX = 0.0;
-          targetDioramaZ = THREE.MathUtils.lerp(0.15, 0.10, t23);
+          targetDioramaZ = THREE.MathUtils.lerp(0.10, 0.05, t23);
           targetRotY = THREE.MathUtils.lerp(0.0, -0.04, t23);
           targetCameraY = THREE.MathUtils.lerp(1.15, 1.25, t23);
           targetCameraZ = THREE.MathUtils.lerp(8.0, 8.4, t23);
+          lookAtX = 0.0;
         } else if (p <= 0.80) {
           targetDioramaX = 0.0;
+          targetDioramaZ = 0.0;
           targetRotY = THREE.MathUtils.lerp(-0.04, 0.0, t34);
           targetCameraY = THREE.MathUtils.lerp(1.25, 1.35, t34);
           targetCameraZ = THREE.MathUtils.lerp(8.4, 8.8, t34);
+          lookAtX = 0.0;
         } else {
-          // Platform scene: SHIFT HERO ANIMATION TO THE LEFT!
-          targetDioramaX = THREE.MathUtils.lerp(0.0, -1.35, t45);
-          targetDioramaY = THREE.MathUtils.lerp(-0.04, -0.15, t45);
-          targetRotY = THREE.MathUtils.lerp(0.0, 0.22, t45);
-          targetCameraY = THREE.MathUtils.lerp(1.35, 1.45, t45);
-          targetCameraZ = THREE.MathUtils.lerp(8.8, 9.3, t45);
+          // Platform scene: Clean shift of diorama to the left half!
+          targetDioramaX = THREE.MathUtils.lerp(0.0, -1.15, t45);
+          targetDioramaY = THREE.MathUtils.lerp(-0.04, -0.12, t45);
+          targetDioramaZ = 0.0;
+          targetRotY = THREE.MathUtils.lerp(0.0, 0.18, t45);
+          targetCameraY = THREE.MathUtils.lerp(1.35, 1.40, t45);
+          targetCameraZ = THREE.MathUtils.lerp(8.8, 9.2, t45);
+          lookAtX = THREE.MathUtils.lerp(0.0, -0.45, t45);
         }
 
         dioramaGroup.position.set(targetDioramaX, targetDioramaY, targetDioramaZ);
@@ -1110,7 +1117,7 @@ export default function AmbientSpatialCanvas({
         camera.position.z = targetCameraZ;
         camera.position.x = currentMouseX * 0.2;
         camera.position.y = targetCameraY - currentMouseY * 0.2;
-        camera.lookAt(targetDioramaX * 0.4, 0.05, 0);
+        camera.lookAt(lookAtX, 0.1, 0);
 
         // Sunlight atmospheric shift
         if (p > 0.75) {
@@ -1136,8 +1143,9 @@ export default function AmbientSpatialCanvas({
         });
 
         // =====================================================================
-        // CHARACTER 1 (SPECIALIST): Desk -> Stand Front Team -> Hands Up -> Border Line -> Point Right
-        // In Team, Control, System, Platform: FIRMLY AT FRONT BORDER LINE (Z = 1.42)
+        // CHARACTER 1 (SPECIALIST):
+        // Desk -> Stand Front Team -> Hands Up -> Border Line -> Point Right
+        // In Team, Control, System, Platform: FIRMLY AT FRONT BORDER LINE (Z = 1.38)
         // ZERO GLITCHING WITH THE DESK!
         // =====================================================================
         let specX = 0.65;
@@ -1147,12 +1155,11 @@ export default function AmbientSpatialCanvas({
         let specArmLZ = 0;
         let specArmRX = 0;
         let specArmRZ = 0;
-        let specArmRY = 0;
         let specHeadY = 0;
         let specHeadX = 0;
 
         if (p <= 0.20) {
-          // Scene 1 -> Scene 2: Seated at desk, acknowledges check-in
+          // Scene 1: Seated at desk typing, acknowledges check-in
           specX = 0.65;
           specZ = 0.35;
           specRotY = 0;
@@ -1165,7 +1172,7 @@ export default function AmbientSpatialCanvas({
         } else if (p <= 0.40) {
           // Scene 2 -> Scene 3: STANDS UP AND COMES FORWARD TO FRONT BORDER LINE OF BOX!
           specX = THREE.MathUtils.lerp(0.65, 0.0, t12);
-          specZ = THREE.MathUtils.lerp(0.35, 1.42, t12); // Reaches 1.42 at p = 0.40!
+          specZ = THREE.MathUtils.lerp(0.35, 1.38, t12); // Reaches 1.38 at p = 0.40!
           specRotY = 0;
           specArmLX = THREE.MathUtils.lerp(0.40, 0.08, t12);
           specArmLZ = THREE.MathUtils.lerp(0.15, 0.06, t12);
@@ -1175,140 +1182,137 @@ export default function AmbientSpatialCanvas({
         } else if (p <= 0.60) {
           // Scene 3 -> Scene 4: STAYS AT FRONT BORDER LINE, RAISES BOTH HANDS UP IN AIR!
           specX = 0.0;
-          specZ = 1.42; // FRONT BORDER LINE
+          specZ = 1.38; // FRONT BORDER LINE
           specRotY = 0;
           const sway = Math.sin(elapsedTime * 3.5) * 0.04 * t23;
           specArmLX = THREE.MathUtils.lerp(0.08, -2.5, t23) + sway;
-          specArmLZ = THREE.MathUtils.lerp(0.06, 0.40, t23);
+          specArmLZ = THREE.MathUtils.lerp(0.06, 0.35, t23);
           specArmRX = THREE.MathUtils.lerp(0.08, -2.5, t23) + sway;
-          specArmRZ = THREE.MathUtils.lerp(-0.06, -0.40, t23);
+          specArmRZ = THREE.MathUtils.lerp(-0.06, -0.35, t23);
           specHeadX = THREE.MathUtils.lerp(0, -0.25, t23);
         } else if (p <= 0.80) {
-          // Scene 4 -> Scene 5: STAYS AT FRONT BORDER LINE, Observant posture
+          // Scene 4 -> Scene 5: STAYS AT FRONT BORDER LINE, Observant stance
           specX = 0.0;
-          specZ = 1.42; // FRONT BORDER LINE
+          specZ = 1.38; // FRONT BORDER LINE
           specRotY = 0;
-          specArmLX = THREE.MathUtils.lerp(-2.5, 0.20, t34);
-          specArmLZ = THREE.MathUtils.lerp(0.40, 0.08, t34);
-          specArmRX = THREE.MathUtils.lerp(-2.5, 0.20, t34);
-          specArmRZ = THREE.MathUtils.lerp(-0.40, -0.08, t34);
+          specArmLX = THREE.MathUtils.lerp(-2.5, 0.15, t34);
+          specArmLZ = THREE.MathUtils.lerp(0.35, 0.08, t34);
+          specArmRX = THREE.MathUtils.lerp(-2.5, 0.15, t34);
+          specArmRZ = THREE.MathUtils.lerp(-0.35, -0.08, t34);
           specHeadX = THREE.MathUtils.lerp(-0.25, 0, t34);
         } else {
-          // Scene 5 -> Scene 6: STAYS AT FRONT BORDER LINE, Shifted slightly left, pointing right!
-          specX = THREE.MathUtils.lerp(0.0, -0.40, t45);
-          specZ = 1.42; // FRONT BORDER LINE
-          specRotY = THREE.MathUtils.lerp(0, Math.PI * 0.25, t45);
-          specArmRX = THREE.MathUtils.lerp(0.20, -1.15, t45);
-          specArmRY = THREE.MathUtils.lerp(0, 0.25, t45);
-          specArmRZ = THREE.MathUtils.lerp(-0.08, -1.20, t45);
-          specArmLX = THREE.MathUtils.lerp(0.20, 0.45, t45);
-          specArmLZ = THREE.MathUtils.lerp(0.08, 0.25, t45);
+          // Scene 5 -> Scene 6: STAYS AT FRONT BORDER LINE, Welcoming pointing to right buttons!
+          specX = 0.0;
+          specZ = 1.38; // FRONT BORDER LINE
+          specRotY = THREE.MathUtils.lerp(0, Math.PI * 0.22, t45);
+          // Clean right arm pointing without gimbal lock
+          specArmRX = THREE.MathUtils.lerp(0.15, -0.35, t45);
+          specArmRZ = THREE.MathUtils.lerp(-0.08, -1.35, t45);
+          specArmLX = THREE.MathUtils.lerp(0.15, 0.35, t45);
+          specArmLZ = THREE.MathUtils.lerp(0.08, 0.20, t45);
           specHeadY = THREE.MathUtils.lerp(0, 0.35, t45);
         }
 
         specialistGroup.position.set(specX, -0.98, specZ);
         specialistGroup.rotation.set(0, specRotY, 0);
         specLeftArmGroup.rotation.set(specArmLX, 0, specArmLZ);
-        specRightArmGroup.rotation.set(specArmRX, specArmRY, specArmRZ);
+        specRightArmGroup.rotation.set(specArmRX, 0, specArmRZ);
         specHead.rotation.set(specHeadX, specHeadY, 0);
 
         // =====================================================================
-        // CHARACTER 2 (OPERATIONS LEAD): Side -> Front Team -> Hands Up -> Border Line -> Point Right
-        // In Team, Control, System, Platform: FIRMLY AT FRONT BORDER LINE (Z = 1.40)
+        // CHARACTER 2 (OPERATIONS LEAD):
+        // Side -> Front Team -> Hands Up -> Border Line -> Point Right
+        // In Team, Control, System, Platform: FIRMLY AT FRONT BORDER LINE (Z = 1.35)
         // ZERO GLITCHING WITH THE DESK!
         // =====================================================================
-        let leadX = 1.65;
-        let leadZ = -0.15;
+        let leadX = 1.60;
+        let leadZ = 0.20;
         let leadRotY = -Math.PI * 0.35;
         let leadArmLX = 0;
         let leadArmLZ = 0;
         let leadArmRX = 0;
         let leadArmRZ = 0;
-        let leadArmRY = 0;
         let leadHeadY = 0;
         let leadHeadX = 0;
 
         if (p <= 0.20) {
-          leadX = THREE.MathUtils.lerp(1.65, 1.45, t01);
-          leadZ = THREE.MathUtils.lerp(-0.15, 0.10, t01);
-          leadRotY = THREE.MathUtils.lerp(-Math.PI * 0.35, -Math.PI * 0.45, t01);
+          leadX = 1.60;
+          leadZ = 0.20;
+          leadRotY = -Math.PI * 0.35;
           leadArmLX = 0.1;
           leadArmLZ = 0.05;
           leadArmRX = 0.4;
-          leadArmRY = 0.2;
           leadArmRZ = 0.1;
           leadHeadY = THREE.MathUtils.lerp(0, -0.4, t01);
         } else if (p <= 0.40) {
           // Scene 2 -> Scene 3: STEPS FORWARD TO FRONT BORDER LINE OF BOX!
-          leadX = THREE.MathUtils.lerp(1.45, 0.75, t12);
-          leadZ = THREE.MathUtils.lerp(0.10, 1.40, t12); // Reaches 1.40 at p = 0.40!
-          leadRotY = THREE.MathUtils.lerp(-Math.PI * 0.45, -0.08, t12);
+          leadX = THREE.MathUtils.lerp(1.60, 0.75, t12);
+          leadZ = THREE.MathUtils.lerp(0.20, 1.35, t12); // Reaches 1.35 at p = 0.40!
+          leadRotY = THREE.MathUtils.lerp(-Math.PI * 0.35, 0, t12);
           leadArmLX = THREE.MathUtils.lerp(0.1, 0.08, t12);
           leadArmLZ = THREE.MathUtils.lerp(0.05, 0.06, t12);
           leadArmRX = THREE.MathUtils.lerp(0.4, 0.12, t12);
-          leadArmRY = THREE.MathUtils.lerp(0.2, 0, t12);
           leadArmRZ = THREE.MathUtils.lerp(0.1, -0.06, t12);
           leadHeadY = THREE.MathUtils.lerp(-0.4, 0, t12);
         } else if (p <= 0.60) {
           // Scene 3 -> Scene 4: STAYS AT FRONT BORDER LINE, RAISES BOTH HANDS UP IN AIR!
           leadX = 0.75;
-          leadZ = 1.40; // FRONT BORDER LINE
-          leadRotY = -0.08;
+          leadZ = 1.35; // FRONT BORDER LINE
+          leadRotY = 0;
           const sway = Math.sin(elapsedTime * 3.5 + 1) * 0.04 * t23;
           leadArmLX = THREE.MathUtils.lerp(0.08, -2.5, t23) + sway;
-          leadArmLZ = THREE.MathUtils.lerp(0.06, 0.40, t23);
+          leadArmLZ = THREE.MathUtils.lerp(0.06, 0.35, t23);
           leadArmRX = THREE.MathUtils.lerp(0.12, -2.5, t23) + sway;
-          leadArmRZ = THREE.MathUtils.lerp(-0.06, -0.40, t23);
+          leadArmRZ = THREE.MathUtils.lerp(-0.06, -0.35, t23);
           leadHeadX = THREE.MathUtils.lerp(0, -0.25, t23);
         } else if (p <= 0.80) {
           // Scene 4 -> Scene 5: STAYS AT FRONT BORDER LINE, Observant stance
           leadX = 0.75;
-          leadZ = 1.40; // FRONT BORDER LINE
-          leadRotY = -0.08;
-          leadArmLX = THREE.MathUtils.lerp(-2.5, 0.20, t34);
-          leadArmLZ = THREE.MathUtils.lerp(0.40, 0.08, t34);
-          leadArmRX = THREE.MathUtils.lerp(-2.5, 0.20, t34);
-          leadArmRZ = THREE.MathUtils.lerp(-0.40, -0.08, t34);
+          leadZ = 1.35; // FRONT BORDER LINE
+          leadRotY = 0;
+          leadArmLX = THREE.MathUtils.lerp(-2.5, 0.15, t34);
+          leadArmLZ = THREE.MathUtils.lerp(0.35, 0.08, t34);
+          leadArmRX = THREE.MathUtils.lerp(-2.5, 0.15, t34);
+          leadArmRZ = THREE.MathUtils.lerp(-0.35, -0.08, t34);
           leadHeadX = THREE.MathUtils.lerp(-0.25, 0, t34);
         } else {
-          // Scene 5 -> Scene 6: STAYS AT FRONT BORDER LINE, Shifted slightly left, pointing right!
-          leadX = THREE.MathUtils.lerp(0.75, 0.25, t45);
-          leadZ = 1.40; // FRONT BORDER LINE
-          leadRotY = THREE.MathUtils.lerp(-0.08, Math.PI * 0.25, t45);
-          leadArmRX = THREE.MathUtils.lerp(0.20, -1.15, t45);
-          leadArmRY = THREE.MathUtils.lerp(0, 0.25, t45);
-          leadArmRZ = THREE.MathUtils.lerp(-0.08, -1.20, t45);
-          leadArmLX = THREE.MathUtils.lerp(0.20, 0.45, t45);
-          leadArmLZ = THREE.MathUtils.lerp(0.08, 0.25, t45);
+          // Scene 5 -> Scene 6: STAYS AT FRONT BORDER LINE, Welcoming pointing to right buttons!
+          leadX = 0.75;
+          leadZ = 1.35; // FRONT BORDER LINE
+          leadRotY = THREE.MathUtils.lerp(0, Math.PI * 0.22, t45);
+          leadArmRX = THREE.MathUtils.lerp(0.15, -0.35, t45);
+          leadArmRZ = THREE.MathUtils.lerp(-0.08, -1.35, t45);
+          leadArmLX = THREE.MathUtils.lerp(0.15, 0.35, t45);
+          leadArmLZ = THREE.MathUtils.lerp(0.08, 0.20, t45);
           leadHeadY = THREE.MathUtils.lerp(0, 0.35, t45);
         }
 
         leadGroup.position.set(leadX, -0.98, leadZ);
         leadGroup.rotation.set(0, leadRotY, 0);
         leadLeftArmGroup.rotation.set(leadArmLX, 0, leadArmLZ);
-        leadRightArmGroup.rotation.set(leadArmRX, leadArmRY, leadArmRZ);
+        leadRightArmGroup.rotation.set(leadArmRX, 0, leadArmRZ);
         leadHead.rotation.set(leadHeadX, leadHeadY, 0);
 
         // =====================================================================
-        // CHARACTER 3 (CUSTOMER / TEAM MEMBER): Walk In -> Front Team -> Hands Up -> Border Line -> Point Right
-        // In Team, Control, System, Platform: FIRMLY AT FRONT BORDER LINE (Z = 1.40)
-        // ZERO GLITCHING WITH THE DESK!
+        // CHARACTER 3 (CUSTOMER / TEAM MEMBER):
+        // Walks Along Front Promenade (Z >= 1.25) -> Front Team -> Hands Up -> Border Line -> Point Right
+        // ZERO GLITCHING WITH THE DESK (Desk is at Z <= 0.22)!
         // =====================================================================
         let custX = 2.4;
-        let custZ = 1.4;
-        let custRotY = -Math.PI * 0.65;
+        let custZ = 1.35;
+        let custRotY = -Math.PI * 0.5;
         let custArmLX = 0;
         let custArmLZ = 0;
         let custArmRX = 0;
         let custArmRZ = 0;
-        let custArmRY = 0;
         let custHeadY = 0;
         let custHeadX = 0;
 
         if (p <= 0.20) {
+          // Customer walks along the wide front promenade (Z: 1.35 -> 1.25), stopping safely IN FRONT of podium!
           custX = THREE.MathUtils.lerp(2.4, -0.75, t01);
-          custZ = THREE.MathUtils.lerp(1.4, 0.45, t01);
-          custRotY = THREE.MathUtils.lerp(-Math.PI * 0.65, -Math.PI * 0.45, t01);
+          custZ = THREE.MathUtils.lerp(1.35, 1.25, t01); // ALWAYS >= 1.25, over 1m from desk!
+          custRotY = -Math.PI * 0.5;
 
           const isWalking = t01 > 0.05 && t01 < 0.95;
           const walkCycle = t01 * Math.PI * 6.0;
@@ -1318,8 +1322,7 @@ export default function AmbientSpatialCanvas({
 
           if (t01 > 0.70) {
             const reach = (t01 - 0.70) / 0.30;
-            custArmRX = THREE.MathUtils.lerp(0, -0.75, reach);
-            custArmRY = THREE.MathUtils.lerp(0, -0.3, reach);
+            custArmRX = THREE.MathUtils.lerp(0, -0.70, reach);
             custArmLX = -Math.sin(walkCycle) * (stride * 0.8);
             ticketGroup.scale.setScalar(reach);
             ticketMesh.position.y = -0.10 - reach * 0.14;
@@ -1329,62 +1332,60 @@ export default function AmbientSpatialCanvas({
             ticketGroup.scale.setScalar(0.001);
           }
         } else if (p <= 0.40) {
-          // Scene 2 -> Scene 3: STEPS FORWARD TO FRONT BORDER LINE OF BOX!
+          // Steps forward from podium (1.25) to front team border line (1.35) and faces forward!
           customerLeftLegGroup.rotation.x = 0;
           customerRightLegGroup.rotation.x = 0;
           ticketGroup.scale.setScalar(0.001);
 
-          custX = THREE.MathUtils.lerp(-0.75, -0.75, t12);
-          custZ = THREE.MathUtils.lerp(0.45, 1.40, t12); // Reaches 1.40 at p = 0.40!
-          custRotY = THREE.MathUtils.lerp(-Math.PI * 0.45, 0.08, t12);
+          custX = -0.75;
+          custZ = THREE.MathUtils.lerp(1.25, 1.35, t12); // Reaches 1.35 at p = 0.40!
+          custRotY = THREE.MathUtils.lerp(-Math.PI * 0.5, 0, t12);
           custArmLX = THREE.MathUtils.lerp(0, 0.08, t12);
           custArmLZ = THREE.MathUtils.lerp(0, 0.06, t12);
-          custArmRX = THREE.MathUtils.lerp(-0.75, 0.08, t12);
-          custArmRY = THREE.MathUtils.lerp(-0.3, 0, t12);
+          custArmRX = THREE.MathUtils.lerp(-0.70, 0.08, t12);
           custArmRZ = THREE.MathUtils.lerp(0, -0.06, t12);
           custHeadY = 0;
         } else if (p <= 0.60) {
-          // Scene 3 -> Scene 4: STAYS AT FRONT BORDER LINE, RAISES BOTH HANDS UP IN AIR!
+          // STAYS AT FRONT BORDER LINE, RAISES BOTH HANDS UP IN AIR!
           customerLeftLegGroup.rotation.x = 0;
           customerRightLegGroup.rotation.x = 0;
           ticketGroup.scale.setScalar(0.001);
 
           custX = -0.75;
-          custZ = 1.40; // FRONT BORDER LINE
-          custRotY = 0.08;
+          custZ = 1.35; // FRONT BORDER LINE
+          custRotY = 0;
           const sway = Math.sin(elapsedTime * 3.5 + 2) * 0.04 * t23;
           custArmLX = THREE.MathUtils.lerp(0.08, -2.5, t23) + sway;
-          custArmLZ = THREE.MathUtils.lerp(0.06, 0.40, t23);
+          custArmLZ = THREE.MathUtils.lerp(0.06, 0.35, t23);
           custArmRX = THREE.MathUtils.lerp(0.08, -2.5, t23) + sway;
-          custArmRZ = THREE.MathUtils.lerp(-0.06, -0.40, t23);
+          custArmRZ = THREE.MathUtils.lerp(-0.06, -0.35, t23);
           custHeadX = THREE.MathUtils.lerp(0, -0.25, t23);
         } else if (p <= 0.80) {
-          // Scene 4 -> Scene 5: STAYS AT FRONT BORDER LINE, Observant stance
+          // STAYS AT FRONT BORDER LINE, Observant stance
           custX = -0.75;
-          custZ = 1.40; // FRONT BORDER LINE
-          custRotY = 0.08;
-          custArmLX = THREE.MathUtils.lerp(-2.5, 0.20, t34);
-          custArmLZ = THREE.MathUtils.lerp(0.40, 0.08, t34);
-          custArmRX = THREE.MathUtils.lerp(-2.5, 0.20, t34);
-          custArmRZ = THREE.MathUtils.lerp(-0.40, -0.08, t34);
+          custZ = 1.35; // FRONT BORDER LINE
+          custRotY = 0;
+          custArmLX = THREE.MathUtils.lerp(-2.5, 0.15, t34);
+          custArmLZ = THREE.MathUtils.lerp(0.35, 0.08, t34);
+          custArmRX = THREE.MathUtils.lerp(-2.5, 0.15, t34);
+          custArmRZ = THREE.MathUtils.lerp(-0.35, -0.08, t34);
           custHeadX = THREE.MathUtils.lerp(-0.25, 0, t34);
         } else {
-          // Scene 5 -> Scene 6: STAYS AT FRONT BORDER LINE, Shifted slightly left, pointing right!
-          custX = THREE.MathUtils.lerp(-0.75, -1.05, t45);
-          custZ = 1.40; // FRONT BORDER LINE
-          custRotY = THREE.MathUtils.lerp(0.08, Math.PI * 0.25, t45);
-          custArmRX = THREE.MathUtils.lerp(0.20, -1.15, t45);
-          custArmRY = THREE.MathUtils.lerp(0, 0.25, t45);
-          custArmRZ = THREE.MathUtils.lerp(-0.08, -1.20, t45);
-          custArmLX = THREE.MathUtils.lerp(0.20, 0.45, t45);
-          custArmLZ = THREE.MathUtils.lerp(0.08, 0.25, t45);
+          // STAYS AT FRONT BORDER LINE, Welcoming pointing to right buttons!
+          custX = -0.75;
+          custZ = 1.35; // FRONT BORDER LINE
+          custRotY = THREE.MathUtils.lerp(0, Math.PI * 0.22, t45);
+          custArmRX = THREE.MathUtils.lerp(0.15, -0.35, t45);
+          custArmRZ = THREE.MathUtils.lerp(-0.08, -1.35, t45);
+          custArmLX = THREE.MathUtils.lerp(0.15, 0.35, t45);
+          custArmLZ = THREE.MathUtils.lerp(0.08, 0.20, t45);
           custHeadY = THREE.MathUtils.lerp(0, 0.35, t45);
         }
 
         customerGroup.position.set(custX, -0.98, custZ);
         customerGroup.rotation.set(0, custRotY, 0);
         customerLeftArmGroup.rotation.set(custArmLX, 0, custArmLZ);
-        customerRightArmGroup.rotation.set(custArmRX, custArmRY, custArmRZ);
+        customerRightArmGroup.rotation.set(custArmRX, 0, custArmRZ);
         custHead.rotation.set(custHeadX, custHeadY, 0);
 
         // Terminal Confirmation Halo Pulse in Scene 2
@@ -1433,7 +1434,6 @@ export default function AmbientSpatialCanvas({
           barMesh3.scale.y = Math.min(1, ctrlProg * 1.0);
           tickerRing.rotation.z = elapsedTime * 0.4;
 
-          // Background Random Data Wall Animation
           controlDataBgGroup.scale.setScalar(Math.max(0.001, ctrlProg));
           dataBars.forEach((b) => {
             const dynamicH = b.baseHeight + Math.sin(elapsedTime * b.speed + b.phase) * (b.baseHeight * 0.42);
@@ -1457,7 +1457,6 @@ export default function AmbientSpatialCanvas({
           const sysProg = p <= 0.80 ? t34 : 1.0 - t45;
           systemArchitectureBgGroup.scale.setScalar(Math.max(0.001, sysProg));
 
-          // Animate Traveling Packets through System Architecture Charts
           archPackets.forEach((pkt) => {
             const t = (elapsedTime * pkt.speed + pkt.offset) % 1.0;
             pkt.mesh.position.x = THREE.MathUtils.lerp(pkt.start.x, pkt.end.x, t);
@@ -1490,7 +1489,7 @@ export default function AmbientSpatialCanvas({
         }
 
         // -------------------------------------------------------------
-        // SCENE 06 (PLATFORM): Canopy Frame & Ambient Glow
+        // SCENE 06 (PLATFORM): Canopy Pergola & Ambient Glow
         // -------------------------------------------------------------
         if (p > 0.80) {
           canopyGroup.scale.setScalar(t45);
