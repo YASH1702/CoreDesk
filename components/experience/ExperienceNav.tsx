@@ -76,14 +76,14 @@ export function ExperienceNav() {
 
         <Link
           href="/login"
-          className="px-4 py-2 rounded-full text-xs font-bold text-[#1E1E1E] bg-[#FAF8F5]/60 hover:bg-[#FAF8F5]/90 backdrop-blur-xl border border-[#C8C1B4]/80 hover:border-[#37261A] shadow-sm transition-all duration-200 cursor-pointer"
+          className="px-4 py-2 rounded-full text-xs font-bold text-[#1E1E1E] bg-[#FAF8F5]/70 hover:bg-[#FAF8F5]/95 backdrop-blur-2xl border-2 border-[#37261A]/35 hover:border-[#37261A] shadow-sm transition-all duration-200 cursor-pointer"
         >
           Sign In
         </Link>
 
         <Link
           href="/book"
-          className="px-4 sm:px-5 py-2 rounded-full bg-[#37261A]/90 hover:bg-[#37261A] backdrop-blur-xl border border-[#37261A]/30 text-[#F5F2EB] text-xs font-bold shadow-[0_4px_15px_rgba(55,38,26,0.25)] transition-all duration-200 flex items-center gap-1.5 group cursor-pointer"
+          className="px-4 sm:px-5 py-2 rounded-full bg-[#37261A]/85 hover:bg-[#37261A] backdrop-blur-2xl border-2 border-[#37261A]/70 hover:border-[#37261A] text-[#F5F2EB] text-xs font-bold shadow-[inset_0_1px_1px_rgba(255,255,255,0.25),0_4px_15px_rgba(55,38,26,0.25)] transition-all duration-200 flex items-center gap-1.5 group cursor-pointer"
         >
           <span>Book Demo</span>
           <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />

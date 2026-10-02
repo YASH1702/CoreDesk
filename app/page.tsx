@@ -6,6 +6,7 @@ import { SCENES } from "@/constants/motion";
 import ScrollExperience from "@/components/experience/ScrollExperience";
 import { ExperienceNav } from "@/components/experience/ExperienceNav";
 import { SceneNav } from "@/components/experience/SceneNav";
+import { AmbientCursorSpotlight } from "@/components/experience/AmbientCursorSpotlight";
 import BusinessScene from "@/components/experience/scenes/BusinessScene";
 import CustomerScene from "@/components/experience/scenes/CustomerScene";
 import { StaffScene } from "@/components/experience/scenes/StaffScene";
@@ -28,6 +29,9 @@ export default function HomePage() {
 
   return (
     <div className="relative w-full h-screen overflow-hidden bg-[#DED9D0] text-[#1E1E1E] selection:bg-[#37261A] selection:text-[#F5F2EB]">
+      {/* Interactive Cursor Ambient Spotlight (Concept 2: Luminous Refraction Follower) */}
+      <AmbientCursorSpotlight />
+
       {/* Persistent Navigation */}
       <ExperienceNav />
       <SceneNav

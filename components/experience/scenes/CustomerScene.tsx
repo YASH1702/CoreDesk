@@ -109,7 +109,7 @@ export default function CustomerScene() {
           <div className="scene-customer-cta will-change-transform">
             <Link
               href="/book"
-              className="px-7 py-3.5 rounded-full bg-[#37261A]/90 hover:bg-[#37261A] backdrop-blur-xl border border-[#37261A]/30 text-[#F5F2EB] font-semibold text-sm shadow-[0_8px_25px_rgba(55,38,26,0.28)] transition-all duration-300 inline-flex items-center gap-2.5 group cursor-pointer"
+              className="px-7 py-3.5 rounded-full bg-[#37261A]/85 hover:bg-[#37261A] backdrop-blur-2xl border-2 border-[#37261A]/70 hover:border-[#37261A] text-[#F5F2EB] font-semibold text-sm shadow-[inset_0_1px_1px_rgba(255,255,255,0.25),0_8px_25px_rgba(55,38,26,0.28)] transition-all duration-300 inline-flex items-center gap-2.5 group cursor-pointer"
             >
               <span>Test Customer Wizard</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

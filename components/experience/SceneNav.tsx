@@ -60,10 +60,10 @@ export function SceneNav({ activeScene, progress, onSelectScene }: SceneNavProps
                 {/* Floating Category Pill on Active or Hover */}
                 {(isActive || isHovered) && (
                   <div
-                    className={`absolute right-8 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.18em] whitespace-nowrap shadow-sm pointer-events-none backdrop-blur-xl transition-all duration-200 ${
+                    className={`absolute right-8 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.18em] whitespace-nowrap shadow-sm pointer-events-none backdrop-blur-2xl transition-all duration-200 ${
                       isActive
-                        ? "bg-[#37261A]/90 text-[#F5F2EB] border border-[#37261A]/30 shadow-[0_4px_12px_rgba(55,38,26,0.35)]"
-                        : "bg-[#F5F2EB]/80 dark:bg-[#1E1E1E]/80 text-[#1E1E1E] dark:text-[#F5F2EB] border border-[#C8C1B4]/70 shadow-sm"
+                        ? "bg-[#37261A]/90 text-[#F5F2EB] border-2 border-[#37261A]/60 shadow-[0_4px_12px_rgba(55,38,26,0.35)]"
+                        : "bg-[#F5F2EB]/80 dark:bg-[#1E1E1E]/80 text-[#1E1E1E] dark:text-[#F5F2EB] border-2 border-[#37261A]/30 shadow-sm"
                     }`}
                   >
                     {scene.number} · {scene.label}
@@ -73,10 +73,10 @@ export function SceneNav({ activeScene, progress, onSelectScene }: SceneNavProps
                 {/* Dot / Pill Button */}
                 <button
                   onClick={() => onSelectScene?.(scene.index)}
-                  className={`relative flex items-center justify-center cursor-pointer transition-all duration-300 rounded-full backdrop-blur-xl ${
+                  className={`relative flex items-center justify-center cursor-pointer transition-all duration-300 rounded-full backdrop-blur-2xl ${
                     isActive
-                      ? "w-6 h-6 bg-[#37261A]/90 text-[#F5F2EB] border border-[#37261A]/30 shadow-[0_2px_8px_rgba(55,38,26,0.4)]"
-                      : "w-5 h-5 bg-[#F5F2EB]/75 dark:bg-[#1E1E1E]/75 border border-[#C8C1B4]/70 dark:border-[#3A3A3A]/70 hover:border-[#37261A] hover:scale-110 shadow-xs"
+                      ? "w-6 h-6 bg-[#37261A]/90 text-[#F5F2EB] border-2 border-[#37261A]/70 shadow-[0_2px_8px_rgba(55,38,26,0.4)]"
+                      : "w-5 h-5 bg-[#F5F2EB]/75 dark:bg-[#1E1E1E]/75 border-2 border-[#37261A]/25 dark:border-[#3A3A3A]/70 hover:border-[#37261A] hover:scale-110 shadow-xs"
                   }`}
                   aria-label={`Jump to scene ${scene.number} - ${scene.label}`}
                 >
