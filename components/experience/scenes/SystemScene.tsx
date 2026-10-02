@@ -80,7 +80,7 @@ export function SystemScene() {
           <div className="scene-system-cta will-change-transform">
             <Link
               href="/dashboard/admin/services"
-              className="px-7 py-3.5 rounded-full bg-[#37261A] hover:bg-[#493323] text-[#F5F2EB] font-semibold text-sm shadow-[0_8px_25px_rgba(55,38,26,0.28)] transition-all duration-300 inline-flex items-center gap-2 group cursor-pointer"
+              className="px-7 py-3.5 rounded-full bg-[#37261A]/90 hover:bg-[#37261A] backdrop-blur-xl border border-[#37261A]/30 text-[#F5F2EB] font-semibold text-sm shadow-[0_8px_25px_rgba(55,38,26,0.28)] transition-all duration-300 inline-flex items-center gap-2 group cursor-pointer"
             >
               <span>Explore Architecture Modules</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -118,7 +118,7 @@ export function SystemScene() {
                   return (
                     <div
                       key={mod.id}
-                      className={`scene-system-mod-${idx + 1} bg-white/95 rounded-xl p-2.5 border border-[#C8C1B4]/70 shadow-xs flex flex-col items-center text-center will-change-transform`}
+                      className={`scene-system-mod-${idx + 1} bg-white/70 backdrop-blur-xl rounded-xl p-2.5 border border-[#C8C1B4]/60 shadow-xs flex flex-col items-center text-center will-change-transform`}
                     >
                       <div className={`w-8 h-8 rounded-lg flex items-center justify-center mb-1.5 ${mod.color}`}>
                         <IconComp className="w-4 h-4" />

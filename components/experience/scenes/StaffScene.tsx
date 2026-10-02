@@ -96,7 +96,7 @@ export function StaffScene() {
           <div className="scene-staff-cta will-change-transform">
             <Link
               href="/dashboard/staff"
-              className="px-7 py-3.5 rounded-full bg-[#37261A] hover:bg-[#493323] text-[#F5F2EB] font-semibold text-sm shadow-[0_8px_25px_rgba(55,38,26,0.28)] transition-all duration-300 inline-flex items-center gap-2.5 group cursor-pointer"
+              className="px-7 py-3.5 rounded-full bg-[#37261A]/90 hover:bg-[#37261A] backdrop-blur-xl border border-[#37261A]/30 text-[#F5F2EB] font-semibold text-sm shadow-[0_8px_25px_rgba(55,38,26,0.28)] transition-all duration-300 inline-flex items-center gap-2.5 group cursor-pointer"
             >
               <span>Explore Staff Agenda</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -118,7 +118,7 @@ export function StaffScene() {
               {/* Header */}
               <div className="scene-staff-card-header flex items-center justify-between pb-3.5 mb-4 border-b border-[#C8C1B4]/60 will-change-transform">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-xl bg-[#DED9D0] border border-[#C8C1B4] flex items-center justify-center text-[#37261A]">
+                  <div className="w-9 h-9 rounded-xl bg-[#DED9D0]/70 backdrop-blur-md border border-[#C8C1B4]/70 flex items-center justify-center text-[#37261A]">
                     <Calendar className="w-4 h-4" />
                   </div>
                   <div>
@@ -136,7 +136,7 @@ export function StaffScene() {
                 {staffMembers.map((staff, idx) => (
                   <div
                     key={staff.name}
-                    className={`scene-staff-item-${idx + 1} bg-white/95 rounded-xl p-3 border border-[#C8C1B4]/70 shadow-sm flex items-center justify-between gap-3 will-change-transform`}
+                    className={`scene-staff-item-${idx + 1} bg-white/70 backdrop-blur-xl rounded-xl p-3 border border-[#C8C1B4]/60 shadow-xs flex items-center justify-between gap-3 will-change-transform`}
                   >
                     <div className="flex items-center gap-2.5">
                       <div className={`w-8 h-8 rounded-lg border flex items-center justify-center font-bold text-[11px] ${staff.color}`}>
@@ -148,7 +148,7 @@ export function StaffScene() {
                       </div>
                     </div>
 
-                    <span className="text-[10px] font-bold text-[#37261A] bg-[#DED9D0] border border-[#C8C1B4] px-2 py-0.5 rounded-full whitespace-nowrap">
+                    <span className="text-[10px] font-bold text-[#37261A] bg-[#DED9D0]/70 backdrop-blur-md border border-[#C8C1B4]/70 px-2 py-0.5 rounded-full whitespace-nowrap">
                       {staff.slots}
                     </span>
                   </div>
@@ -156,7 +156,7 @@ export function StaffScene() {
               </div>
 
               {/* Operational Schedule Timeline Bar */}
-              <div className="scene-staff-timeline bg-white/95 rounded-xl p-3 border border-[#C8C1B4]/70 shadow-sm will-change-transform">
+              <div className="scene-staff-timeline bg-white/70 backdrop-blur-xl rounded-xl p-3 border border-[#C8C1B4]/60 shadow-xs will-change-transform">
                 <div className="flex items-center justify-between text-[11px] font-bold text-[#1E1E1E] mb-2">
                   <span className="flex items-center gap-1.5">
                     <Clock className="w-3 h-3 text-[#37261A]" /> Shift Hours (09:00 - 17:00)

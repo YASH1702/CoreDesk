@@ -20,15 +20,13 @@ export function ExperienceNav() {
         onToggle: (self) => {
           if (self.isActive) {
             gsap.to(navRef.current, {
-              backgroundColor: "rgba(222, 217, 208, 0.96)",
-              borderColor: "rgba(200, 193, 180, 0.8)",
+              backgroundColor: "rgba(222, 217, 208, 0.92)",
               boxShadow: "0 10px 30px rgba(55, 38, 26, 0.06)",
               duration: 0.3,
             });
           } else {
             gsap.to(navRef.current, {
-              backgroundColor: "rgba(222, 217, 208, 0.82)",
-              borderColor: "rgba(200, 193, 180, 0.4)",
+              backgroundColor: "rgba(222, 217, 208, 0.75)",
               boxShadow: "none",
               duration: 0.3,
             });
@@ -43,7 +41,7 @@ export function ExperienceNav() {
   return (
     <header
       ref={navRef}
-      className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-6 sm:px-10 h-16 border-b border-[#C8C1B4]/40 bg-[#DED9D0]/80 backdrop-blur-xl transition-all duration-300"
+      className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-6 sm:px-10 h-16 bg-[#DED9D0]/75 backdrop-blur-xl transition-all duration-300"
     >
       {/* Brand Mark */}
       <Link href="/" className="flex items-center gap-2.5 group cursor-pointer" title="BusinessFlow">
@@ -53,7 +51,7 @@ export function ExperienceNav() {
         <span className="text-base font-extrabold tracking-tight text-[#1E1E1E]">
           Business<span className="text-[#37261A]">Flow</span>
         </span>
-        <span className="hidden sm:inline-block ml-2 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#F5F2EB] text-[#37261A] border border-[#C8C1B4]">
+        <span className="hidden sm:inline-block ml-2 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#F5F2EB]/70 backdrop-blur-md text-[#37261A] border border-[#C8C1B4]/70">
           OS v2.0
         </span>
       </Link>
@@ -78,14 +76,14 @@ export function ExperienceNav() {
 
         <Link
           href="/login"
-          className="px-4 py-2 rounded-full text-xs font-bold text-[#1E1E1E] border border-[#C8C1B4] hover:bg-[#FAF8F5] hover:border-[#37261A] transition-all duration-200"
+          className="px-4 py-2 rounded-full text-xs font-bold text-[#1E1E1E] bg-[#FAF8F5]/60 hover:bg-[#FAF8F5]/90 backdrop-blur-xl border border-[#C8C1B4]/80 hover:border-[#37261A] shadow-sm transition-all duration-200 cursor-pointer"
         >
           Sign In
         </Link>
 
         <Link
           href="/book"
-          className="px-4 sm:px-5 py-2 rounded-full bg-[#37261A] hover:bg-[#493323] text-[#F5F2EB] text-xs font-bold shadow-[0_4px_15px_rgba(55,38,26,0.25)] transition-all duration-200 flex items-center gap-1.5 group cursor-pointer"
+          className="px-4 sm:px-5 py-2 rounded-full bg-[#37261A]/90 hover:bg-[#37261A] backdrop-blur-xl border border-[#37261A]/30 text-[#F5F2EB] text-xs font-bold shadow-[0_4px_15px_rgba(55,38,26,0.25)] transition-all duration-200 flex items-center gap-1.5 group cursor-pointer"
         >
           <span>Book Demo</span>
           <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />

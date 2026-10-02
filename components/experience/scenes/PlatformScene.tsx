@@ -56,8 +56,8 @@ export function PlatformScene() {
                 <span className="text-xs uppercase tracking-wider font-extrabold text-[#37261A]">
                   Live Ecosystem Launch
                 </span>
-                <span className="text-[10px] font-bold text-[#5C9E6E] bg-[#F0FDF4] border border-[#BBF7D0] px-2.5 py-0.5 rounded-full flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#16A34A] animate-pulse" />
+                <span className="text-[10px] font-bold text-[#5C9E6E] bg-[#5C9E6E]/10 backdrop-blur-md border border-[#5C9E6E]/20 px-2.5 py-0.5 rounded-full flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#5C9E6E] animate-pulse" />
                   Live Cloud Deployed
                 </span>
               </div>
@@ -65,10 +65,10 @@ export function PlatformScene() {
               <div className="flex flex-col gap-3.5">
                 <Link
                   href="/book"
-                  className="w-full px-6 py-4 rounded-xl bg-gradient-to-r from-[#37261A] to-[#493323] hover:from-[#493323] hover:to-[#5A402D] text-[#F5F2EB] font-bold text-sm shadow-[0_10px_25px_rgba(55,38,26,0.32)] transition-all duration-300 flex items-center justify-between group cursor-pointer"
+                  className="w-full px-6 py-4 rounded-xl bg-gradient-to-r from-[#37261A]/95 to-[#493323]/95 hover:from-[#37261A] hover:to-[#493323] backdrop-blur-xl border border-[#37261A]/40 text-[#F5F2EB] font-bold text-sm shadow-[0_10px_25px_rgba(55,38,26,0.32)] transition-all duration-300 flex items-center justify-between group cursor-pointer"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-lg bg-white/20 backdrop-blur-md flex items-center justify-center">
                       <Sparkles className="w-4 h-4 text-[#F5F2EB]" />
                     </div>
                     <div className="text-left">
@@ -81,10 +81,10 @@ export function PlatformScene() {
 
                 <Link
                   href="/login"
-                  className="w-full px-6 py-3.5 rounded-xl bg-white/95 hover:bg-white text-[#1E1E1E] border border-[#C8C1B4] hover:border-[#37261A] font-semibold text-sm shadow-sm transition-all duration-300 flex items-center justify-between group cursor-pointer"
+                  className="w-full px-6 py-3.5 rounded-xl bg-white/70 hover:bg-white/90 backdrop-blur-xl text-[#1E1E1E] border border-[#C8C1B4]/70 hover:border-[#37261A] font-semibold text-sm shadow-xs transition-all duration-300 flex items-center justify-between group cursor-pointer"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-[#DED9D0]/60 border border-[#C8C1B4] flex items-center justify-center text-[#5D554A] group-hover:text-[#37261A]">
+                    <div className="w-8 h-8 rounded-lg bg-[#DED9D0]/60 backdrop-blur-md border border-[#C8C1B4] flex items-center justify-center text-[#5D554A] group-hover:text-[#37261A]">
                       <ShieldCheck className="w-4 h-4" />
                     </div>
                     <div className="text-left">

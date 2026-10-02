@@ -86,7 +86,7 @@ export function ControlScene() {
           <div className="scene-control-cta will-change-transform">
             <Link
               href="/dashboard/admin"
-              className="px-7 py-3.5 rounded-full bg-[#37261A] hover:bg-[#493323] text-[#F5F2EB] font-semibold text-sm shadow-[0_8px_25px_rgba(55,38,26,0.28)] transition-all duration-300 inline-flex items-center gap-2 group cursor-pointer"
+              className="px-7 py-3.5 rounded-full bg-[#37261A]/90 hover:bg-[#37261A] backdrop-blur-xl border border-[#37261A]/30 text-[#F5F2EB] font-semibold text-sm shadow-[0_8px_25px_rgba(55,38,26,0.28)] transition-all duration-300 inline-flex items-center gap-2 group cursor-pointer"
             >
               <ShieldCheck className="w-4 h-4" />
               <span>Open Executive Console</span>
@@ -112,7 +112,7 @@ export function ControlScene() {
                   <h3 className="text-sm font-bold text-[#1E1E1E]">Revenue & Flow Analytics</h3>
                   <p className="text-[11px] text-[#5D554A] font-medium">Real-time enterprise metrics & CRM</p>
                 </div>
-                <span className="text-[10px] font-bold text-[#37261A] bg-[#DED9D0] border border-[#C8C1B4] px-2.5 py-0.5 rounded-full">
+                <span className="text-[10px] font-bold text-[#37261A] bg-[#DED9D0]/70 backdrop-blur-md border border-[#C8C1B4]/70 px-2.5 py-0.5 rounded-full">
                   Live Feed
                 </span>
               </div>
@@ -124,7 +124,7 @@ export function ControlScene() {
                   return (
                     <div
                       key={m.label}
-                      className={`scene-control-metric-${idx + 1} bg-white/95 rounded-xl p-3 border border-[#C8C1B4]/70 shadow-sm will-change-transform`}
+                      className={`scene-control-metric-${idx + 1} bg-white/70 backdrop-blur-xl rounded-xl p-3 border border-[#C8C1B4]/60 shadow-xs will-change-transform`}
                     >
                       <div className="flex items-center justify-between mb-1">
                         <div className={`w-7 h-7 rounded-lg flex items-center justify-center ${m.color}`}>
@@ -140,7 +140,7 @@ export function ControlScene() {
               </div>
 
               {/* Weekly Performance Bar Chart */}
-              <div className="scene-control-chart bg-white/95 rounded-xl p-3.5 border border-[#C8C1B4]/70 shadow-sm mb-3.5 will-change-transform">
+              <div className="scene-control-chart bg-white/70 backdrop-blur-xl rounded-xl p-3.5 border border-[#C8C1B4]/60 shadow-xs mb-3.5 will-change-transform">
                 <div className="flex items-center justify-between mb-2.5">
                   <span className="text-[11px] font-bold text-[#1E1E1E]">Weekly Booking Volume</span>
                   <span className="text-[10px] text-[#37261A] font-semibold">Peak: Sat (₹24.8k)</span>

@@ -109,7 +109,7 @@ export default function CustomerScene() {
           <div className="scene-customer-cta will-change-transform">
             <Link
               href="/book"
-              className="px-7 py-3.5 rounded-full bg-[#37261A] hover:bg-[#493323] text-[#F5F2EB] font-semibold text-sm shadow-[0_8px_25px_rgba(55,38,26,0.28)] transition-all duration-300 inline-flex items-center gap-2.5 group cursor-pointer"
+              className="px-7 py-3.5 rounded-full bg-[#37261A]/90 hover:bg-[#37261A] backdrop-blur-xl border border-[#37261A]/30 text-[#F5F2EB] font-semibold text-sm shadow-[0_8px_25px_rgba(55,38,26,0.28)] transition-all duration-300 inline-flex items-center gap-2.5 group cursor-pointer"
             >
               <span>Test Customer Wizard</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -134,7 +134,7 @@ export default function CustomerScene() {
                   <h3 className="text-sm font-bold text-[#1E1E1E]">Client Self-Booking Portal</h3>
                   <p className="text-[11px] text-[#5D554A] font-medium">Deterministic availability · No overlaps</p>
                 </div>
-                <div className="px-2.5 py-0.5 rounded-full bg-[#DED9D0] border border-[#C8C1B4] text-[#37261A] text-[10px] font-bold">
+                <div className="px-2.5 py-0.5 rounded-full bg-[#DED9D0]/70 backdrop-blur-md border border-[#C8C1B4]/70 text-[#37261A] text-[10px] font-bold">
                   Step 4 of 4
                 </div>
               </div>
@@ -146,10 +146,10 @@ export default function CustomerScene() {
                   return (
                     <div
                       key={st.num}
-                      className={`${st.selector} p-3 rounded-xl border transition-colors duration-300 flex items-center justify-between gap-3 will-change-transform ${
+                      className={`${st.selector} p-3 rounded-xl border backdrop-blur-xl transition-colors duration-300 flex items-center justify-between gap-3 will-change-transform shadow-xs ${
                         st.active
-                          ? "bg-white border-[#37261A] shadow-sm ring-1 ring-[#37261A]/20"
-                          : "bg-white border-[#C8C1B4]/70 hover:border-[#C8C1B4]"
+                          ? "bg-white/85 border-[#37261A] ring-1 ring-[#37261A]/20"
+                          : "bg-white/70 border-[#C8C1B4]/60 hover:border-[#C8C1B4]"
                       }`}
                     >
                       <div className="flex items-center gap-2.5">

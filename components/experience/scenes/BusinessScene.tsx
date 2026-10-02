@@ -67,14 +67,14 @@ export default function BusinessScene() {
           <div className="scene-business-cta flex flex-wrap items-center gap-4 will-change-transform">
             <Link
               href="/book"
-              className="px-7 py-3.5 rounded-full bg-[#37261A] hover:bg-[#493323] text-[#F5F2EB] font-semibold text-sm shadow-[0_8px_25px_rgba(55,38,26,0.28)] transition-all duration-300 flex items-center gap-2.5 group cursor-pointer"
+              className="px-7 py-3.5 rounded-full bg-[#37261A]/90 hover:bg-[#37261A] backdrop-blur-xl border border-[#37261A]/30 text-[#F5F2EB] font-semibold text-sm shadow-[0_8px_25px_rgba(55,38,26,0.28)] transition-all duration-300 flex items-center gap-2.5 group cursor-pointer"
             >
               <span>Explore Live Booking</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
               href="/login"
-              className="px-7 py-3.5 rounded-full bg-[#FAF8F5]/85 hover:bg-[#FAF8F5] text-[#1E1E1E] border border-[#C8C1B4] font-semibold text-sm shadow-sm transition-all duration-300 flex items-center gap-2 cursor-pointer"
+              className="px-7 py-3.5 rounded-full bg-[#FAF8F5]/70 hover:bg-[#FAF8F5]/90 backdrop-blur-xl text-[#1E1E1E] border border-[#C8C1B4]/80 font-semibold text-sm shadow-sm transition-all duration-300 flex items-center gap-2 cursor-pointer"
             >
               <ShieldCheck className="w-4 h-4 text-[#5D554A]" />
               <span>Sign In</span>
@@ -111,7 +111,7 @@ export default function BusinessScene() {
               </div>
 
               {/* Primary Metric Panel */}
-              <div className="scene-business-metric-primary bg-white/95 rounded-xl p-4 border border-[#C8C1B4]/70 shadow-sm mb-3.5 will-change-transform">
+              <div className="scene-business-metric-primary bg-white/70 backdrop-blur-xl rounded-xl p-4 border border-[#C8C1B4]/60 shadow-xs mb-3.5 will-change-transform">
                 <div className="flex items-center justify-between mb-1.5">
                   <span className="text-[11px] font-semibold text-[#5D554A] uppercase tracking-wider">Today's Revenue</span>
                   <span className="text-[10px] font-bold text-[#5C9E6E] bg-[#5C9E6E]/10 px-2 py-0.5 rounded-full flex items-center gap-1">
@@ -125,7 +125,7 @@ export default function BusinessScene() {
 
               {/* Sub Metrics Grid */}
               <div className="grid grid-cols-2 gap-3 mb-3.5">
-                <div className="scene-business-metric-slot bg-white/95 rounded-xl p-3 border border-[#C8C1B4]/70 shadow-sm will-change-transform">
+                <div className="scene-business-metric-slot bg-white/70 backdrop-blur-xl rounded-xl p-3 border border-[#C8C1B4]/60 shadow-xs will-change-transform">
                   <div className="flex items-center gap-1.5 text-[#37261A] mb-1">
                     <Calendar className="w-3.5 h-3.5" />
                     <span className="text-[11px] font-semibold text-[#5D554A]">Confirmed</span>
@@ -134,7 +134,7 @@ export default function BusinessScene() {
                   <p className="text-[10px] text-[#5C9E6E] mt-0.5 font-medium">100% capacity</p>
                 </div>
 
-                <div className="scene-business-metric-staff bg-white/95 rounded-xl p-3 border border-[#C8C1B4]/70 shadow-sm will-change-transform">
+                <div className="scene-business-metric-staff bg-white/70 backdrop-blur-xl rounded-xl p-3 border border-[#C8C1B4]/60 shadow-xs will-change-transform">
                   <div className="flex items-center gap-1.5 text-[#37261A] mb-1">
                     <Users className="w-3.5 h-3.5" />
                     <span className="text-[11px] font-semibold text-[#5D554A]">Staff Online</span>
