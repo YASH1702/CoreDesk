@@ -181,3 +181,15 @@ html.dark ::-webkit-scrollbar-thumb {
 html.dark ::-webkit-scrollbar-thumb:hover {
   background: #8AA2BA;
 }
+
+/* Custom Editorial Luxury Cursor (Hidden default arrow for fine pointer devices) */
+@media (pointer: fine) {
+  body,
+  a,
+  button,
+  [role="button"],
+  .cursor-pointer,
+  label {
+    cursor: none !important;
+  }
+}
