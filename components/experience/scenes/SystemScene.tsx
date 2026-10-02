@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { Building2, Layers, Users, UserCheck, Calendar, CreditCard, Bell, BarChart3, ArrowRight } from "lucide-react";
 import { SCENES } from "@/constants/motion";
+import { MagneticWrapper } from "@/components/shared/MagneticWrapper";
 
 export function SystemScene() {
   const sceneData = SCENES.find((s) => s.id === "system");
@@ -78,13 +79,15 @@ export function SystemScene() {
 
           {/* Action CTA */}
           <div className="scene-system-cta will-change-transform">
-            <Link
-              href="/dashboard/admin/services"
-              className="px-7 py-3.5 rounded-full bg-[#37261A]/85 hover:bg-[#37261A] backdrop-blur-2xl border-2 border-[#37261A]/70 hover:border-[#37261A] text-[#F5F2EB] font-semibold text-sm shadow-[inset_0_1px_1px_rgba(255,255,255,0.25),0_8px_25px_rgba(55,38,26,0.28)] transition-all duration-300 inline-flex items-center gap-2 group cursor-pointer"
-            >
-              <span>Explore Architecture Modules</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
+            <MagneticWrapper strength={0.3} radius={40}>
+              <Link
+                href="/dashboard/admin/services"
+                className="px-7 py-3.5 rounded-full bg-[#37261A]/85 hover:bg-[#37261A] backdrop-blur-2xl border-2 border-[#37261A]/70 hover:border-[#37261A] text-[#F5F2EB] font-semibold text-sm shadow-[inset_0_1px_1px_rgba(255,255,255,0.25),0_8px_25px_rgba(55,38,26,0.28)] transition-all duration-300 inline-flex items-center gap-2 group cursor-pointer"
+              >
+                <span>Explore Architecture Modules</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </MagneticWrapper>
           </div>
         </div>
 

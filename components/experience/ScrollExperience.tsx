@@ -149,10 +149,8 @@ export default function ScrollExperience({
       const masterTl = gsap.timeline({ paused: true });
       masterTlRef.current = masterTl;
 
-      // Consistent Khadi stage background matching header across all scenes
-      if (stageBg) {
-        masterTl.set(stageBg, { backgroundColor: "#DED9D0" }, 0.0);
-      }
+      // Consistent Khadi / Espresso Noir stage background matching header across all scenes
+      // Handled via Tailwind CSS classes: bg-[#DED9D0] dark:bg-[#18120D]
 
       // =============================================================
       // TRANSITION 1: SCENE 0 (BUSINESS) -> SCENE 1 (CUSTOMER) [0.0 -> 1.0]
@@ -416,10 +414,10 @@ export default function ScrollExperience({
         ref={stageRef}
         className="w-full h-full overflow-hidden relative"
       >
-        {/* Dynamic Khadi Stage Background */}
+        {/* Dynamic Khadi / Espresso Noir Stage Background */}
         <div
           ref={stageBgRef}
-          className="absolute inset-0 w-full h-full bg-[#DED9D0] -z-30 transition-colors duration-700"
+          className="absolute inset-0 w-full h-full bg-[#DED9D0] dark:bg-[#18120D] -z-30 transition-colors duration-500"
         />
 
         {/* Dynamic Ambient Lighting Gradient Atmosphere (Pure Khadi stage matching header) */}

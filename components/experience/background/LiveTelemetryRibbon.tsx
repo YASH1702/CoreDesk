@@ -46,18 +46,18 @@ export function LiveTelemetryRibbon({ activeScene }: LiveTelemetryRibbonProps) {
   return (
     <div
       aria-label="System Telemetry"
-      className="fixed bottom-0 left-0 right-0 h-7 z-[60] px-4 sm:px-8 lg:px-12 flex items-center justify-between bg-[#DED9D0]/70 backdrop-blur-xl border-t border-[#C8C1B4]/50 select-none text-[9px] sm:text-[10px] font-mono tracking-wider text-[#5D554A] pointer-events-none"
+      className="fixed bottom-0 left-0 right-0 h-7 z-[60] px-4 sm:px-8 lg:px-12 flex items-center justify-between bg-[#DED9D0]/70 dark:bg-[#18120D]/85 backdrop-blur-xl border-t border-[#C8C1B4]/50 dark:border-[#37261A]/80 select-none text-[9px] sm:text-[10px] font-mono tracking-wider text-[#5D554A] dark:text-[#AAA194] pointer-events-none transition-colors duration-500"
     >
       {/* Left: Engine Health Status */}
       <div className="flex items-center gap-2">
         <span className="w-1.5 h-1.5 rounded-full bg-[#5C9E6E] animate-pulse" />
-        <span className="font-bold text-[#37261A]">CORE ENGINE</span>
+        <span className="font-bold text-[#37261A] dark:text-[#F5F2EB]">CORE ENGINE</span>
         <span className="hidden md:inline text-[#AAA194]">·</span>
         <span className="hidden md:inline">POSTGRESQL SYNCHRONIZED (0ms)</span>
       </div>
 
       {/* Center: Active Scene Category Telemetry */}
-      <div className="hidden sm:flex items-center gap-2 text-[#37261A] font-semibold">
+      <div className="hidden sm:flex items-center gap-2 text-[#37261A] dark:text-[#8AA2BA] font-semibold">
         <span>BUSINESSFLOW OS v2.0</span>
         <span className="text-[#AAA194]">/</span>
         <span className="uppercase">{currentScene.number} {currentScene.label}</span>
@@ -65,14 +65,14 @@ export function LiveTelemetryRibbon({ activeScene }: LiveTelemetryRibbonProps) {
 
       {/* Right: Live Mouse Coordinates + Live Clock */}
       <div className="flex items-center gap-3 sm:gap-4 font-mono">
-        <div className="hidden lg:flex items-center gap-1.5 text-[#5D554A]">
+        <div className="hidden lg:flex items-center gap-1.5 text-[#5D554A] dark:text-[#AAA194]">
           <span>X:</span>
-          <span className="text-[#1E1E1E] font-bold w-7 text-right">{mouseCoords.x}</span>
+          <span className="text-[#1E1E1E] dark:text-[#F5F2EB] font-bold w-7 text-right">{mouseCoords.x}</span>
           <span>Y:</span>
-          <span className="text-[#1E1E1E] font-bold w-7 text-right">{mouseCoords.y}</span>
+          <span className="text-[#1E1E1E] dark:text-[#F5F2EB] font-bold w-7 text-right">{mouseCoords.y}</span>
         </div>
         <span className="hidden sm:inline text-[#AAA194]">·</span>
-        <span className="font-bold text-[#1E1E1E] tabular-nums">{utcTime || "00:00:00 UTC"}</span>
+        <span className="font-bold text-[#1E1E1E] dark:text-[#F5F2EB] tabular-nums">{utcTime || "00:00:00 UTC"}</span>
       </div>
     </div>
   );

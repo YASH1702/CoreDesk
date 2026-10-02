@@ -1,12 +1,24 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { Calendar, TrendingUp, Users, Star, ArrowRight, ShieldCheck } from "lucide-react";
 import { SCENES } from "@/constants/motion";
+import { MagneticWrapper } from "@/components/shared/MagneticWrapper";
 
 export function ControlScene() {
   const sceneData = SCENES.find((s) => s.id === "control");
+  const [selectedDay, setSelectedDay] = useState("Sat");
+
+  const dayStats: Record<string, { rev: string; count: number }> = {
+    Mon: { rev: "₹14.2k", count: 18 },
+    Tue: { rev: "₹18.6k", count: 24 },
+    Wed: { rev: "₹12.1k", count: 16 },
+    Thu: { rev: "₹22.4k", count: 28 },
+    Fri: { rev: "₹17.8k", count: 22 },
+    Sat: { rev: "₹24.8k", count: 32 },
+    Sun: { rev: "₹19.5k", count: 25 },
+  };
 
   const metrics = [
     { label: "Total Bookings", value: "248", icon: Calendar, change: "+18%", color: "text-[#37261A] bg-[#DED9D0]" },
@@ -84,14 +96,16 @@ export function ControlScene() {
 
           {/* Interactive CTA */}
           <div className="scene-control-cta will-change-transform">
-            <Link
-              href="/dashboard/admin"
-              className="px-7 py-3.5 rounded-full bg-[#37261A]/85 hover:bg-[#37261A] backdrop-blur-2xl border-2 border-[#37261A]/70 hover:border-[#37261A] text-[#F5F2EB] font-semibold text-sm shadow-[inset_0_1px_1px_rgba(255,255,255,0.25),0_8px_25px_rgba(55,38,26,0.28)] transition-all duration-300 inline-flex items-center gap-2 group cursor-pointer"
-            >
-              <ShieldCheck className="w-4 h-4" />
-              <span>Open Executive Console</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
+            <MagneticWrapper strength={0.3} radius={40}>
+              <Link
+                href="/dashboard/admin"
+                className="px-7 py-3.5 rounded-full bg-[#37261A]/85 hover:bg-[#37261A] backdrop-blur-2xl border-2 border-[#37261A]/70 hover:border-[#37261A] text-[#F5F2EB] font-semibold text-sm shadow-[inset_0_1px_1px_rgba(255,255,255,0.25),0_8px_25px_rgba(55,38,26,0.28)] transition-all duration-300 inline-flex items-center gap-2 group cursor-pointer"
+              >
+                <ShieldCheck className="w-4 h-4" />
+                <span>Open Executive Console</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </MagneticWrapper>
           </div>
         </div>
 
@@ -143,19 +157,42 @@ export function ControlScene() {
               <div className="scene-control-chart bg-white/70 backdrop-blur-xl rounded-xl p-3.5 border border-[#C8C1B4]/60 shadow-xs mb-3.5 will-change-transform">
                 <div className="flex items-center justify-between mb-2.5">
                   <span className="text-[11px] font-bold text-[#1E1E1E]">Weekly Booking Volume</span>
-                  <span className="text-[10px] text-[#37261A] font-semibold">Peak: Sat (₹24.8k)</span>
+                  <span className="text-[10px] text-[#37261A] font-semibold bg-[#DED9D0]/60 px-2 py-0.5 rounded-full border border-[#C8C1B4]/60 transition-all">
+                    {selectedDay === "Sat"
+                      ? "Peak: Sat (₹24.8k)"
+                      : `${selectedDay}: ${dayStats[selectedDay]?.rev} (${dayStats[selectedDay]?.count} slots)`}
+                  </span>
                 </div>
 
                 <div className="h-20 w-full flex items-end justify-between gap-2 px-1 pt-1 border-b border-[#C8C1B4]/60">
-                  {days.map((d) => (
-                    <div key={d.day} className="flex-1 flex flex-col items-center gap-1 h-full justify-end group">
-                      <div
-                        style={{ height: d.height }}
-                        className="w-full max-w-[22px] bg-gradient-to-t from-[#8AA2BA] to-[#37261A] rounded-t-md transition-all duration-300 group-hover:from-[#37261A] group-hover:to-[#493323]"
-                      />
-                      <span className="text-[9px] font-bold text-[#5D554A]">{d.day}</span>
-                    </div>
-                  ))}
+                  {days.map((d) => {
+                    const isSelected = selectedDay === d.day;
+                    return (
+                      <button
+                        key={d.day}
+                        type="button"
+                        onClick={() => setSelectedDay(d.day)}
+                        onMouseEnter={() => setSelectedDay(d.day)}
+                        className="flex-1 flex flex-col items-center gap-1 h-full justify-end cursor-pointer group focus:outline-hidden"
+                      >
+                        <div
+                          style={{ height: d.height }}
+                          className={`w-full max-w-[22px] rounded-t-md transition-all duration-300 ${
+                            isSelected
+                              ? "bg-gradient-to-t from-[#37261A] to-[#493323] shadow-md scale-y-105 ring-1 ring-[#37261A]/50"
+                              : "bg-gradient-to-t from-[#8AA2BA]/70 to-[#37261A]/60 group-hover:from-[#8AA2BA] group-hover:to-[#37261A]"
+                          }`}
+                        />
+                        <span
+                          className={`text-[9px] font-bold transition-colors ${
+                            isSelected ? "text-[#37261A] font-extrabold" : "text-[#5D554A] group-hover:text-[#1E1E1E]"
+                          }`}
+                        >
+                          {d.day}
+                        </span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 

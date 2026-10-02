@@ -29,7 +29,7 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-[#DED9D0] text-[#1E1E1E] selection:bg-[#37261A] selection:text-[#F5F2EB]">
+    <div className="relative w-full h-screen overflow-hidden bg-[#DED9D0] dark:bg-[#18120D] text-[#1E1E1E] dark:text-[#F5F2EB] transition-colors duration-500 selection:bg-[#37261A] selection:text-[#F5F2EB]">
       {/* Complete Architectural Background Suite (All 5 Concepts: Grain, CAD Grid, Watermark, Topography, Telemetry) */}
       <BackgroundEnvironment activeScene={activeScene} />
 

@@ -999,7 +999,7 @@ export default function AmbientSpatialCanvas({
     const particles = new THREE.Points(particleGeometry, particleMaterial);
     worldGroup.add(particles);
 
-    // Pointer Parallax
+    // Pointer & Gyroscope Parallax
     let targetMouseX = 0;
     let targetMouseY = 0;
     let currentMouseX = 0;
@@ -1010,7 +1010,17 @@ export default function AmbientSpatialCanvas({
       targetMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
     };
 
+    const handleDeviceOrientation = (e: DeviceOrientationEvent) => {
+      if (e.gamma !== null && e.beta !== null) {
+        targetMouseX = Math.max(-1, Math.min(1, e.gamma / 25));
+        targetMouseY = Math.max(-1, Math.min(1, (e.beta - 40) / 25));
+      }
+    };
+
     window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    if (typeof window !== "undefined" && "DeviceOrientationEvent" in window) {
+      window.addEventListener("deviceorientation", handleDeviceOrientation, { passive: true });
+    }
 
     const handleResize = () => {
       if (!container) return;
@@ -1044,8 +1054,8 @@ export default function AmbientSpatialCanvas({
       const elapsedTime = clock.getElapsedTime();
       const p = Math.max(0, Math.min(1, scrollProgressRef.current));
 
-      currentMouseX += (targetMouseX - currentMouseX) * 0.04;
-      currentMouseY += (targetMouseY - currentMouseY) * 0.04;
+      currentMouseX += (targetMouseX - currentMouseX) * 0.065;
+      currentMouseY += (targetMouseY - currentMouseY) * 0.065;
 
       if (!prefersReducedMotion) {
         // =====================================================================
@@ -1111,13 +1121,14 @@ export default function AmbientSpatialCanvas({
         }
 
         dioramaGroup.position.set(targetDioramaX, targetDioramaY, targetDioramaZ);
-        dioramaGroup.rotation.y = targetRotY;
-        dioramaGroup.rotation.x = THREE.MathUtils.lerp(0.08, 0.05, p);
+        dioramaGroup.rotation.y = targetRotY + currentMouseX * 0.12;
+        dioramaGroup.rotation.x = THREE.MathUtils.lerp(0.08, 0.05, p) - currentMouseY * 0.08;
+        dioramaGroup.rotation.z = -currentMouseX * 0.025;
 
         camera.position.z = targetCameraZ;
-        camera.position.x = currentMouseX * 0.2;
-        camera.position.y = targetCameraY - currentMouseY * 0.2;
-        camera.lookAt(lookAtX, 0.1, 0);
+        camera.position.x = currentMouseX * 0.35;
+        camera.position.y = targetCameraY - currentMouseY * 0.25;
+        camera.lookAt(lookAtX + currentMouseX * 0.10, 0.1, 0);
 
         // Atmosphere lighting transition across scenes (Warm Khadi hues)
         if (p > 0.75) {
@@ -1526,6 +1537,9 @@ export default function AmbientSpatialCanvas({
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener("pointermove", handlePointerMove);
+      if (typeof window !== "undefined" && "DeviceOrientationEvent" in window) {
+        window.removeEventListener("deviceorientation", handleDeviceOrientation);
+      }
       window.removeEventListener("resize", handleResize);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
 

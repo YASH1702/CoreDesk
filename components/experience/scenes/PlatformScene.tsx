@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { ArrowRight, Sparkles, ShieldCheck } from "lucide-react";
 import { SCENES } from "@/constants/motion";
+import { MagneticWrapper } from "@/components/shared/MagneticWrapper";
 
 export function PlatformScene() {
   const sceneData = SCENES.find((s) => s.id === "platform");
@@ -63,37 +64,41 @@ export function PlatformScene() {
               </div>
 
               <div className="flex flex-col gap-3">
-                <Link
-                  href="/book"
-                  className="w-full px-5 sm:px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#37261A]/90 to-[#493323]/90 hover:from-[#37261A] hover:to-[#493323] backdrop-blur-2xl border-2 border-[#37261A]/70 hover:border-[#37261A] text-[#F5F2EB] font-bold text-sm shadow-[inset_0_1px_1px_rgba(255,255,255,0.25),0_8px_25px_rgba(55,38,26,0.30)] transition-all duration-300 flex items-center justify-between group cursor-pointer"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-white/20 backdrop-blur-md flex items-center justify-center">
-                      <Sparkles className="w-4 h-4 text-[#F5F2EB]" />
+                <MagneticWrapper strength={0.2} radius={40} className="w-full">
+                  <Link
+                    href="/book"
+                    className="w-full px-5 sm:px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#37261A]/90 to-[#493323]/90 hover:from-[#37261A] hover:to-[#493323] backdrop-blur-2xl border-2 border-[#37261A]/70 hover:border-[#37261A] text-[#F5F2EB] font-bold text-sm shadow-[inset_0_1px_1px_rgba(255,255,255,0.25),0_8px_25px_rgba(55,38,26,0.30)] transition-all duration-300 flex items-center justify-between group cursor-pointer"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-white/20 backdrop-blur-md flex items-center justify-center">
+                        <Sparkles className="w-4 h-4 text-[#F5F2EB]" />
+                      </div>
+                      <div className="text-left">
+                        <div className="text-sm font-bold">Launch Live Experience</div>
+                        <div className="text-[10px] text-[#F5F2EB]/80 font-normal">Customer booking & slot checkout</div>
+                      </div>
                     </div>
-                    <div className="text-left">
-                      <div className="text-sm font-bold">Launch Live Experience</div>
-                      <div className="text-[10px] text-[#F5F2EB]/80 font-normal">Customer booking & slot checkout</div>
-                    </div>
-                  </div>
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
-                </Link>
+                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
+                  </Link>
+                </MagneticWrapper>
 
-                <Link
-                  href="/login"
-                  className="w-full px-5 sm:px-6 py-3 rounded-xl bg-[#FAF8F5]/70 hover:bg-[#FAF8F5]/95 backdrop-blur-2xl text-[#1E1E1E] border-2 border-[#37261A]/35 hover:border-[#37261A] font-semibold text-sm shadow-xs transition-all duration-300 flex items-center justify-between group cursor-pointer"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-[#DED9D0]/60 backdrop-blur-md border border-[#C8C1B4] flex items-center justify-center text-[#5D554A] group-hover:text-[#37261A]">
-                      <ShieldCheck className="w-4 h-4" />
+                <MagneticWrapper strength={0.2} radius={40} className="w-full">
+                  <Link
+                    href="/login"
+                    className="w-full px-5 sm:px-6 py-3 rounded-xl bg-[#FAF8F5]/70 hover:bg-[#FAF8F5]/95 backdrop-blur-2xl text-[#1E1E1E] border-2 border-[#37261A]/35 hover:border-[#37261A] font-semibold text-sm shadow-xs transition-all duration-300 flex items-center justify-between group cursor-pointer"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-[#DED9D0]/60 backdrop-blur-md border border-[#C8C1B4] flex items-center justify-center text-[#5D554A] group-hover:text-[#37261A]">
+                        <ShieldCheck className="w-4 h-4" />
+                      </div>
+                      <div className="text-left">
+                        <div className="text-sm font-bold text-[#1E1E1E]">Sign In to Admin</div>
+                        <div className="text-[10px] text-[#5D554A]">Command center, analytics & team</div>
+                      </div>
                     </div>
-                    <div className="text-left">
-                      <div className="text-sm font-bold text-[#1E1E1E]">Sign In to Admin</div>
-                      <div className="text-[10px] text-[#5D554A]">Command center, analytics & team</div>
-                    </div>
-                  </div>
-                  <ArrowRight className="w-4 h-4 text-[#5D554A] group-hover:text-[#37261A] group-hover:translate-x-1 transition-transform" />
-                </Link>
+                    <ArrowRight className="w-4 h-4 text-[#5D554A] group-hover:text-[#37261A] group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </MagneticWrapper>
               </div>
             </div>
           </div>

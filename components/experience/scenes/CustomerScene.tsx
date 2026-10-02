@@ -1,49 +1,50 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { Check, Clock, Calendar as CalendarIcon, User, ShieldCheck, ArrowRight, Zap } from "lucide-react";
 import { SCENES } from "@/constants/motion";
+import { MagneticWrapper } from "@/components/shared/MagneticWrapper";
 
 export default function CustomerScene() {
   const sceneData = SCENES.find((s) => s.id === "customer");
+  const [activeStep, setActiveStep] = useState(4);
 
-  const steps = [
+  const stepConfigs = [
     {
       num: "01",
+      stepIndex: 1,
       title: "Service Package",
       detail: "Executive Strategy Audit · 60m",
       price: "₹1,500",
       icon: Clock,
-      done: true,
       selector: "scene-customer-step-1",
     },
     {
       num: "02",
+      stepIndex: 2,
       title: "Specialist",
       detail: "Dr. Marcus Chen · Principal Lead",
       price: "Selected",
       icon: User,
-      done: true,
       selector: "scene-customer-step-2",
     },
     {
       num: "03",
+      stepIndex: 3,
       title: "Selected Slot",
       detail: "Thursday, Oct 15 · 10:30 AM",
       price: "Confirmed",
       icon: CalendarIcon,
-      done: true,
       selector: "scene-customer-step-3",
     },
     {
       num: "04",
+      stepIndex: 4,
       title: "Instant Checkout",
       detail: "Stripe Secured · Deposit Verified",
       price: "Ready",
       icon: ShieldCheck,
-      done: false,
-      active: true,
       selector: "scene-customer-step-4",
     },
   ];
@@ -107,13 +108,15 @@ export default function CustomerScene() {
 
           {/* Interactive CTA */}
           <div className="scene-customer-cta will-change-transform">
-            <Link
-              href="/book"
-              className="px-7 py-3.5 rounded-full bg-[#37261A]/85 hover:bg-[#37261A] backdrop-blur-2xl border-2 border-[#37261A]/70 hover:border-[#37261A] text-[#F5F2EB] font-semibold text-sm shadow-[inset_0_1px_1px_rgba(255,255,255,0.25),0_8px_25px_rgba(55,38,26,0.28)] transition-all duration-300 inline-flex items-center gap-2.5 group cursor-pointer"
-            >
-              <span>Test Customer Wizard</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
+            <MagneticWrapper strength={0.3} radius={40}>
+              <Link
+                href="/book"
+                className="px-7 py-3.5 rounded-full bg-[#37261A]/85 hover:bg-[#37261A] backdrop-blur-2xl border-2 border-[#37261A]/70 hover:border-[#37261A] text-[#F5F2EB] font-semibold text-sm shadow-[inset_0_1px_1px_rgba(255,255,255,0.25),0_8px_25px_rgba(55,38,26,0.28)] transition-all duration-300 inline-flex items-center gap-2.5 group cursor-pointer"
+              >
+                <span>Test Customer Wizard</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </MagneticWrapper>
           </div>
         </div>
 
@@ -135,34 +138,40 @@ export default function CustomerScene() {
                   <p className="text-[11px] text-[#5D554A] font-medium">Deterministic availability · No overlaps</p>
                 </div>
                 <div className="px-2.5 py-0.5 rounded-full bg-[#DED9D0]/70 backdrop-blur-md border border-[#C8C1B4]/70 text-[#37261A] text-[10px] font-bold">
-                  Step 4 of 4
+                  Step {activeStep} of 4
                 </div>
               </div>
 
               {/* Step Sequence Cards */}
               <div className="space-y-2.5">
-                {steps.map((st) => {
+                {stepConfigs.map((st) => {
                   const IconComp = st.icon;
+                  const isDone = st.stepIndex < activeStep;
+                  const isActive = st.stepIndex === activeStep;
                   return (
-                    <div
+                    <button
                       key={st.num}
-                      className={`${st.selector} p-3 rounded-xl border backdrop-blur-xl transition-colors duration-300 flex items-center justify-between gap-3 will-change-transform shadow-xs ${
-                        st.active
-                          ? "bg-white/85 border-[#37261A] ring-1 ring-[#37261A]/20"
-                          : "bg-white/70 border-[#C8C1B4]/60 hover:border-[#C8C1B4]"
+                      type="button"
+                      onClick={() => setActiveStep(st.stepIndex)}
+                      className={`${st.selector} w-full text-left p-3 rounded-xl border backdrop-blur-xl transition-all duration-200 flex items-center justify-between gap-3 will-change-transform shadow-xs cursor-pointer ${
+                        isActive
+                          ? "bg-white/90 border-[#37261A] ring-2 ring-[#37261A]/20 shadow-md scale-[1.01]"
+                          : isDone
+                          ? "bg-white/75 border-[#C8C1B4]/60 hover:border-[#37261A]/40"
+                          : "bg-white/50 border-[#C8C1B4]/40 opacity-70 hover:opacity-90"
                       }`}
                     >
                       <div className="flex items-center gap-2.5">
                         <div
-                          className={`w-7 h-7 rounded-lg flex items-center justify-center font-bold text-[10px] ${
-                            st.done
+                          className={`w-7 h-7 rounded-lg flex items-center justify-center font-bold text-[10px] transition-colors ${
+                            isDone
                               ? "bg-[#5C9E6E]/15 text-[#5C9E6E]"
-                              : st.active
+                              : isActive
                               ? "bg-[#37261A] text-[#F5F2EB] shadow-sm"
                               : "bg-[#DED9D0] text-[#5D554A]"
                           }`}
                         >
-                          {st.done ? <Check className="w-3.5 h-3.5" /> : <IconComp className="w-3.5 h-3.5" />}
+                          {isDone ? <Check className="w-3.5 h-3.5" /> : <IconComp className="w-3.5 h-3.5" />}
                         </div>
                         <div>
                           <div className="text-[10px] font-extrabold uppercase tracking-wider text-[#5D554A]">
@@ -175,15 +184,17 @@ export default function CustomerScene() {
                       </div>
 
                       <span
-                        className={`text-[11px] font-bold px-2 py-0.5 rounded-md ${
-                          st.active
-                            ? "bg-[#DED9D0] text-[#37261A] border border-[#C8C1B4]"
+                        className={`text-[11px] font-bold px-2 py-0.5 rounded-md transition-colors ${
+                          isActive
+                            ? "bg-[#37261A] text-[#F5F2EB]"
+                            : isDone
+                            ? "bg-[#5C9E6E]/10 text-[#5C9E6E]"
                             : "text-[#5D554A] bg-[#DED9D0]/60"
                         }`}
                       >
-                        {st.price}
+                        {isDone ? "Done" : st.price}
                       </span>
-                    </div>
+                    </button>
                   );
                 })}
               </div>

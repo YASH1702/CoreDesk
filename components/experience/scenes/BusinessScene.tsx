@@ -1,12 +1,20 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-import { Sparkles, ArrowRight, TrendingUp, Calendar, Users, ShieldCheck, Activity } from "lucide-react";
+import { Sparkles, ArrowRight, TrendingUp, Calendar, Users, ShieldCheck, Activity, Plus } from "lucide-react";
 import { SCENES } from "@/constants/motion";
+import { MagneticWrapper } from "@/components/shared/MagneticWrapper";
 
 export default function BusinessScene() {
   const sceneData = SCENES.find((s) => s.id === "business");
+  const [slots, setSlots] = useState(18);
+  const revenue = 124500 + (slots - 18) * 6500;
+  const isModified = slots > 18;
+
+  const handleAddSlot = () => {
+    setSlots((prev) => (prev >= 22 ? 18 : prev + 1));
+  };
 
   return (
     <div className="w-full h-full min-h-screen flex items-center justify-between px-6 sm:px-10 lg:px-14 xl:px-20 py-20 relative overflow-hidden">
@@ -65,20 +73,24 @@ export default function BusinessScene() {
 
           {/* Action CTAs */}
           <div className="scene-business-cta flex flex-wrap items-center gap-4 will-change-transform">
-            <Link
-              href="/book"
-              className="px-7 py-3.5 rounded-full bg-[#37261A]/85 hover:bg-[#37261A] backdrop-blur-2xl border-2 border-[#37261A]/70 hover:border-[#37261A] text-[#F5F2EB] font-semibold text-sm shadow-[inset_0_1px_1px_rgba(255,255,255,0.25),0_8px_25px_rgba(55,38,26,0.28)] transition-all duration-300 flex items-center gap-2.5 group cursor-pointer"
-            >
-              <span>Explore Live Booking</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
-            <Link
-              href="/login"
-              className="px-7 py-3.5 rounded-full bg-[#FAF8F5]/70 hover:bg-[#FAF8F5]/90 backdrop-blur-2xl text-[#1E1E1E] border-2 border-[#37261A]/35 hover:border-[#37261A] font-semibold text-sm shadow-sm transition-all duration-300 flex items-center gap-2 cursor-pointer"
-            >
-              <ShieldCheck className="w-4 h-4 text-[#5D554A]" />
-              <span>Sign In</span>
-            </Link>
+            <MagneticWrapper strength={0.3} radius={45}>
+              <Link
+                href="/book"
+                className="px-7 py-3.5 rounded-full bg-[#37261A]/85 hover:bg-[#37261A] backdrop-blur-2xl border-2 border-[#37261A]/70 hover:border-[#37261A] text-[#F5F2EB] font-semibold text-sm shadow-[inset_0_1px_1px_rgba(255,255,255,0.25),0_8px_25px_rgba(55,38,26,0.28)] transition-all duration-300 flex items-center gap-2.5 group cursor-pointer"
+              >
+                <span>Explore Live Booking</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </MagneticWrapper>
+            <MagneticWrapper strength={0.25} radius={40}>
+              <Link
+                href="/login"
+                className="px-7 py-3.5 rounded-full bg-[#FAF8F5]/70 hover:bg-[#FAF8F5]/90 backdrop-blur-2xl text-[#1E1E1E] border-2 border-[#37261A]/35 hover:border-[#37261A] font-semibold text-sm shadow-sm transition-all duration-300 flex items-center gap-2 cursor-pointer"
+              >
+                <ShieldCheck className="w-4 h-4 text-[#5D554A]" />
+                <span>Sign In</span>
+              </Link>
+            </MagneticWrapper>
           </div>
         </div>
 
@@ -115,24 +127,37 @@ export default function BusinessScene() {
                 <div className="flex items-center justify-between mb-1.5">
                   <span className="text-[11px] font-semibold text-[#5D554A] uppercase tracking-wider">Today's Revenue</span>
                   <span className="text-[10px] font-bold text-[#5C9E6E] bg-[#5C9E6E]/10 px-2 py-0.5 rounded-full flex items-center gap-1">
-                    <TrendingUp className="w-2.5 h-2.5" /> +24% vs yesterday
+                    <TrendingUp className="w-2.5 h-2.5" /> {isModified ? "+34% surge" : "+24% vs yesterday"}
                   </span>
                 </div>
                 <div className="text-2xl font-extrabold text-[#1E1E1E] tracking-tight">
-                  ₹1,24,500<span className="text-sm font-normal text-[#5D554A]">.00</span>
+                  ₹{revenue.toLocaleString("en-IN")}<span className="text-sm font-normal text-[#5D554A]">.00</span>
                 </div>
               </div>
 
               {/* Sub Metrics Grid */}
               <div className="grid grid-cols-2 gap-3 mb-3.5">
-                <div className="scene-business-metric-slot bg-white/70 backdrop-blur-xl rounded-xl p-3 border border-[#C8C1B4]/60 shadow-xs will-change-transform">
-                  <div className="flex items-center gap-1.5 text-[#37261A] mb-1">
-                    <Calendar className="w-3.5 h-3.5" />
-                    <span className="text-[11px] font-semibold text-[#5D554A]">Confirmed</span>
+                <button
+                  type="button"
+                  onClick={handleAddSlot}
+                  title="Click to simulate booking slot intake"
+                  className="scene-business-metric-slot text-left bg-white/80 hover:bg-white backdrop-blur-xl rounded-xl p-3 border border-[#C8C1B4]/60 hover:border-[#37261A]/50 shadow-xs hover:shadow-md transition-all duration-200 cursor-pointer group will-change-transform active:scale-95"
+                >
+                  <div className="flex items-center justify-between text-[#37261A] mb-1">
+                    <div className="flex items-center gap-1.5">
+                      <Calendar className="w-3.5 h-3.5" />
+                      <span className="text-[11px] font-semibold text-[#5D554A]">Confirmed</span>
+                    </div>
+                    <span className="text-[9px] font-bold bg-[#37261A]/10 text-[#37261A] group-hover:bg-[#37261A] group-hover:text-[#F5F2EB] px-1.5 py-0.5 rounded transition-colors flex items-center gap-0.5">
+                      <Plus className="w-2.5 h-2.5" /> Book
+                    </span>
                   </div>
-                  <div className="text-xl font-bold text-[#1E1E1E]">18 <span className="text-[10px] font-normal text-[#5D554A]">Slots</span></div>
-                  <p className="text-[10px] text-[#5C9E6E] mt-0.5 font-medium">100% capacity</p>
-                </div>
+                  <div className="text-xl font-bold text-[#1E1E1E]">{slots} <span className="text-[10px] font-normal text-[#5D554A]">Slots</span></div>
+                  <p className="text-[10px] text-[#5C9E6E] mt-0.5 font-medium flex items-center justify-between">
+                    <span>{slots >= 22 ? "At Max Surge" : "100% capacity"}</span>
+                    {isModified && <span className="text-[9px] text-[#37261A] font-bold">+₹6,500 sync</span>}
+                  </p>
+                </button>
 
                 <div className="scene-business-metric-staff bg-white/70 backdrop-blur-xl rounded-xl p-3 border border-[#C8C1B4]/60 shadow-xs will-change-transform">
                   <div className="flex items-center gap-1.5 text-[#37261A] mb-1">
