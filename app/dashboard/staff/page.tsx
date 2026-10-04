@@ -1,6 +1,7 @@
 import React from "react";
 import DashboardLayoutWrapper from "@/components/dashboard/DashboardLayoutWrapper";
 import { prisma } from "@/lib/prisma";
+import UniversalCalendarSyncButton from "@/components/booking/UniversalCalendarSyncButton";
 import { Calendar, Clock, User, CheckCircle2, Shield } from "lucide-react";
 
 export const revalidate = 0;
@@ -66,10 +67,18 @@ export default async function StaffAgendaPage() {
                       )}
                     </div>
 
-                    <div className="text-right">
-                      <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#5C9E6E]/15 text-[#5C9E6E] border border-[#5C9E6E]/30">
+                    <div className="flex flex-col sm:items-end gap-2.5">
+                      <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#5C9E6E]/15 text-[#5C9E6E] border border-[#5C9E6E]/30 w-fit">
                         {appt.status}
                       </span>
+                      <UniversalCalendarSyncButton
+                        title={`${appt.service.title} - ${appt.customer?.name || "Client"}`}
+                        description={`Client: ${appt.customer?.name || "Client"} (${appt.customer?.email || ""}). Notes: ${appt.notes || "None"}`}
+                        location="CoreDesk Specialist Suite"
+                        startTime={appt.startTime}
+                        endTime={appt.endTime}
+                        variant="compact"
+                      />
                     </div>
                   </div>
                 ))}

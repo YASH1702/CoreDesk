@@ -2,6 +2,7 @@ import React from "react";
 import DashboardLayoutWrapper from "@/components/dashboard/DashboardLayoutWrapper";
 import Providers from "@/components/shared/Providers";
 import { getAppointmentsQueue } from "@/actions/appointments";
+import UniversalCalendarSyncButton from "@/components/booking/UniversalCalendarSyncButton";
 import { Calendar, Filter, Download } from "lucide-react";
 
 export const revalidate = 0;
@@ -41,6 +42,7 @@ export default async function AppointmentsQueuePage() {
                     <th className="pb-3 font-bold">Specialist</th>
                     <th className="pb-3 font-bold">Date & Time</th>
                     <th className="pb-3 font-bold">Status</th>
+                    <th className="pb-3 font-bold text-center">Sync</th>
                     <th className="pb-3 font-bold text-right">Price</th>
                   </tr>
                 </thead>
@@ -62,6 +64,16 @@ export default async function AppointmentsQueuePage() {
                         <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#5C9E6E]/15 text-[#5C9E6E] border border-[#5C9E6E]/30">
                           {appt.status}
                         </span>
+                      </td>
+                      <td className="py-3.5 text-center">
+                        <UniversalCalendarSyncButton
+                          title={`${appt.service?.title || "Session"} - ${appt.customer?.name || "Client"}`}
+                          description={`Booking #${appt.id.slice(0, 8)} with ${appt.staff?.user?.name || "Specialist"}.`}
+                          location="CoreDesk Executive Suite"
+                          startTime={appt.startTime}
+                          endTime={appt.endTime}
+                          variant="compact"
+                        />
                       </td>
                       <td className="py-3.5 text-right font-extrabold text-[#2A2927] dark:text-[#F8F7F3] gold-text">
                         ${appt.payment?.amount || appt.service?.price}.00
