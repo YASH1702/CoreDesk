@@ -114,12 +114,12 @@ export default function DashboardLayoutWrapper({ children }: { children: React.R
       <aside className="hidden lg:flex w-72 flex-col bg-[#F3EFE7] dark:bg-[#0F1422] border-r border-[#DDD6C9] dark:border-[#27314A] shrink-0 min-h-screen p-6 justify-between transition-colors duration-300 z-30">
         <div className="space-y-6">
           {/* Brand Mark */}
-          <Link href="/" className="flex items-center gap-2.5 group cursor-pointer" title="Return to BusinessFlow">
+          <Link href="/" className="flex items-center gap-2.5 group cursor-pointer" title="Return to CoreDesk">
             <div className="w-9 h-9 rounded-2xl bg-[#C69A4B] text-white flex items-center justify-center shadow-gold-btn group-hover:scale-105 transition-transform">
               <Sparkles className="w-4.5 h-4.5" />
             </div>
             <span className="text-lg font-bold tracking-tight text-[#2A2927] dark:text-[#F8F7F3]">
-              Business<span className="gold-text">Flow</span>
+              Core<span className="gold-text">Desk</span>
             </span>
             <span className="ml-auto px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FFF8ED] dark:bg-[#1B2238] text-[#C69A4B] border border-[#E8D7B2] dark:border-[#27314A]">
               OS
@@ -277,7 +277,7 @@ export default function DashboardLayoutWrapper({ children }: { children: React.R
             <div className="w-7 h-7 rounded-xl bg-[#C69A4B] text-white flex items-center justify-center">
               <Sparkles className="w-3.5 h-3.5" />
             </div>
-            <span className="text-sm font-bold text-[#2A2927] dark:text-[#F8F7F3]">BusinessFlow</span>
+            <span className="text-sm font-bold text-[#2A2927] dark:text-[#F8F7F3]">CoreDesk</span>
           </Link>
           <div className="flex items-center gap-2">
             <button

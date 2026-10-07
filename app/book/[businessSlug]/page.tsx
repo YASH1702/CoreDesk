@@ -16,11 +16,11 @@ export async function generateMetadata({ params }: BookBusinessPageProps): Promi
   });
 
   if (!business) {
-    return { title: "Book Appointment | BusinessFlow" };
+    return { title: "Book Appointment | CoreDesk" };
   }
 
   return {
-    title: `Book with ${business.name} | BusinessFlow`,
+    title: `Book with ${business.name} | CoreDesk`,
     description: `Schedule a verified appointment directly with ${business.name}. Instant availability and confirmation.`,
   };
 }

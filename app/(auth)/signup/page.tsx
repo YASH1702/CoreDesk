@@ -71,11 +71,11 @@ export default function SignupPage() {
               <Sparkles className="w-5 h-5 text-white" />
             </div>
             <span className="text-2xl font-bold tracking-tight text-[#2A2927] dark:text-[#F8F7F3]">
-              Business<span className="gold-text">Flow</span>
+              Core<span className="gold-text">Desk</span>
             </span>
           </Link>
           <h1 className="text-xl font-bold text-[#2A2927] dark:text-[#F8F7F3] tracking-tight">Create Account</h1>
-          <p className="text-xs text-[#5D5A56] dark:text-[#A0A8B8] mt-1">Start your 14-day free trial of BusinessFlow</p>
+          <p className="text-xs text-[#5D5A56] dark:text-[#A0A8B8] mt-1">Start your 14-day free trial of CoreDesk</p>
         </div>
 
         {/* Error Alert */}

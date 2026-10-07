@@ -1,7 +1,6 @@
-# AI_CONTEXT.md — BusinessFlow Product Redesign
+# AI_CONTEXT.md — CoreDesk Architecture & Design System
 
-> **Previous Iteration**: CoreDesk (deployed on Vercel via `YASH1702/CoreDesk`)
-> **New Direction**: BusinessFlow — Premium Business Operating System
+> **Brand**: CoreDesk — Premium Executive Business Operating System
 > **Branch**: `main`
 > **Database**: PostgreSQL on Supabase (`db.zzdimmuqsvduxdhbwpou.supabase.co`)
 
@@ -221,7 +220,7 @@ D:\CoreDesk/
 - Standard section-based scrolling
 - Dark mode toggle
 
-### New (BusinessFlow)
+### New (CoreDesk)
 - **Cinematic scroll experience**: 6 distinct visual compositions
 - **GSAP ScrollTrigger**: Deterministic scroll-driven animation
 - **Horizontal transition language**: Elements enter/exit left/right
@@ -260,6 +259,6 @@ D:\CoreDesk/
 - **Vercel**: Already configured, `postinstall: prisma generate` in package.json
 - **Supabase**: PostgreSQL connection established and working
 - **Environment Variables**: `DATABASE_URL`, `DIRECT_URL`, `NEXTAUTH_SECRET`, `NEXTAUTH_URL`, Stripe keys
-- **Git**: `main` branch, pushed to `YASH1702/CoreDesk` (will need rename to BusinessFlow)
+- **Git**: `main` branch, repository `YASH1702/CoreDesk`
 - **Build**: Production build passes cleanly (18 routes, all verified)
 - **Critical**: Do NOT run destructive migrations against production Supabase DB

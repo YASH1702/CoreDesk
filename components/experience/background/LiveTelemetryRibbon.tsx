@@ -58,7 +58,7 @@ export function LiveTelemetryRibbon({ activeScene }: LiveTelemetryRibbonProps) {
 
       {/* Center: Active Scene Category Telemetry */}
       <div className="hidden sm:flex items-center gap-2 text-[#37261A] dark:text-[#8AA2BA] font-semibold">
-        <span>BUSINESSFLOW OS v2.0</span>
+        <span>COREDESK OS v2.0</span>
         <span className="text-[#AAA194]">/</span>
         <span className="uppercase">{currentScene.number} {currentScene.label}</span>
       </div>

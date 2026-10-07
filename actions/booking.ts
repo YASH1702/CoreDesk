@@ -250,7 +250,7 @@ export async function createBookingAction(data: {
           customerName: data.customerName,
           serviceTitle: service.title,
           startTime: startTime.toISOString(),
-          businessName: "BusinessFlow Partner",
+          businessName: "CoreDesk Partner",
         },
       });
     } catch (inngestErr) {

@@ -47,12 +47,12 @@ export function ExperienceNav() {
       className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-between px-6 sm:px-10 h-16 bg-[#DED9D0]/75 dark:bg-[#18120D]/80 backdrop-blur-xl transition-all duration-300"
     >
       {/* Brand Mark */}
-      <Link href="/" className="flex items-center gap-2.5 group cursor-pointer" title="BusinessFlow">
+      <Link href="/" className="flex items-center gap-2.5 group cursor-pointer" title="CoreDesk">
         <div className="w-8 h-8 rounded-xl bg-[#37261A] dark:bg-[#F5F2EB] text-[#F5F2EB] dark:text-[#18120D] flex items-center justify-center shadow-[0_4px_12px_rgba(55,38,26,0.3)] group-hover:scale-105 transition-transform duration-200">
           <Sparkles className="w-4 h-4" />
         </div>
         <span className="text-base font-extrabold tracking-tight text-[#1E1E1E] dark:text-[#F5F2EB]">
-          Business<span className="text-[#37261A] dark:text-[#8AA2BA]">Flow</span>
+          Core<span className="text-[#37261A] dark:text-[#8AA2BA]">Desk</span>
         </span>
         <span className="hidden sm:inline-block ml-2 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#F5F2EB]/70 dark:bg-[#251D16]/80 backdrop-blur-md text-[#37261A] dark:text-[#8AA2BA] border border-[#C8C1B4]/70 dark:border-[#37261A]/80">
           OS v2.0

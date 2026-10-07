@@ -1,6 +1,6 @@
-# TODO.md — BusinessFlow Redesign Tracker
+# TODO.md — CoreDesk Architecture Tracker
 
-> Last Updated: 2026-09-28
+> Last Updated: 2026-10-07
 > Status: **Phases 0, 1, 2, 3, 4 Complete → Phase 5 Polish & Deployment Verified**
 
 ---
@@ -262,5 +262,23 @@
 - [x] Verified `npx tsc --noEmit` with 0 type errors
 - [x] Verified `npm run build` compiled all routes cleanly with exit code 0
 - [x] Synchronized commits to remote `main`
+
+---
+
+## PHASE 12 — GLOBAL BRANDING REALIGNMENT TO COREDESK ✅
+
+- [x] Updated Experience Navigation bar logo mark and title to `CoreDesk`
+- [x] Updated Live Telemetry Ribbon status badge to `COREDESK OS v2.0`
+- [x] Updated Main Shared Navbar logo mark, title, and tooltip to `CoreDesk`
+- [x] Updated Shared Footer logo mark, tagline, and legal copyright to `CoreDesk Technologies`
+- [x] Updated Dashboard Layout desktop executive sidebar mark & mobile header mark to `CoreDesk`
+- [x] Updated Authentication pages (Login, Signup, Forgot Password) headers and 14-day trial copy to `CoreDesk`
+- [x] Updated Booking portal metadata titles and dynamic partner metadata (`/book`, `/book/[businessSlug]`, `/business/[slug]`) to `CoreDesk`
+- [x] Updated Motion constant scene sublines to `CoreDesk connects your website...`
+- [x] Updated Inngest engine client identifier and name to `coredesk` / `CoreDesk Platform Engine`
+- [x] Updated default appointment notification partner name to `CoreDesk Partner`
+- [x] Updated `package.json` and `package-lock.json` package names to `coredesk`
+- [x] Verified zero remaining legacy brand instances across source code
+
 
 

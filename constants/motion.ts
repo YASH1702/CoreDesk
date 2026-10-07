@@ -61,7 +61,7 @@ export const SCENES = [
     label: "Business",
     number: "01",
     headline: "YOUR BUSINESS,\nBEAUTIFULLY CONNECTED.",
-    subline: "BusinessFlow connects your website, customers, staff, and operations into one premium experience.",
+    subline: "CoreDesk connects your website, customers, staff, and operations into one premium experience.",
   },
   {
     id: "customer",

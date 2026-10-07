@@ -31,10 +31,10 @@ export async function generateMetadata({ params }: BusinessPageProps) {
     include: { cmsSettings: true },
   });
 
-  if (!business) return { title: "Business Not Found | BusinessFlow" };
+  if (!business) return { title: "Business Not Found | CoreDesk" };
 
   return {
-    title: `${business.cmsSettings?.seoTitle || business.name} — BusinessFlow Portal`,
+    title: `${business.cmsSettings?.seoTitle || business.name} — CoreDesk Portal`,
     description: business.cmsSettings?.seoDescription || business.description || `Book premier appointments with ${business.name}.`,
   };
 }
@@ -69,7 +69,7 @@ export default async function PublicBusinessPage({ params }: BusinessPageProps) 
         <div className="text-center max-w-3xl mx-auto space-y-5">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FFF8ED] border border-[#E8D7B2] text-[#C69A4B] text-xs font-bold">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Verified BusinessFlow Partner · {archetype.name}</span>
+            <span>Verified CoreDesk Partner · {archetype.name}</span>
           </div>
 
           <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-[#2A2927] leading-[1.1]">
