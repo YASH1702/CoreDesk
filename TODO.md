@@ -280,5 +280,15 @@
 - [x] Updated `package.json` and `package-lock.json` package names to `coredesk`
 - [x] Verified zero remaining legacy brand instances across source code
 
+---
+
+## PHASE 13 — REMOVAL OF SWISS CAD GRID & VIEWFINDER BRACKETS ✅
+
+- [x] Removed `ArchitecturalCadGrid.tsx` background component (crosshairs, viewfinder brackets, and CAD datum labels)
+- [x] Updated `BackgroundEnvironment.tsx` to completely decommission Swiss CAD grid rendering
+- [x] Retained refined aesthetic suite: Tactile Khadi paper grain, harmonic topographic waves, ghost numerals, and live telemetry ribbon
+- [x] Verified zero type errors and clean production build
+
+
 
 

@@ -30,7 +30,7 @@ export default function HomePage() {
 
   return (
     <div className="relative w-full h-screen overflow-hidden bg-[#DED9D0] dark:bg-[#18120D] text-[#1E1E1E] dark:text-[#F5F2EB] transition-colors duration-500 selection:bg-[#37261A] selection:text-[#F5F2EB]">
-      {/* Complete Architectural Background Suite (All 5 Concepts: Grain, CAD Grid, Watermark, Topography, Telemetry) */}
+      {/* Luxury Architectural Background Suite (Tactile Paper Grain, Watermark Numerals, Topography, Live Telemetry) */}
       <BackgroundEnvironment activeScene={activeScene} />
 
       {/* Interactive Cursor Ambient Spotlight (Luminous Refraction Follower) */}
